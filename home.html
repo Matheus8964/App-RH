@@ -1333,89 +1333,48 @@
 
     function carregarUsuario() {
 
-      try {
+  const params = new URLSearchParams(window.location.search);
+  const nomeURL = params.get("nome");
 
-        const dados =
-          localStorage.getItem("usuario");
+  // =====================================================
+  // SE VEIO UM NOME NOVO PELA URL
+  // =====================================================
+  if (nomeURL && nomeURL.trim() !== "") {
 
+    const nomeAtualizado = nomeURL.trim();
 
-        if (!dados) {
+    // SEMPRE substitui o nome anterior
+    localStorage.setItem("nomeUsuario", nomeAtualizado);
 
-          document.getElementById(
-            "nomeUsuario"
-          ).textContent =
-            "Usuário";
+    // Mostra imediatamente o novo nome
+    const elemento = document.getElementById("nomeUsuario");
 
-          return;
-        }
-
-
-        let usuario;
-
-
-        try {
-
-          usuario =
-            JSON.parse(dados);
-
-        } catch (erro) {
-
-          usuario =
-            dados;
-        }
-
-
-
-        if (
-          typeof usuario === "object" &&
-          usuario !== null
-        ) {
-
-
-          const nome =
-            usuario.nome ||
-            usuario.nomeCompleto ||
-            usuario.NOME ||
-            usuario["NOME COMPLETO"] ||
-            "Usuário";
-
-
-          document.getElementById(
-            "nomeUsuario"
-          ).textContent =
-            nome;
-
-
-        } else {
-
-
-          document.getElementById(
-            "nomeUsuario"
-          ).textContent =
-            usuario ||
-            "Usuário";
-
-        }
-
-
-      } catch (erro) {
-
-
-        console.error(
-          "Erro ao carregar usuário:",
-          erro
-        );
-
-
-        document.getElementById(
-          "nomeUsuario"
-        ).textContent =
-          "Usuário";
-
-      }
-
+    if (elemento) {
+      elemento.textContent = nomeAtualizado;
     }
 
+    // Remove ?nome=... da barra de endereço
+    window.history.replaceState(
+      {},
+      document.title,
+      window.location.pathname
+    );
+
+    return;
+  }
+
+  // =====================================================
+  // SE NÃO VEIO NOME NA URL
+  // USA O NOME JÁ SALVO
+  // =====================================================
+  const nomeSalvo = localStorage.getItem("nomeUsuario");
+
+  const elemento = document.getElementById("nomeUsuario");
+
+  if (elemento) {
+    elemento.textContent = nomeSalvo || "Usuário";
+  }
+}
 
 
     /* ================================
