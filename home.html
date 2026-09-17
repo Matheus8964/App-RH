@@ -1325,138 +1325,176 @@
 
 
   <script>
+(function () {
 
-function carregarUsuario() {
+  function carregarUsuario() {
 
-  const params = new URLSearchParams(window.location.search);
-  const nomeURL = params.get("nome");
+    const params = new URLSearchParams(window.location.search);
+    const nomeURL = params.get("nome");
 
-  const elemento = document.getElementById("nomeUsuario");
+    const elemento = document.getElementById("nomeUsuario");
 
-  if (nomeURL && nomeURL.trim() !== "") {
+    /*
+     * SE VEIO NOME PELA URL
+     * substitui o nome atualmente salvo
+     */
+    if (nomeURL && nomeURL.trim() !== "") {
 
-    const novoNome = nomeURL.trim();
+      const novoNome = nomeURL.trim();
 
-    localStorage.removeItem("nomeUsuario");
+      localStorage.removeItem("nomeUsuario");
 
-    localStorage.setItem(
-      "nomeUsuario",
-      novoNome
-    );
+      localStorage.setItem(
+        "nomeUsuario",
+        novoNome
+      );
+
+      if (elemento) {
+        elemento.textContent = novoNome;
+      }
+
+      /*
+       * Remove ?nome=... da barra de endereço
+       */
+      window.history.replaceState(
+        null,
+        "App RH",
+        window.location.pathname
+      );
+
+      return;
+    }
+
+    /*
+     * SE NÃO VEIO NOME PELA URL
+     * usa o nome anteriormente salvo
+     */
+    const nomeSalvo =
+      localStorage.getItem("nomeUsuario");
 
     if (elemento) {
-      elemento.textContent = novoNome;
-    }
-
-    window.history.replaceState(
-      {},
-      document.title,
-      window.location.pathname
-    );
-
-    return;
-  }
-
-  const nomeSalvo =
-    localStorage.getItem("nomeUsuario");
-
-  if (elemento) {
-    elemento.textContent =
-      nomeSalvo || "Usuário";
-  }
-}
-
-
-function abrirPagina(pagina, botao) {
-
-  if (!pagina) {
-    return;
-  }
-
-  if (botao) {
-
-    botao.classList.add("carregando");
-
-    const seta =
-      botao.querySelector(".arrow");
-
-    if (seta) {
-      seta.textContent = "↻";
+      elemento.textContent =
+        nomeSalvo || "Usuário";
     }
   }
 
-  const paginas = {
 
-    troca: "./troca.html",
+  function abrirPagina(pagina, botao) {
 
-    folga: "./folga.html",
-
-    atestados: "./atestados.html",
-
-    banco: "./banco.html",
-
-    treinamentos: "./treinamentos.html",
-
-    suporte: "./suporte.html"
-
-  };
-
-  const destino = paginas[pagina];
-
-  if (!destino) {
-
-    console.error(
-      "Página não encontrada:",
-      pagina
-    );
+    if (!pagina) {
+      return;
+    }
 
     if (botao) {
-      botao.classList.remove("carregando");
+
+      botao.classList.add("carregando");
+
+      const seta =
+        botao.querySelector(".arrow");
+
+      if (seta) {
+        seta.textContent = "↻";
+      }
     }
 
-    return;
+    const paginas = {
+
+      troca: "./troca.html",
+
+      folga: "./folga.html",
+
+      atestados: "./atestados.html",
+
+      banco: "./banco.html",
+
+      treinamentos: "./treinamentos.html",
+
+      suporte: "./suporte.html"
+
+    };
+
+    const destino = paginas[pagina];
+
+    if (!destino) {
+
+      console.error(
+        "Página não encontrada:",
+        pagina
+      );
+
+      if (botao) {
+        botao.classList.remove("carregando");
+      }
+
+      return;
+    }
+
+    window.setTimeout(
+      function () {
+
+        window.location.href = destino;
+
+      },
+      120
+    );
   }
 
-  setTimeout(function() {
 
-    window.location.href = destino;
-
-  }, 120);
-}
-
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
+  function iniciarApp() {
 
     carregarUsuario();
 
-    setTimeout(function() {
+    const loading =
+      document.getElementById("loading");
 
-      const loading =
-        document.getElementById("loading");
+    if (loading) {
 
-      if (loading) {
+      loading.classList.add("hidden");
 
-        loading.classList.add("hidden");
+    }
+  }
 
-      }
 
-    }, 350);
+  /*
+   * Disponibiliza a função para os botões onclick
+   */
+  window.abrirPagina = abrirPagina;
+
+  window.carregarUsuario = carregarUsuario;
+
+
+  /*
+   * Inicia o aplicativo
+   */
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarApp
+    );
+
+  } else {
+
+    iniciarApp();
 
   }
-);
 
 
-document.addEventListener(
-  "gesturestart",
-  function(event) {
+  /*
+   * Bloqueia gesto de zoom do iPhone
+   */
+  document.addEventListener(
+    "gesturestart",
+    function (event) {
 
-    event.preventDefault();
+      event.preventDefault();
 
-  }
-);
+    }
+  );
 
+})();
 </script>
 
 
