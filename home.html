@@ -1327,242 +1327,231 @@
   <script>
 
 
-    /* ================================
-       CARREGAR USUÁRIO
-    ================================= */
+/* ================================
+     CARREGAR USUÁRIO
+  ================================= */
 
-   function carregarUsuario() {
+  function carregarUsuario() {
 
-  const params = new URLSearchParams(window.location.search);
-  const nomeURL = params.get("nome");
+    const params = new URLSearchParams(window.location.search);
+    const nomeURL = params.get("nome");
 
-  const elemento = document.getElementById("nomeUsuario");
-
-  // =====================================================
-  // SE VEIO NOME PELA URL
-  // APAGA O ATUAL E SUBSTITUI PELO NOVO
-  // =====================================================
-  if (nomeURL && nomeURL.trim() !== "") {
-
-    const novoNome = nomeURL.trim();
-
-    // Apaga o nome atualmente salvo
-    localStorage.removeItem("nomeUsuario");
-
-    // Salva o novo nome vindo da URL
-    localStorage.setItem("nomeUsuario", novoNome);
-
-    // Mostra o novo nome
-    if (elemento) {
-      elemento.textContent = novoNome;
-    }
-
-    // Remove o ?nome= da URL
-    window.history.replaceState(
-      {},
-      document.title,
-      window.location.pathname
-    );
-
-    return;
-  }
-
-  // =====================================================
-  // SE NÃO VEIO NOME PELA URL
-  // USA O ÚLTIMO NOME SALVO
-  // =====================================================
-  const nomeSalvo = localStorage.getItem("nomeUsuario");
-
-  if (elemento) {
-    elemento.textContent = nomeSalvo || "Usuário";
-  }
-}
-
-  // =====================================================
-  // SE NÃO VEIO NOME NA URL
-  // USA O NOME JÁ SALVO
-  // =====================================================
-  const nomeSalvo = localStorage.getItem("nomeUsuario");
-
-  const elemento = document.getElementById("nomeUsuario");
-
-  if (elemento) {
-    elemento.textContent = nomeSalvo || "Usuário";
-  }
-}
+    const elemento = document.getElementById("nomeUsuario");
 
 
-    /* ================================
-       ABRIR PÁGINA DO GITHUB
-    ================================= */
+    // ==========================================
+    // VEIO UM NOME NOVO PELA URL
+    // ==========================================
 
-    function abrirPagina(
-      pagina,
-      botao
-    ) {
+    if (nomeURL && nomeURL.trim() !== "") {
+
+      const novoNome = nomeURL.trim();
 
 
-      if (!pagina) {
-        return;
+      // Apaga o nome anterior
+      localStorage.removeItem("nomeUsuario");
+
+
+      // Salva o novo nome
+      localStorage.setItem(
+        "nomeUsuario",
+        novoNome
+      );
+
+
+      // Mostra o novo nome
+      if (elemento) {
+
+        elemento.textContent =
+          novoNome;
+
       }
 
 
+      // Remove ?nome= da URL
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
 
-      /* Evita múltiplos cliques */
+
+      return;
+
+    }
+
+
+    // ==========================================
+    // NÃO VEIO NOME PELA URL
+    // USA O NOME SALVO
+    // ==========================================
+
+    const nomeSalvo =
+      localStorage.getItem("nomeUsuario");
+
+
+    if (elemento) {
+
+      elemento.textContent =
+        nomeSalvo || "Usuário";
+
+    }
+
+  }
+
+
+
+  /* ================================
+     ABRIR PÁGINA DO GITHUB
+  ================================= */
+
+  function abrirPagina(
+    pagina,
+    botao
+  ) {
+
+    if (!pagina) {
+      return;
+    }
+
+
+    // Evita múltiplos cliques
+
+    if (botao) {
+
+      botao.classList.add(
+        "carregando"
+      );
+
+
+      const seta =
+        botao.querySelector(
+          ".arrow"
+        );
+
+
+      if (seta) {
+
+        seta.textContent =
+          "↻";
+
+      }
+
+    }
+
+
+    const paginas = {
+
+      troca:
+        "./troca.html",
+
+      folga:
+        "./folga.html",
+
+      atestados:
+        "./atestados.html",
+
+      banco:
+        "./banco.html",
+
+      treinamentos:
+        "./treinamentos.html",
+
+      suporte:
+        "./suporte.html"
+
+    };
+
+
+    const destino =
+      paginas[pagina];
+
+
+    if (!destino) {
+
+      console.error(
+        "Página não encontrada:",
+        pagina
+      );
+
 
       if (botao) {
 
-        botao.classList.add(
+        botao.classList.remove(
           "carregando"
         );
 
-
-        const seta =
-          botao.querySelector(
-            ".arrow"
-          );
-
-
-        if (seta) {
-
-          seta.textContent =
-            "↻";
-        }
-
       }
 
-
-
-      /*
-       * Cada módulo possui sua própria
-       * página HTML no GitHub.
-       */
-
-      const paginas = {
-
-        troca:
-          "./troca.html",
-
-        folga:
-          "./folga.html",
-
-        atestados:
-          "./atestados.html",
-
-        banco:
-          "./banco.html",
-
-        treinamentos:
-          "./treinamentos.html",
-
-        suporte:
-          "./suporte.html"
-
-      };
-
-
-      const destino =
-        paginas[pagina];
-
-
-      if (!destino) {
-
-        console.error(
-          "Página não encontrada:",
-          pagina
-        );
-
-        if (botao) {
-
-          botao.classList.remove(
-            "carregando"
-          );
-
-        }
-
-        return;
-      }
-
-
-
-      /*
-       * Pequeno atraso apenas para
-       * mostrar a animação do botão.
-       */
-
-      setTimeout(
-        function() {
-
-          window.location.href =
-            destino;
-
-        },
-        120
-      );
-
+      return;
     }
 
 
-
-    /* ================================
-       INICIALIZAÇÃO
-    ================================= */
-
-    document.addEventListener(
-      "DOMContentLoaded",
+    setTimeout(
       function() {
 
+        window.location.href =
+          destino;
 
-        carregarUsuario();
-
-
-
-        /*
-         * Remove a tela de carregamento.
-         */
-
-        setTimeout(
-          function() {
-
-
-            const loading =
-              document.getElementById(
-                "loading"
-              );
-
-
-            if (loading) {
-
-              loading.classList.add(
-                "hidden"
-              );
-
-            }
-
-
-          },
-          350
-        );
-
-
-      }
+      },
+      120
     );
 
+  }
 
 
-    /* ================================
-       COMPATIBILIDADE IOS
-    ================================= */
 
-    document.addEventListener(
-      "gesturestart",
-      function(event) {
+  /* ================================
+     INICIALIZAÇÃO
+  ================================= */
 
-        event.preventDefault();
+  document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
-      }
-    );
+      // Carrega o usuário
+      carregarUsuario();
 
+
+      // Remove tela de carregamento
+      setTimeout(
+        function() {
+
+          const loading =
+            document.getElementById(
+              "loading"
+            );
+
+
+          if (loading) {
+
+            loading.classList.add(
+              "hidden"
+            );
+
+          }
+
+        },
+        350
+      );
+
+    }
+  );
+
+
+
+  /* ================================
+     COMPATIBILIDADE IOS
+  ================================= */
+
+  document.addEventListener(
+    "gesturestart",
+    function(event) {
+
+      event.preventDefault();
+
+    }
+  );
 
   </script>
 
