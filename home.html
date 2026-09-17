@@ -1331,29 +1331,33 @@
        CARREGAR USUÁRIO
     ================================= */
 
-    function carregarUsuario() {
+   function carregarUsuario() {
 
   const params = new URLSearchParams(window.location.search);
   const nomeURL = params.get("nome");
 
+  const elemento = document.getElementById("nomeUsuario");
+
   // =====================================================
-  // SE VEIO UM NOME NOVO PELA URL
+  // SE VEIO NOME PELA URL
+  // APAGA O ATUAL E SUBSTITUI PELO NOVO
   // =====================================================
   if (nomeURL && nomeURL.trim() !== "") {
 
-    const nomeAtualizado = nomeURL.trim();
+    const novoNome = nomeURL.trim();
 
-    // SEMPRE substitui o nome anterior
-    localStorage.setItem("nomeUsuario", nomeAtualizado);
+    // Apaga o nome atualmente salvo
+    localStorage.removeItem("nomeUsuario");
 
-    // Mostra imediatamente o novo nome
-    const elemento = document.getElementById("nomeUsuario");
+    // Salva o novo nome vindo da URL
+    localStorage.setItem("nomeUsuario", novoNome);
 
+    // Mostra o novo nome
     if (elemento) {
-      elemento.textContent = nomeAtualizado;
+      elemento.textContent = novoNome;
     }
 
-    // Remove ?nome=... da barra de endereço
+    // Remove o ?nome= da URL
     window.history.replaceState(
       {},
       document.title,
@@ -1362,6 +1366,17 @@
 
     return;
   }
+
+  // =====================================================
+  // SE NÃO VEIO NOME PELA URL
+  // USA O ÚLTIMO NOME SALVO
+  // =====================================================
+  const nomeSalvo = localStorage.getItem("nomeUsuario");
+
+  if (elemento) {
+    elemento.textContent = nomeSalvo || "Usuário";
+  }
+}
 
   // =====================================================
   // SE NÃO VEIO NOME NA URL
