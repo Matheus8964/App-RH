@@ -1,7 +1,7 @@
 {
-  "name": "Meu Aplicativo",
-  "short_name": "Meu App",
-  "description": "Aplicativo baseado em Google Sites.",
+  "name": "App RH",
+  "short_name": "App RH",
+  "description": "Aplicativo interno RH",
   "lang": "pt-BR",
   "start_url": "./",
   "scope": "./",
