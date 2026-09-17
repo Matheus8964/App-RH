@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Meu Aplicativo">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <title>Meu Aplicativo</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; font-family: Arial, sans-serif; background: #0f172a; }
+    #app { width: 100%; height: 100%; position: relative; }
+    #siteFrame { width: 100%; height: 100%; border: 0; display: block; background: white; }
+    #loading {
+      position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px; background: #0f172a; color: white;
+      transition: opacity .25s ease;
+    }
+    #loading.hidden { opacity: 0; pointer-events: none; }
+    .spinner { width: 38px; height: 38px; border: 4px solid rgba(255,255,255,.25); border-top-color: white; border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #offline {
+      display: none; position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 20;
+      padding: 12px 14px; border-radius: 12px; background: rgba(15,23,42,.95); color: white;
+      text-align: center; font-size: 14px;
+    }
+    #install {
+      display: none; position: fixed; right: 16px; bottom: 16px; z-index: 30;
+      border: 0; border-radius: 999px; padding: 12px 18px; background: #2563eb; color: white;
+      font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,.25); cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main id="app">
+    <div id="loading">
+      <div class="spinner"></div>
+      <strong>Carregando...</strong>
+    </div>
+
+    <iframe
+      id="siteFrame"
+      title="Site"
+      src="https://sites.google.com/view/SEU-SITE-AQUI"
+      allow="fullscreen; clipboard-read; clipboard-write"
+      referrerpolicy="strict-origin-when-cross-origin">
+    </iframe>
+
+    <div id="offline">Sem conexão. A estrutura do aplicativo está disponível, mas o Google Sites precisa de internet.</div>
+    <button id="install" type="button">Instalar aplicativo</button>
+  </main>
+
+  <script>
+    const frame = document.getElementById('siteFrame');
+    const loading = document.getElementById('loading');
+    const offline = document.getElementById('offline');
+    const installButton = document.getElementById('install');
+
+    frame.addEventListener('load', () => loading.classList.add('hidden'));
+
+    function updateConnection() {
+      offline.style.display = navigator.onLine ? 'none' : 'block';
+    }
+    window.addEventListener('online', updateConnection);
+    window.addEventListener('offline', updateConnection);
+    updateConnection();
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(console.error);
+      });
+    }
+
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      deferredPrompt = event;
+      installButton.style.display = 'block';
+    });
+
+    installButton.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installButton.style.display = 'none';
+    });
+
+    window.addEventListener('appinstalled', () => {
+      installButton.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
