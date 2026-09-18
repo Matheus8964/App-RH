@@ -1,138 +1,1147 @@
-const CACHE_NAME = "app-rh-v1";
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-const ARQUIVOS = [
-    "./",
-    "./index.html",
-    "./alarme.html",
-    "./manifest.json"
-];
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<meta name="theme-color" content="#0f172a">
+
+<title>Alarme - App RH</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    background:#0f172a;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:430px;
+}
+
+.topo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.topo h1{
+    margin:0;
+    font-size:28px;
+}
+
+.topo p{
+    margin-top:8px;
+    color:#94a3b8;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:24px;
+    padding:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+.display{
+    text-align:center;
+    font-size:70px;
+    font-weight:bold;
+    letter-spacing:3px;
+    margin:25px 0;
+}
+
+.status{
+    text-align:center;
+    min-height:24px;
+    color:#94a3b8;
+    margin-bottom:20px;
+}
+
+.botoes-rapidos{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.botoes-rapidos button{
+    border:0;
+    padding:14px 5px;
+    border-radius:12px;
+    background:#334155;
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.botoes-rapidos button:active{
+    transform:scale(.96);
+}
+
+.acoes{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+button{
+    border:0;
+    border-radius:14px;
+    padding:16px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#btnIniciar{
+    background:#22c55e;
+    color:white;
+}
+
+#btnPausar{
+    background:#f59e0b;
+    color:white;
+}
+
+#btnCancelar{
+    background:#ef4444;
+    color:white;
+}
+
+#btnNotificacao{
+    width:100%;
+    margin-top:15px;
+    background:#475569;
+    color:white;
+}
+
+.config{
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #334155;
+}
+
+.config label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+    color:#cbd5e1;
+}
+
+.config input{
+    width:20px;
+    height:20px;
+}
+
+.alarme-tocando{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#020617;
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.alarme-tocando.ativo{
+    display:flex;
+}
+
+.alarme-box{
+    width:100%;
+    max-width:400px;
+    text-align:center;
+}
+
+.alarme-box .icone{
+    font-size:80px;
+    animation:pulsar 1s infinite;
+}
+
+.alarme-box h2{
+    font-size:36px;
+    margin:20px 0 10px;
+}
+
+.alarme-box p{
+    color:#94a3b8;
+    font-size:18px;
+}
+
+#btnPararAlarme{
+    width:100%;
+    background:#ef4444;
+    color:white;
+    font-size:22px;
+    margin-top:30px;
+}
+
+@keyframes pulsar{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.2);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+@media(max-width:380px){
+
+    .display{
+        font-size:55px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="topo">
+
+        <h1>⏰ Alarme</h1>
+
+        <p>App RH</p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div
+            id="display"
+            class="display">
+            00:00:00
+        </div>
+
+
+        <div
+            id="status"
+            class="status">
+            Nenhum alarme programado
+        </div>
+
+
+        <div class="botoes-rapidos">
+
+            <button onclick="definirMinutos(5)">
+                5 min
+            </button>
+
+            <button onclick="definirMinutos(10)">
+                10 min
+            </button>
+
+            <button onclick="definirMinutos(15)">
+                15 min
+            </button>
+
+            <button onclick="definirMinutos(30)">
+                30 min
+            </button>
+
+            <button onclick="definirMinutos(60)">
+                1 hora
+            </button>
+
+            <button onclick="definirMinutos(120)">
+                2 horas
+            </button>
+
+        </div>
+
+
+        <div class="acoes">
+
+            <button
+                id="btnIniciar"
+                onclick="iniciarAlarme()">
+                ▶ Iniciar
+            </button>
+
+            <button
+                id="btnPausar"
+                onclick="pausarAlarme()">
+                ⏸ Pausar
+            </button>
+
+            <button
+                id="btnCancelar"
+                onclick="cancelarAlarme()">
+                ⏹ Cancelar
+            </button>
+
+        </div>
+
+
+        <button
+            id="btnNotificacao"
+            onclick="ativarNotificacoes()">
+
+            🔔 Ativar notificações
+
+        </button>
+
+
+        <div class="config">
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="usarVibracao"
+                    checked>
+
+                📳 Vibrar ao terminar
+
+            </label>
+
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="usarSom"
+                    checked>
+
+                🔊 Tocar som ao terminar
+
+            </label>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TELA DO ALARME -->
+
+<div
+    id="alarmeTocando"
+    class="alarme-tocando">
+
+    <div class="alarme-box">
+
+        <div class="icone">
+            🔔
+        </div>
+
+        <h2>ALARME!</h2>
+
+        <p>
+            Seu tempo terminou.
+        </p>
+
+        <button
+            id="btnPararAlarme"
+            onclick="pararAlarme()">
+
+            🔕 PARAR ALARME
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   VARIÁVEIS
+===================================================== */
+
+let intervalo = null;
+
+let tempoRestante = 0;
+
+let tempoInicial = 0;
+
+let fimDoAlarme = null;
+
+let alarmeAtivo = false;
+
+let audioContext = null;
+
+let oscilador = null;
 
 
 /* =====================================================
-   INSTALAÇÃO
+   SERVICE WORKER
 ===================================================== */
 
-self.addEventListener("install", event => {
+if("serviceWorker" in navigator){
 
-    event.waitUntil(
+    navigator.serviceWorker
+        .register("./sw.js")
+        .then(() => {
 
-        caches.open(CACHE_NAME)
-            .then(cache => {
+            console.log(
+                "Service Worker registrado."
+            );
 
-                return cache.addAll(
-                    ARQUIVOS
-                );
+        })
+        .catch(erro => {
 
-            })
+            console.error(
+                "Erro Service Worker:",
+                erro
+            );
 
+        });
+
+}
+
+
+/* =====================================================
+   ELEMENTOS
+===================================================== */
+
+const display =
+    document.getElementById("display");
+
+const status =
+    document.getElementById("status");
+
+
+/* =====================================================
+   FORMATAR TEMPO
+===================================================== */
+
+function formatarTempo(segundos){
+
+    segundos =
+        Math.max(0, Math.floor(segundos));
+
+    const horas =
+        Math.floor(segundos / 3600);
+
+    const minutos =
+        Math.floor(
+            (segundos % 3600) / 60
+        );
+
+    const seg =
+        segundos % 60;
+
+    return (
+        String(horas).padStart(2,"0")
+        + ":" +
+        String(minutos).padStart(2,"0")
+        + ":" +
+        String(seg).padStart(2,"0")
     );
 
-    self.skipWaiting();
-
-});
+}
 
 
 /* =====================================================
-   ATIVAÇÃO
+   ATUALIZAR DISPLAY
 ===================================================== */
 
-self.addEventListener("activate", event => {
+function atualizarDisplay(){
 
-    event.waitUntil(
+    display.textContent =
+        formatarTempo(tempoRestante);
 
-        caches.keys()
-            .then(chaves => {
-
-                return Promise.all(
-
-                    chaves
-                        .filter(chave =>
-                            chave !== CACHE_NAME
-                        )
-                        .map(chave =>
-                            caches.delete(chave)
-                        )
-
-                );
-
-            })
-
-    );
-
-    self.clients.claim();
-
-});
+}
 
 
 /* =====================================================
-   CACHE
+   DEFINIR MINUTOS
 ===================================================== */
 
-self.addEventListener("fetch", event => {
+function definirMinutos(minutos){
 
-    event.respondWith(
+    pausarAlarme();
 
-        caches.match(event.request)
-            .then(resposta => {
+    tempoRestante =
+        minutos * 60;
 
-                return resposta ||
-                    fetch(event.request);
+    tempoInicial =
+        tempoRestante;
 
-            })
+    atualizarDisplay();
 
-    );
+    status.textContent =
+        `${minutos} minuto(s) selecionado(s)`;
 
-});
+}
 
 
 /* =====================================================
-   CLIQUE NA NOTIFICAÇÃO
+   ATIVAR NOTIFICAÇÕES
 ===================================================== */
 
-self.addEventListener(
-    "notificationclick",
-    event => {
+async function ativarNotificacoes(){
 
-        event.notification.close();
+    if(!("Notification" in window)){
 
+        alert(
+            "Este navegador não suporta notificações."
+        );
 
-        event.waitUntil(
+        return;
 
-            clients.matchAll({
-                type: "window",
-                includeUncontrolled: true
-            })
-
-            .then(lista => {
-
-                for(
-                    const cliente of lista
-                ){
-
-                    if(
-                        "focus" in cliente
-                    ){
-
-                        return cliente.focus();
-
-                    }
-
-                }
+    }
 
 
-                if(
-                    clients.openWindow
-                ){
+    const permissao =
+        await Notification.requestPermission();
 
-                    return clients.openWindow(
-                        "./alarme.html"
-                    );
 
-                }
+    if(permissao === "granted"){
 
-            })
+        status.textContent =
+            "🔔 Notificações ativadas";
 
+        new Notification(
+            "App RH",
+            {
+                body:
+                    "Notificações de alarme ativadas.",
+                icon:
+                    "./icons/icon-192.png"
+            }
         );
 
     }
+    else{
+
+        status.textContent =
+            "⚠️ Permissão de notificação negada";
+
+    }
+
+}
+
+
+/* =====================================================
+   INICIAR ALARME
+===================================================== */
+
+async function iniciarAlarme(){
+
+    if(tempoRestante <= 0){
+
+        status.textContent =
+            "Escolha um tempo primeiro.";
+
+        return;
+
+    }
+
+
+    /* Pedir permissão */
+
+    if(
+        "Notification" in window &&
+        Notification.permission !== "granted"
+    ){
+
+        await ativarNotificacoes();
+
+    }
+
+
+    /* Calcular horário final */
+
+    fimDoAlarme =
+        Date.now() +
+        (tempoRestante * 1000);
+
+
+    alarmeAtivo = true;
+
+
+    localStorage.setItem(
+        "alarmeRH",
+        JSON.stringify({
+
+            fim:
+                fimDoAlarme,
+
+            ativo:
+                true
+
+        })
+    );
+
+
+    status.textContent =
+        "⏰ Alarme ativo";
+
+
+    executarContagem();
+
+}
+
+
+/* =====================================================
+   CONTAGEM
+===================================================== */
+
+function executarContagem(){
+
+    clearInterval(intervalo);
+
+
+    intervalo =
+        setInterval(() => {
+
+
+            const agora =
+                Date.now();
+
+
+            tempoRestante =
+                Math.ceil(
+                    (fimDoAlarme - agora)
+                    / 1000
+                );
+
+
+            if(tempoRestante <= 0){
+
+                tempoRestante = 0;
+
+                atualizarDisplay();
+
+                clearInterval(intervalo);
+
+                finalizarAlarme();
+
+                return;
+
+            }
+
+
+            atualizarDisplay();
+
+
+        },1000);
+
+}
+
+
+/* =====================================================
+   PAUSAR
+===================================================== */
+
+function pausarAlarme(){
+
+    if(!alarmeAtivo){
+
+        return;
+
+    }
+
+
+    clearInterval(intervalo);
+
+    tempoRestante =
+        Math.max(
+            0,
+            Math.ceil(
+                (fimDoAlarme - Date.now())
+                / 1000
+            )
+        );
+
+
+    alarmeAtivo = false;
+
+
+    localStorage.setItem(
+        "alarmeRH",
+        JSON.stringify({
+
+            tempo:
+                tempoRestante,
+
+            ativo:
+                false
+
+        })
+    );
+
+
+    status.textContent =
+        "⏸ Alarme pausado";
+
+
+    atualizarDisplay();
+
+}
+
+
+/* =====================================================
+   CANCELAR
+===================================================== */
+
+function cancelarAlarme(){
+
+    clearInterval(intervalo);
+
+
+    alarmeAtivo = false;
+
+    tempoRestante = 0;
+
+    fimDoAlarme = null;
+
+
+    localStorage.removeItem(
+        "alarmeRH"
+    );
+
+
+    atualizarDisplay();
+
+
+    status.textContent =
+        "Nenhum alarme programado";
+
+
+    pararSom();
+
+}
+
+
+/* =====================================================
+   FINALIZAR ALARME
+===================================================== */
+
+function finalizarAlarme(){
+
+    alarmeAtivo = false;
+
+
+    localStorage.removeItem(
+        "alarmeRH"
+    );
+
+
+    status.textContent =
+        "🔔 ALARME FINALIZADO";
+
+
+    /* Tela */
+
+    document
+        .getElementById("alarmeTocando")
+        .classList.add("ativo");
+
+
+    /* Vibração */
+
+    if(
+        document
+        .getElementById("usarVibracao")
+        .checked &&
+        navigator.vibrate
+    ){
+
+        navigator.vibrate([
+            1000,
+            500,
+            1000,
+            500,
+            1000
+        ]);
+
+    }
+
+
+    /* Som */
+
+    if(
+        document
+        .getElementById("usarSom")
+        .checked
+    ){
+
+        tocarSom();
+
+    }
+
+
+    /* Notificação */
+
+    enviarNotificacao();
+
+}
+
+
+/* =====================================================
+   NOTIFICAÇÃO
+===================================================== */
+
+function enviarNotificacao(){
+
+    if(
+        !("Notification" in window)
+    ){
+
+        return;
+
+    }
+
+
+    if(
+        Notification.permission !==
+        "granted"
+    ){
+
+        return;
+
+    }
+
+
+    /* Se o Service Worker estiver disponível */
+
+    if(
+        navigator.serviceWorker &&
+        navigator.serviceWorker.ready
+    ){
+
+        navigator.serviceWorker.ready
+            .then(registro => {
+
+                registro.showNotification(
+                    "🔔 Alarme - App RH",
+                    {
+
+                        body:
+                            "Seu cronômetro terminou.",
+
+                        icon:
+                            "./icons/icon-192.png",
+
+                        badge:
+                            "./icons/icon-192.png",
+
+                        tag:
+                            "alarme-rh",
+
+                        requireInteraction:
+                            true,
+
+                        vibrate:
+                            [1000,500,1000]
+
+                    }
+                );
+
+            });
+
+    }
+
+    else{
+
+        new Notification(
+            "🔔 Alarme - App RH",
+            {
+
+                body:
+                    "Seu cronômetro terminou.",
+
+                icon:
+                    "./icons/icon-192.png"
+
+            }
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   SOM
+===================================================== */
+
+function tocarSom(){
+
+    try{
+
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+
+        function toque(){
+
+            if(!audioContext){
+                return;
+            }
+
+
+            oscilador =
+                audioContext.createOscillator();
+
+
+            const ganho =
+                audioContext.createGain();
+
+
+            oscilador.type =
+                "square";
+
+
+            oscilador.frequency.value =
+                880;
+
+
+            ganho.gain.value =
+                0.2;
+
+
+            oscilador.connect(
+                ganho
+            );
+
+
+            ganho.connect(
+                audioContext.destination
+            );
+
+
+            oscilador.start();
+
+
+            setTimeout(() => {
+
+                if(oscilador){
+
+                    oscilador.stop();
+
+                }
+
+            },700);
+
+        }
+
+
+        toque();
+
+
+        window.somInterval =
+            setInterval(
+                toque,
+                1200
+            );
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro ao tocar alarme:",
+            erro
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   PARAR SOM
+===================================================== */
+
+function pararSom(){
+
+    if(window.somInterval){
+
+        clearInterval(
+            window.somInterval
+        );
+
+        window.somInterval = null;
+
+    }
+
+
+    if(oscilador){
+
+        try{
+
+            oscilador.stop();
+
+        }
+        catch(e){}
+
+        oscilador = null;
+
+    }
+
+}
+
+
+/* =====================================================
+   PARAR ALARME
+===================================================== */
+
+function pararAlarme(){
+
+    pararSom();
+
+
+    if(navigator.vibrate){
+
+        navigator.vibrate(0);
+
+    }
+
+
+    document
+        .getElementById("alarmeTocando")
+        .classList.remove("ativo");
+
+
+    status.textContent =
+        "Alarme parado.";
+
+}
+
+
+/* =====================================================
+   RECUPERAR ALARME
+===================================================== */
+
+function recuperarAlarme(){
+
+    const salvo =
+        localStorage.getItem(
+            "alarmeRH"
+        );
+
+
+    if(!salvo){
+
+        return;
+
+    }
+
+
+    try{
+
+        const dados =
+            JSON.parse(salvo);
+
+
+        if(
+            dados.ativo &&
+            dados.fim
+        ){
+
+            const restante =
+                Math.ceil(
+                    (dados.fim - Date.now())
+                    / 1000
+                );
+
+
+            if(restante > 0){
+
+                fimDoAlarme =
+                    dados.fim;
+
+                tempoRestante =
+                    restante;
+
+                alarmeAtivo =
+                    true;
+
+
+                atualizarDisplay();
+
+
+                status.textContent =
+                    "⏰ Alarme ativo";
+
+
+                executarContagem();
+
+            }
+            else{
+
+                tempoRestante = 0;
+
+                atualizarDisplay();
+
+                finalizarAlarme();
+
+            }
+
+        }
+
+    }
+    catch(erro){
+
+        console.error(
+            "Erro ao recuperar alarme:",
+            erro
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   VOLTAR PARA A PÁGINA
+===================================================== */
+
+window.addEventListener(
+    "pageshow",
+    () => {
+
+        recuperarAlarme();
+
+    }
 );
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+recuperarAlarme();
+
+</script>
+
+</body>
+
+</html>
