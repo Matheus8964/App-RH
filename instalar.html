@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
@@ -6,49 +7,44 @@
 <meta charset="UTF-8">
 
 <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+name="viewport"
+content="width=device-width, initial-scale=1, viewport-fit=cover"
+
+>
+
+<meta name="theme-color" content="#0f172a">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta
+name="apple-mobile-web-app-capable"
+content="yes"
+
 >
 
 <meta
-  name="theme-color"
-  content="#0f172a"
+name="apple-mobile-web-app-status-bar-style"
+content="black-translucent"
+
 >
 
 <meta
-  name="mobile-web-app-capable"
-  content="yes"
+name="apple-mobile-web-app-title"
+content="App RH"
+
 >
 
-<meta
-  name="apple-mobile-web-app-capable"
-  content="yes"
->
-
-<meta
-  name="apple-mobile-web-app-status-bar-style"
-  content="black-translucent"
->
-
-<meta
-  name="apple-mobile-web-app-title"
-  content="App RH"
->
-
-<!-- MANIFEST DO PWA -->
 <link
   rel="manifest"
   href="./manifest.json"
 >
 
-<!-- ÍCONE IPHONE -->
 <link
   rel="apple-touch-icon"
   href="./icons/icon-192.png"
 >
 
 <title>Instalar App RH</title>
-
 
 <style>
 
@@ -57,7 +53,6 @@
   margin:0;
   padding:0;
 }
-
 
 html,
 body{
@@ -86,7 +81,6 @@ body{
 
 }
 
-
 body{
 
   min-height:100vh;
@@ -103,14 +97,12 @@ body{
 
 }
 
-
 .container{
 
   width:100%;
   max-width:460px;
 
 }
-
 
 .logo-area{
 
@@ -119,7 +111,6 @@ body{
   margin-bottom:24px;
 
 }
-
 
 .logo{
 
@@ -141,7 +132,6 @@ body{
 
 }
 
-
 .logo span{
 
   font-size:30px;
@@ -150,7 +140,6 @@ body{
   color:#2563eb;
 
 }
-
 
 .logo-area h1{
 
@@ -161,7 +150,6 @@ body{
 
 }
 
-
 .logo-area p{
 
   margin-top:8px;
@@ -171,7 +159,6 @@ body{
   font-size:15px;
 
 }
-
 
 .card{
 
@@ -188,7 +175,6 @@ body{
 
 }
 
-
 .card h2{
 
   text-align:center;
@@ -198,7 +184,6 @@ body{
   margin-bottom:8px;
 
 }
-
 
 .subtitle{
 
@@ -214,20 +199,17 @@ body{
 
 }
 
-
 .platform{
 
   display:none;
 
 }
 
-
 .platform.active{
 
   display:block;
 
 }
-
 
 .install-button{
 
@@ -258,20 +240,17 @@ body{
 
 }
 
-
 .install-button:active{
 
   transform:scale(.98);
 
 }
 
-
 .install-button:hover{
 
   background:#1d4ed8;
 
 }
-
 
 .install-button:disabled{
 
@@ -282,7 +261,6 @@ body{
   box-shadow:none;
 
 }
-
 
 .secondary-button{
 
@@ -308,13 +286,11 @@ body{
 
 }
 
-
 .steps{
 
   margin-top:20px;
 
 }
-
 
 .step{
 
@@ -330,13 +306,11 @@ body{
 
 }
 
-
 .step:last-child{
 
   border-bottom:none;
 
 }
-
 
 .step-number{
 
@@ -360,13 +334,11 @@ body{
 
 }
 
-
 .step-content{
 
   flex:1;
 
 }
-
 
 .step-title{
 
@@ -378,7 +350,6 @@ body{
 
 }
 
-
 .step-description{
 
   color:#64748b;
@@ -388,7 +359,6 @@ body{
   line-height:1.45;
 
 }
-
 
 .share-icon{
 
@@ -410,7 +380,6 @@ body{
 
 }
 
-
 .warning{
 
   margin-top:18px;
@@ -431,59 +400,6 @@ body{
 
 }
 
-
-.success{
-
-  display:none;
-
-  text-align:center;
-
-  padding:8px 0 20px;
-
-}
-
-
-.success-icon{
-
-  width:60px;
-  height:60px;
-
-  margin:0 auto 14px;
-
-  border-radius:50%;
-
-  background:#dcfce7;
-
-  color:#16a34a;
-
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
-  font-size:30px;
-
-}
-
-
-.success h2{
-
-  margin-bottom:8px;
-
-}
-
-
-.success p{
-
-  color:#64748b;
-
-  font-size:14px;
-
-  line-height:1.5;
-
-}
-
-
 .footer{
 
   text-align:center;
@@ -496,13 +412,11 @@ body{
 
 }
 
-
 .hidden{
 
   display:none !important;
 
 }
-
 
 @media(max-width:380px){
 
@@ -531,327 +445,288 @@ body{
 
 </head>
 
-
 <body>
-
 
 <div class="container">
 
+  <!-- LOGO -->
 
   <div class="logo-area">
 
-    <div class="logo">
+```
+<div class="logo">
 
-      <span>RH</span>
+  <span>RH</span>
 
-    </div>
+</div>
 
-    <h1>App RH</h1>
+<h1>App RH</h1>
 
-    <p>Sistema de Recursos Humanos</p>
+<p>Sistema de Recursos Humanos</p>
+```
 
   </div>
 
+  <!-- CARD -->
 
   <div class="card">
 
+```
+<div id="conteudo">
 
-    <div id="conteudo">
 
+  <h2>
 
-      <h2 id="titulo">
+    Instale o App RH
 
-        Instale o App RH
+  </h2>
 
-      </h2>
 
+  <p class="subtitle">
 
-      <p class="subtitle" id="subtitulo">
+    Tenha acesso rápido ao sistema diretamente pela tela inicial do seu celular.
 
-        Tenha acesso rápido ao sistema diretamente pela tela inicial do seu celular.
+  </p>
 
-      </p>
 
+  <!-- ANDROID -->
 
-      <!-- ANDROID -->
+  <div
+    id="android"
+    class="platform"
+  >
 
-      <div
-        id="android"
-        class="platform"
-      >
-
-        <button
-          id="btnInstalar"
-          class="install-button"
-          type="button"
-          onclick="instalarApp()"
-        >
-
-          📲 INSTALAR APP
-
-        </button>
-
-
-        <button
-          class="secondary-button"
-          type="button"
-          onclick="entrarSistema()"
-        >
-
-          Entrar pelo navegador
-
-        </button>
-
-      </div>
-
-
-      <!-- IPHONE -->
-
-      <div
-        id="iphone"
-        class="platform"
-      >
-
-
-        <button
-          class="install-button"
-          type="button"
-          onclick="mostrarTutorial()"
-        >
-
-          🍎 COMO INSTALAR NO IPHONE
-
-        </button>
-
-
-        <div
-          id="tutorial"
-          class="steps hidden"
-        >
-
-
-          <div class="step">
-
-            <div class="step-number">
-              1
-            </div>
-
-            <div class="step-content">
-
-              <div class="step-title">
-                Abra o Safari
-              </div>
-
-              <div class="step-description">
-
-                Acesse o App RH pelo navegador
-                <strong>Safari</strong>.
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="step">
-
-            <div class="step-number">
-              2
-            </div>
-
-            <div class="step-content">
-
-              <div class="step-title">
-                Toque em Compartilhar
-              </div>
-
-              <div class="step-description">
-
-                Na parte inferior do Safari,
-                toque no botão
-                <span class="share-icon">↑</span>
-                <strong>Compartilhar</strong>.
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="step">
-
-            <div class="step-number">
-              3
-            </div>
-
-            <div class="step-content">
-
-              <div class="step-title">
-                Adicionar à Tela de Início
-              </div>
-
-              <div class="step-description">
-
-                Deslize o menu para cima e selecione
-                <strong>Adicionar à Tela de Início</strong>.
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="step">
-
-            <div class="step-number">
-              4
-            </div>
-
-            <div class="step-content">
-
-              <div class="step-title">
-                Confirme
-              </div>
-
-              <div class="step-description">
-
-                Toque em <strong>Adicionar</strong>.
-                O ícone do App RH aparecerá na tela inicial.
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-        </div>
-
-
-        <div class="warning">
-
-          ⚠️ No iPhone, a instalação deve ser feita pelo
-          <strong>Safari</strong>. Outros navegadores podem não mostrar
-          a opção "Adicionar à Tela de Início".
-
-        </div>
-
-
-        <button
-          class="secondary-button"
-          type="button"
-          onclick="entrarSistema()"
-        >
-
-          Entrar pelo navegador
-
-        </button>
-
-
-      </div>
-
-
-      <!-- COMPUTADOR -->
-
-      <div
-        id="computador"
-        class="platform"
-      >
-
-        <button
-          id="btnDesktop"
-          class="install-button"
-          type="button"
-          onclick="instalarApp()"
-        >
-
-          💻 INSTALAR APP
-
-        </button>
-
-
-        <button
-          class="secondary-button"
-          type="button"
-          onclick="entrarSistema()"
-        >
-
-          Entrar pelo navegador
-
-        </button>
-
-
-        <div class="warning">
-
-          Se o botão de instalação não aparecer,
-          procure o ícone de instalação
-          <strong>⊕</strong>
-          na barra de endereço do navegador.
-
-        </div>
-
-      </div>
-
-
-    </div>
-
-
-    <!-- JÁ INSTALADO -->
-
-    <div
-      id="jaInstalado"
-      class="success"
+    <button
+      id="btnInstalar"
+      class="install-button"
+      type="button"
+      onclick="instalarApp()"
+      disabled
     >
 
-      <div class="success-icon">
+      📲 PREPARANDO INSTALAÇÃO...
 
-        ✓
+    </button>
+
+
+    <button
+      class="secondary-button"
+      type="button"
+      onclick="entrarSistema()"
+    >
+
+      Entrar pelo navegador
+
+    </button>
+
+  </div>
+
+
+  <!-- IPHONE -->
+
+  <div
+    id="iphone"
+    class="platform"
+  >
+
+    <button
+      class="install-button"
+      type="button"
+      onclick="mostrarTutorial()"
+    >
+
+      🍎 COMO INSTALAR NO IPHONE
+
+    </button>
+
+
+    <div
+      id="tutorial"
+      class="steps hidden"
+    >
+
+
+      <div class="step">
+
+        <div class="step-number">
+          1
+        </div>
+
+        <div class="step-content">
+
+          <div class="step-title">
+            Abra o Safari
+          </div>
+
+          <div class="step-description">
+
+            Acesse o App RH pelo navegador
+            <strong>Safari</strong>.
+
+          </div>
+
+        </div>
 
       </div>
 
 
-      <h2>
-        App RH instalado
-      </h2>
+      <div class="step">
+
+        <div class="step-number">
+          2
+        </div>
+
+        <div class="step-content">
+
+          <div class="step-title">
+            Toque em Compartilhar
+          </div>
+
+          <div class="step-description">
+
+            Na parte inferior do Safari,
+            toque no botão
+            <span class="share-icon">↑</span>
+            <strong>Compartilhar</strong>.
+
+          </div>
+
+        </div>
+
+      </div>
 
 
-      <p>
+      <div class="step">
 
-        O aplicativo já está instalado neste dispositivo.
+        <div class="step-number">
+          3
+        </div>
 
-      </p>
+        <div class="step-content">
+
+          <div class="step-title">
+            Adicionar à Tela de Início
+          </div>
+
+          <div class="step-description">
+
+            Deslize o menu para cima e selecione
+            <strong>Adicionar à Tela de Início</strong>.
+
+          </div>
+
+        </div>
+
+      </div>
 
 
-      <button
-        class="install-button"
-        type="button"
-        onclick="entrarSistema()"
-        style="margin-top:20px"
-      >
+      <div class="step">
 
-        ENTRAR NO APP RH
+        <div class="step-number">
+          4
+        </div>
 
-      </button>
+        <div class="step-content">
+
+          <div class="step-title">
+            Confirme
+          </div>
+
+          <div class="step-description">
+
+            Toque em <strong>Adicionar</strong>.
+            O ícone do App RH aparecerá na tela inicial.
+
+          </div>
+
+        </div>
+
+      </div>
+
 
     </div>
+
+
+    <div class="warning">
+
+      ⚠️ No iPhone, a instalação deve ser feita pelo
+      <strong>Safari</strong>. Outros navegadores podem não mostrar
+      a opção "Adicionar à Tela de Início".
+
+    </div>
+
+
+    <button
+      class="secondary-button"
+      type="button"
+      onclick="entrarSistema()"
+    >
+
+      Entrar pelo navegador
+
+    </button>
 
 
   </div>
 
 
-  <div class="footer">
+  <!-- COMPUTADOR -->
 
-    App RH • Sistema de Recursos Humanos
+  <div
+    id="computador"
+    class="platform"
+  >
+
+    <button
+      id="btnDesktop"
+      class="install-button"
+      type="button"
+      onclick="instalarApp()"
+      disabled
+    >
+
+      💻 PREPARANDO INSTALAÇÃO...
+
+    </button>
+
+
+    <button
+      class="secondary-button"
+      type="button"
+      onclick="entrarSistema()"
+    >
+
+      Entrar pelo navegador
+
+    </button>
+
+
+    <div class="warning">
+
+      Se o botão de instalação não aparecer,
+      procure o ícone de instalação
+      <strong>⊕</strong>
+      na barra de endereço do navegador.
+
+    </div>
 
   </div>
 
 
 </div>
+```
 
+  </div>
 
+  <div class="footer">
+
+```
+App RH • Sistema de Recursos Humanos
+```
+
+  </div>
+
+</div>
 
 <script>
 
@@ -860,23 +735,64 @@ body{
    CONFIGURAÇÃO
 ===================================================== */
 
-
-const URL_HOME =
-  "./home.html";
+const URL_HOME = "./index.html";
 
 
 /* =====================================================
-   VARIÁVEL DE INSTALAÇÃO
+   VARIÁVEL DO EVENTO DE INSTALAÇÃO
 ===================================================== */
-
 
 let eventoInstalacao = null;
 
 
 /* =====================================================
-   REGISTRAR SERVICE WORKER
+   IR PARA INDEX
 ===================================================== */
 
+function entrarSistema(){
+
+  window.location.replace("./index.html");
+
+}
+
+
+/* =====================================================
+   VERIFICAR SE O APP JÁ ESTÁ INSTALADO
+===================================================== */
+
+function appJaInstalado(){
+
+  /*
+    Android / Chrome / Edge / outros navegadores
+  */
+
+  const standalone =
+    window.matchMedia(
+      "(display-mode: standalone)"
+    ).matches;
+
+
+  /*
+    iPhone / iPad Safari
+  */
+
+  const iosStandalone =
+    window.navigator.standalone === true;
+
+
+  /*
+    Se qualquer uma das condições for verdadeira,
+    o usuário já está dentro do aplicativo instalado.
+  */
+
+  return standalone || iosStandalone;
+
+}
+
+
+/* =====================================================
+   REGISTRAR SERVICE WORKER
+===================================================== */
 
 function registrarServiceWorker(){
 
@@ -896,7 +812,7 @@ function registrarServiceWorker(){
     .then(function(registration){
 
       console.log(
-        "Service Worker registrado com sucesso:",
+        "Service Worker registrado:",
         registration.scope
       );
 
@@ -917,8 +833,30 @@ function registrarServiceWorker(){
    DETECTAR SISTEMA
 ===================================================== */
 
-
 function detectarSistema(){
+
+  /*
+    PRIMEIRO:
+    verifica se já está instalado.
+
+    Se estiver, NÃO mostra nenhuma mensagem.
+    Vai diretamente para index.html.
+  */
+
+  if(appJaInstalado()){
+
+    console.log(
+      "App RH já está instalado."
+    );
+
+    window.location.replace(
+      "./index.html"
+    );
+
+    return;
+
+  }
+
 
   const ua =
     navigator.userAgent ||
@@ -935,37 +873,9 @@ function detectarSistema(){
     /Android/i.test(ua);
 
 
-  const standalone =
-    window.matchMedia(
-      "(display-mode: standalone)"
-    ).matches ||
-    window.navigator.standalone === true;
-
-
-  if(standalone){
-
-  window.location.replace("./index.html");
-
-  return;
-
-}
-
-
-  document
-    .getElementById("conteudo")
-    .style.display = "block";
-
-
-  if(ios){
-
-    document
-      .getElementById("iphone")
-      .classList.add("active");
-
-    return;
-
-  }
-
+  /*
+    ANDROID
+  */
 
   if(android){
 
@@ -978,6 +888,25 @@ function detectarSistema(){
   }
 
 
+  /*
+    IPHONE / IPAD
+  */
+
+  if(ios){
+
+    document
+      .getElementById("iphone")
+      .classList.add("active");
+
+    return;
+
+  }
+
+
+  /*
+    COMPUTADOR
+  */
+
   document
     .getElementById("computador")
     .classList.add("active");
@@ -986,30 +915,46 @@ function detectarSistema(){
 
 
 /* =====================================================
-   EVENTO DE INSTALAÇÃO
+   EVENTO beforeinstallprompt
 ===================================================== */
-
 
 window.addEventListener(
   "beforeinstallprompt",
   function(event){
 
     console.log(
-      "Evento beforeinstallprompt recebido."
+      "beforeinstallprompt recebido."
     );
 
+
+    /*
+      Impede o navegador de abrir
+      automaticamente o aviso.
+    */
 
     event.preventDefault();
 
 
+    /*
+      Guarda o evento para o botão.
+    */
+
     eventoInstalacao = event;
 
+
+    /*
+      Botão Android
+    */
 
     const botaoAndroid =
       document.getElementById(
         "btnInstalar"
       );
 
+
+    /*
+      Botão computador
+    */
 
     const botaoDesktop =
       document.getElementById(
@@ -1044,14 +989,17 @@ window.addEventListener(
    INSTALAR APP
 ===================================================== */
 
-
 async function instalarApp(){
+
+  /*
+    Se o navegador não forneceu
+    o evento de instalação.
+  */
 
   if(!eventoInstalacao){
 
-    alert(
-      "A instalação automática ainda não foi liberada pelo navegador.\n\n" +
-      "Verifique se você está acessando o App RH pelo GitHub Pages oficial e usando um navegador compatível."
+    console.warn(
+      "O navegador ainda não liberou a instalação."
     );
 
     return;
@@ -1061,18 +1009,39 @@ async function instalarApp(){
 
   try{
 
+    /*
+      Abre o diálogo nativo
+      de instalação.
+    */
+
     eventoInstalacao.prompt();
 
+
+    /*
+      Aguarda a escolha do usuário.
+    */
 
     const resultado =
       await eventoInstalacao.userChoice;
 
 
     console.log(
-      "Resultado da instalação:",
+      "Resultado:",
       resultado
     );
 
+
+    /*
+      O evento só pode ser usado uma vez.
+    */
+
+    eventoInstalacao = null;
+
+
+    /*
+      Se aceitou, o evento appinstalled
+      será disparado pelo navegador.
+    */
 
     if(
       resultado &&
@@ -1080,13 +1049,7 @@ async function instalarApp(){
     ){
 
       console.log(
-        "Usuário aceitou instalar o App RH."
-      );
-
-    }else{
-
-      console.log(
-        "Usuário cancelou a instalação."
+        "Instalação aceita."
       );
 
     }
@@ -1094,14 +1057,11 @@ async function instalarApp(){
   }catch(error){
 
     console.error(
-      "Erro durante a instalação:",
+      "Erro ao instalar:",
       error
     );
 
   }
-
-
-  eventoInstalacao = null;
 
 }
 
@@ -1109,7 +1069,6 @@ async function instalarApp(){
 /* =====================================================
    TUTORIAL IPHONE
 ===================================================== */
-
 
 function mostrarTutorial(){
 
@@ -1134,95 +1093,53 @@ function mostrarTutorial(){
 
 
 /* =====================================================
-   ENTRAR NO SISTEMA
-===================================================== */
-
-
-function entrarSistema(){
-
-  window.location.href =
-    URL_HOME;
-
-}
-
-
-/* =====================================================
-   APP INSTALADO
-===================================================== */
-
-
-function mostrarJaInstalado(){
-
-  const conteudo =
-    document.getElementById(
-      "conteudo"
-    );
-
-
-  const instalado =
-    document.getElementById(
-      "jaInstalado"
-    );
-
-
-  if(conteudo){
-
-    conteudo.classList.add(
-      "hidden"
-    );
-
-  }
-
-
-  if(instalado){
-
-    instalado.style.display =
-      "block";
-
-  }
-
-}
-
-
-/* =====================================================
    INSTALAÇÃO CONCLUÍDA
 ===================================================== */
-
 
 window.addEventListener(
   "appinstalled",
   function(){
 
     console.log(
-      "App RH instalado."
+      "App RH instalado com sucesso."
     );
+
 
     eventoInstalacao = null;
 
-    window.location.replace("./index.html");
+
+    /*
+      NÃO mostra "App instalado".
+
+      Vai diretamente para index.html.
+    */
+
+    window.location.replace(
+      "./index.html"
+    );
 
   }
 );
 
 
 /* =====================================================
-   INICIAR
+   INICIALIZAÇÃO
 ===================================================== */
-
 
 document.addEventListener(
   "DOMContentLoaded",
   function(){
 
     /*
-      Primeiro registra o Service Worker.
+      Registra o Service Worker.
     */
 
     registrarServiceWorker();
 
 
     /*
-      Depois identifica o dispositivo.
+      Verifica se já está instalado
+      e identifica o dispositivo.
     */
 
     detectarSistema();
@@ -1231,8 +1148,31 @@ document.addEventListener(
 );
 
 
-</script>
+/* =====================================================
+   VERIFICAÇÃO EXTRA
+===================================================== */
 
+window.addEventListener(
+  "pageshow",
+  function(){
+
+    /*
+      Caso a página seja aberta novamente
+      já estando em modo aplicativo.
+    */
+
+    if(appJaInstalado()){
+
+      window.location.replace(
+        "./index.html"
+      );
+
+    }
+
+  }
+);
+
+</script>
 
 </body>
 
