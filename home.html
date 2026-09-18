@@ -616,7 +616,9 @@
     .icon-suporte {
       background: #fef2f2;
     }
-
+.icon-alarme{
+  background: #fff7ed;
+}
 
     /* ================================
        RODAPÉ
@@ -1287,7 +1289,35 @@
             <div class="menu-description">
               Entre em contato com o suporte do sistema
             </div>
+<!-- ALARME -->
 
+<button
+  class="menu-button"
+  type="button"
+  onclick="abrirPagina('alarme', this)"
+>
+
+  <div class="menu-icon icon-alarme">
+    ⏰
+  </div>
+
+  <div class="menu-info">
+
+    <div class="menu-title">
+      Alarme
+    </div>
+
+    <div class="menu-description">
+      Crie um cronômetro e receba uma notificação
+    </div>
+
+  </div>
+
+  <div class="arrow">
+    ›
+  </div>
+
+</button>
           </div>
 
 
@@ -1377,7 +1407,9 @@ function abrirPagina(pagina, botao) {
 
     treinamentos: "./treinamentos.html",
 
-    suporte: "./suporte.html"
+    suporte: "./suporte.html",
+    alarme: "./alarme.html",
+    
 
   };
 
