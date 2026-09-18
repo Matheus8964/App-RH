@@ -1325,58 +1325,46 @@
 
 
   <script>
-(function () {
+(function carregarUsuario() {
 
-  function carregarUsuario() {
+  const params = new URLSearchParams(window.location.search);
 
-    const params = new URLSearchParams(window.location.search);
-    const nomeURL = params.get("nome");
+  const nomeURL = params.get("nome");
 
-    const elemento = document.getElementById("nomeUsuario");
+  const elemento = document.getElementById("nomeUsuario");
 
-    /*
-     * SE VEIO NOME PELA URL
-     * substitui o nome atualmente salvo
-     */
-    if (nomeURL && nomeURL.trim() !== "") {
 
-      const novoNome = nomeURL.trim();
+  // Se entrou pelo login e veio um nome na URL
+  if (nomeURL && nomeURL.trim() !== "") {
 
-      localStorage.removeItem("nomeUsuario");
+    const nome = nomeURL.trim();
 
-      localStorage.setItem(
-        "nomeUsuario",
-        novoNome
-      );
+    // Substitui o nome antigo pelo novo
+    localStorage.setItem("nomeUsuario", nome);
 
-      if (elemento) {
-        elemento.textContent = novoNome;
-      }
-
-      /*
-       * Remove ?nome=... da barra de endereço
-       */
-      window.history.replaceState(
-        null,
-        "App RH",
-        window.location.pathname
-      );
-
-      return;
-    }
-
-    /*
-     * SE NÃO VEIO NOME PELA URL
-     * usa o nome anteriormente salvo
-     */
-    const nomeSalvo =
-      localStorage.getItem("nomeUsuario");
-
+    // Mostra o nome na tela
     if (elemento) {
-      elemento.textContent =
-        nomeSalvo || "Usuário";
+      elemento.textContent = nome;
     }
+
+    // Remove ?nome=... da URL
+    window.history.replaceState(
+      {},
+      document.title,
+      window.location.pathname
+    );
+
+    return;
   }
+
+
+  // Se abriu o GitHub diretamente, usa o nome já salvo
+  const nomeSalvo = localStorage.getItem("nomeUsuario");
+
+  if (elemento) {
+    elemento.textContent = nomeSalvo || "Usuário";
+  }
+}
 
 
   function abrirPagina(pagina, botao) {
