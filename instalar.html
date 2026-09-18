@@ -944,11 +944,11 @@ function detectarSistema(){
 
   if(standalone){
 
-    mostrarJaInstalado();
+  window.location.replace("./index.html");
 
-    return;
+  return;
 
-  }
+}
 
 
   document
@@ -1197,10 +1197,9 @@ window.addEventListener(
       "App RH instalado."
     );
 
-
     eventoInstalacao = null;
 
-    mostrarJaInstalado();
+    window.location.replace("./index.html");
 
   }
 );
