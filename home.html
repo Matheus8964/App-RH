@@ -1324,41 +1324,27 @@
 
 
 
-  <script>
+<script>
 
 function carregarUsuario() {
 
-  const params = new URLSearchParams(
-    window.location.search
-  );
+  const params = new URLSearchParams(window.location.search);
 
   const nomeURL = params.get("nome");
 
-  const elemento =
-    document.getElementById("nomeUsuario");
+  const elemento = document.getElementById("nomeUsuario");
 
 
-  // Veio um nome novo pelo login
   if (nomeURL && nomeURL.trim() !== "") {
 
-    const nome =
-      nomeURL.trim();
+    const nome = nomeURL.trim();
 
-    // Salva/substitui o nome
-    localStorage.setItem(
-      "nomeUsuario",
-      nome
-    );
+    localStorage.setItem("nomeUsuario", nome);
 
-    // Mostra o nome
     if (elemento) {
-
-      elemento.textContent =
-        nome;
-
+      elemento.textContent = nome;
     }
 
-    // Limpa o nome da URL
     window.history.replaceState(
       {},
       document.title,
@@ -1369,16 +1355,10 @@ function carregarUsuario() {
   }
 
 
-  // Não veio nome pela URL:
-  // usa o nome que já estava salvo
-  const nomeSalvo =
-    localStorage.getItem("nomeUsuario");
+  const nomeSalvo = localStorage.getItem("nomeUsuario");
 
   if (elemento) {
-
-    elemento.textContent =
-      nomeSalvo || "Usuário";
-
+    elemento.textContent = nomeSalvo || "Usuário";
   }
 }
 
@@ -1401,23 +1381,20 @@ function abrirPagina(pagina, botao) {
 
   };
 
-  const destino =
-    paginas[pagina];
+
+  const destino = paginas[pagina];
 
   if (!destino) {
     return;
   }
 
+
   if (botao) {
-
-    botao.classList.add(
-      "carregando"
-    );
-
+    botao.classList.add("carregando");
   }
 
-  window.location.href =
-    destino;
+
+  window.location.href = destino;
 }
 
 
@@ -1431,9 +1408,7 @@ document.addEventListener(
       document.getElementById("loading");
 
     if (loading) {
-
       loading.classList.add("hidden");
-
     }
 
   }
