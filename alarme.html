@@ -1,0 +1,138 @@
+const CACHE_NAME = "app-rh-v1";
+
+const ARQUIVOS = [
+    "./",
+    "./index.html",
+    "./alarme.html",
+    "./manifest.json"
+];
+
+
+/* =====================================================
+   INSTALAÇÃO
+===================================================== */
+
+self.addEventListener("install", event => {
+
+    event.waitUntil(
+
+        caches.open(CACHE_NAME)
+            .then(cache => {
+
+                return cache.addAll(
+                    ARQUIVOS
+                );
+
+            })
+
+    );
+
+    self.skipWaiting();
+
+});
+
+
+/* =====================================================
+   ATIVAÇÃO
+===================================================== */
+
+self.addEventListener("activate", event => {
+
+    event.waitUntil(
+
+        caches.keys()
+            .then(chaves => {
+
+                return Promise.all(
+
+                    chaves
+                        .filter(chave =>
+                            chave !== CACHE_NAME
+                        )
+                        .map(chave =>
+                            caches.delete(chave)
+                        )
+
+                );
+
+            })
+
+    );
+
+    self.clients.claim();
+
+});
+
+
+/* =====================================================
+   CACHE
+===================================================== */
+
+self.addEventListener("fetch", event => {
+
+    event.respondWith(
+
+        caches.match(event.request)
+            .then(resposta => {
+
+                return resposta ||
+                    fetch(event.request);
+
+            })
+
+    );
+
+});
+
+
+/* =====================================================
+   CLIQUE NA NOTIFICAÇÃO
+===================================================== */
+
+self.addEventListener(
+    "notificationclick",
+    event => {
+
+        event.notification.close();
+
+
+        event.waitUntil(
+
+            clients.matchAll({
+                type: "window",
+                includeUncontrolled: true
+            })
+
+            .then(lista => {
+
+                for(
+                    const cliente of lista
+                ){
+
+                    if(
+                        "focus" in cliente
+                    ){
+
+                        return cliente.focus();
+
+                    }
+
+                }
+
+
+                if(
+                    clients.openWindow
+                ){
+
+                    return clients.openWindow(
+                        "./alarme.html"
+                    );
+
+                }
+
+            })
+
+        );
+
+    }
+);
