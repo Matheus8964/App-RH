@@ -1325,29 +1325,40 @@
 
 
   <script>
-(function carregarUsuario() {
 
-  const params = new URLSearchParams(window.location.search);
+function carregarUsuario() {
+
+  const params = new URLSearchParams(
+    window.location.search
+  );
 
   const nomeURL = params.get("nome");
 
-  const elemento = document.getElementById("nomeUsuario");
+  const elemento =
+    document.getElementById("nomeUsuario");
 
 
-  // Se entrou pelo login e veio um nome na URL
+  // Veio um nome novo pelo login
   if (nomeURL && nomeURL.trim() !== "") {
 
-    const nome = nomeURL.trim();
+    const nome =
+      nomeURL.trim();
 
-    // Substitui o nome antigo pelo novo
-    localStorage.setItem("nomeUsuario", nome);
+    // Salva/substitui o nome
+    localStorage.setItem(
+      "nomeUsuario",
+      nome
+    );
 
-    // Mostra o nome na tela
+    // Mostra o nome
     if (elemento) {
-      elemento.textContent = nome;
+
+      elemento.textContent =
+        nome;
+
     }
 
-    // Remove ?nome=... da URL
+    // Limpa o nome da URL
     window.history.replaceState(
       {},
       document.title,
@@ -1358,77 +1369,61 @@
   }
 
 
-  // Se abriu o GitHub diretamente, usa o nome já salvo
-  const nomeSalvo = localStorage.getItem("nomeUsuario");
+  // Não veio nome pela URL:
+  // usa o nome que já estava salvo
+  const nomeSalvo =
+    localStorage.getItem("nomeUsuario");
 
   if (elemento) {
-    elemento.textContent = nomeSalvo || "Usuário";
+
+    elemento.textContent =
+      nomeSalvo || "Usuário";
+
   }
 }
 
 
-  function abrirPagina(pagina, botao) {
+function abrirPagina(pagina, botao) {
 
-    if (!pagina) {
-      return;
-    }
+  const paginas = {
 
-    if (botao) {
+    troca: "./troca.html",
 
-      botao.classList.add("carregando");
+    folga: "./folga.html",
 
-      const seta =
-        botao.querySelector(".arrow");
+    atestados: "./atestados.html",
 
-      if (seta) {
-        seta.textContent = "↻";
-      }
-    }
+    banco: "./banco.html",
 
-    const paginas = {
+    treinamentos: "./treinamentos.html",
 
-      troca: "./troca.html",
+    suporte: "./suporte.html"
 
-      folga: "./folga.html",
+  };
 
-      atestados: "./atestados.html",
+  const destino =
+    paginas[pagina];
 
-      banco: "./banco.html",
-
-      treinamentos: "./treinamentos.html",
-
-      suporte: "./suporte.html"
-
-    };
-
-    const destino = paginas[pagina];
-
-    if (!destino) {
-
-      console.error(
-        "Página não encontrada:",
-        pagina
-      );
-
-      if (botao) {
-        botao.classList.remove("carregando");
-      }
-
-      return;
-    }
-
-    window.setTimeout(
-      function () {
-
-        window.location.href = destino;
-
-      },
-      120
-    );
+  if (!destino) {
+    return;
   }
 
+  if (botao) {
 
-  function iniciarApp() {
+    botao.classList.add(
+      "carregando"
+    );
+
+  }
+
+  window.location.href =
+    destino;
+}
+
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
 
     carregarUsuario();
 
@@ -1440,49 +1435,10 @@
       loading.classList.add("hidden");
 
     }
-  }
-
-
-  /*
-   * Disponibiliza a função para os botões onclick
-   */
-  window.abrirPagina = abrirPagina;
-
-  window.carregarUsuario = carregarUsuario;
-
-
-  /*
-   * Inicia o aplicativo
-   */
-  if (
-    document.readyState === "loading"
-  ) {
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      iniciarApp
-    );
-
-  } else {
-
-    iniciarApp();
 
   }
+);
 
-
-  /*
-   * Bloqueia gesto de zoom do iPhone
-   */
-  document.addEventListener(
-    "gesturestart",
-    function (event) {
-
-      event.preventDefault();
-
-    }
-  );
-
-})();
 </script>
 
 
