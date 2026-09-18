@@ -1,57 +1,12 @@
-const CACHE_NAME = 'meu-app-shell-v1';
-const APP_SHELL = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
-];
-
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting())
-  );
-});
-
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-      )
-    ).then(() => self.clients.claim())
-  );
-});
-
-self.addEventListener('fetch', event => {
-  const request = event.request;
-  if (request.method !== 'GET') return;
-
-  const url = new URL(request.url);
-
-  // Cache somente os arquivos do próprio PWA.
-  // O conteúdo do Google Sites continua sendo carregado pela internet.
-  if (url.origin === self.location.origin) {
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
-          return response;
-        })
-        .catch(() => caches.match(request))
-    );
-  }
-});
-const CACHE_NAME = "app-rh-v1";
+const CACHE_NAME = "app-rh-v2";
 
 const ARQUIVOS = [
     "./",
     "./index.html",
     "./alarme.html",
-    "./manifest.json"
+    "./manifest.json",
+    "./icons/icon-192.png",
+    "./icons/icon-512.png"
 ];
 
 
@@ -61,20 +16,24 @@ const ARQUIVOS = [
 
 self.addEventListener("install", event => {
 
+    console.log("[SW] Instalando:", CACHE_NAME);
+
     event.waitUntil(
 
         caches.open(CACHE_NAME)
             .then(cache => {
 
-                return cache.addAll(
-                    ARQUIVOS
-                );
+                return cache.addAll(ARQUIVOS);
+
+            })
+            .then(() => {
+
+                // Ativa a nova versão imediatamente
+                return self.skipWaiting();
 
             })
 
     );
-
-    self.skipWaiting();
 
 });
 
@@ -85,6 +44,8 @@ self.addEventListener("install", event => {
 
 self.addEventListener("activate", event => {
 
+    console.log("[SW] Ativando:", CACHE_NAME);
+
     event.waitUntil(
 
         caches.keys()
@@ -93,37 +54,99 @@ self.addEventListener("activate", event => {
                 return Promise.all(
 
                     chaves
-                        .filter(chave =>
-                            chave !== CACHE_NAME
-                        )
-                        .map(chave =>
-                            caches.delete(chave)
-                        )
+                        .filter(chave => chave !== CACHE_NAME)
+                        .map(chave => {
+
+                            console.log(
+                                "[SW] Removendo cache antigo:",
+                                chave
+                            );
+
+                            return caches.delete(chave);
+
+                        })
 
                 );
 
             })
+            .then(() => {
+
+                // Assume o controle imediatamente
+                return self.clients.claim();
+
+            })
 
     );
-
-    self.clients.claim();
 
 });
 
 
 /* =====================================================
    CACHE
+   =====================================================
+
+   Primeiro tenta buscar a versão atual pela internet.
+
+   Se conseguir:
+   - entrega a versão nova
+   - atualiza o cache
+
+   Se estiver sem internet:
+   - usa a versão armazenada no cache
 ===================================================== */
 
 self.addEventListener("fetch", event => {
 
+    const request = event.request;
+
+    // Ignora requisições que não sejam GET
+    if (request.method !== "GET") {
+        return;
+    }
+
+    const url = new URL(request.url);
+
+    // Só trabalha com arquivos do próprio PWA
+    if (url.origin !== self.location.origin) {
+        return;
+    }
+
     event.respondWith(
 
-        caches.match(event.request)
-            .then(resposta => {
+        fetch(request)
 
-                return resposta ||
-                    fetch(event.request);
+            .then(response => {
+
+                // Guarda uma cópia da resposta nova
+                if (
+                    response &&
+                    response.status === 200
+                ) {
+
+                    const copia = response.clone();
+
+                    caches.open(CACHE_NAME)
+                        .then(cache => {
+
+                            cache.put(
+                                request,
+                                copia
+                            );
+
+                        });
+
+                }
+
+                return response;
+
+            })
+
+            .catch(() => {
+
+                // Sem internet:
+                // usa o arquivo salvo no cache
+
+                return caches.match(request);
 
             })
 
@@ -133,7 +156,7 @@ self.addEventListener("fetch", event => {
 
 
 /* =====================================================
-   CLIQUE NA NOTIFICAÇÃO
+   CLIQUE NA NOTIFICAÇÃO DO ALARME
 ===================================================== */
 
 self.addEventListener(
@@ -141,7 +164,6 @@ self.addEventListener(
     event => {
 
         event.notification.close();
-
 
         event.waitUntil(
 
@@ -152,13 +174,16 @@ self.addEventListener(
 
             .then(lista => {
 
-                for(
-                    const cliente of lista
-                ){
+                // Se o App RH já estiver aberto,
+                // coloca a janela em primeiro plano.
 
-                    if(
+                for (
+                    const cliente of lista
+                ) {
+
+                    if (
                         "focus" in cliente
-                    ){
+                    ) {
 
                         return cliente.focus();
 
@@ -167,9 +192,12 @@ self.addEventListener(
                 }
 
 
-                if(
+                // Se não estiver aberto,
+                // abre o alarme.
+
+                if (
                     clients.openWindow
-                ){
+                ) {
 
                     return clients.openWindow(
                         "./alarme.html"
