@@ -16,6 +16,11 @@
 >
 
 <meta
+  name="mobile-web-app-capable"
+  content="yes"
+>
+
+<meta
   name="apple-mobile-web-app-capable"
   content="yes"
 >
@@ -30,9 +35,16 @@
   content="App RH"
 >
 
-<meta
-  name="mobile-web-app-capable"
-  content="yes"
+<!-- MANIFEST DO PWA -->
+<link
+  rel="manifest"
+  href="./manifest.json"
+>
+
+<!-- ÍCONE IPHONE -->
+<link
+  rel="apple-touch-icon"
+  href="./icons/icon-192.png"
 >
 
 <title>Instalar App RH</title>
@@ -261,6 +273,17 @@ body{
 }
 
 
+.install-button:disabled{
+
+  background:#94a3b8;
+
+  cursor:not-allowed;
+
+  box-shadow:none;
+
+}
+
+
 .secondary-button{
 
   width:100%;
@@ -434,6 +457,7 @@ body{
   color:#16a34a;
 
   display:flex;
+
   align-items:center;
   justify-content:center;
 
@@ -502,7 +526,6 @@ body{
   }
 
 }
-
 
 </style>
 
@@ -851,6 +874,46 @@ let eventoInstalacao = null;
 
 
 /* =====================================================
+   REGISTRAR SERVICE WORKER
+===================================================== */
+
+
+function registrarServiceWorker(){
+
+  if(!("serviceWorker" in navigator)){
+
+    console.warn(
+      "Este navegador não suporta Service Worker."
+    );
+
+    return;
+
+  }
+
+
+  navigator.serviceWorker
+    .register("./sw.js")
+    .then(function(registration){
+
+      console.log(
+        "Service Worker registrado com sucesso:",
+        registration.scope
+      );
+
+    })
+    .catch(function(error){
+
+      console.error(
+        "Erro ao registrar Service Worker:",
+        error
+      );
+
+    });
+
+}
+
+
+/* =====================================================
    DETECTAR SISTEMA
 ===================================================== */
 
@@ -923,7 +986,7 @@ function detectarSistema(){
 
 
 /* =====================================================
-   INSTALAÇÃO PWA
+   EVENTO DE INSTALAÇÃO
 ===================================================== */
 
 
@@ -931,23 +994,45 @@ window.addEventListener(
   "beforeinstallprompt",
   function(event){
 
+    console.log(
+      "Evento beforeinstallprompt recebido."
+    );
+
+
     event.preventDefault();
+
 
     eventoInstalacao = event;
 
 
-    const botao =
+    const botaoAndroid =
       document.getElementById(
         "btnInstalar"
       );
 
 
-    if(botao){
+    const botaoDesktop =
+      document.getElementById(
+        "btnDesktop"
+      );
 
-      botao.textContent =
+
+    if(botaoAndroid){
+
+      botaoAndroid.disabled = false;
+
+      botaoAndroid.textContent =
         "📲 INSTALAR APP";
 
-      botao.disabled = false;
+    }
+
+
+    if(botaoDesktop){
+
+      botaoDesktop.disabled = false;
+
+      botaoDesktop.textContent =
+        "💻 INSTALAR APP";
 
     }
 
@@ -956,7 +1041,7 @@ window.addEventListener(
 
 
 /* =====================================================
-   INSTALAR
+   INSTALAR APP
 ===================================================== */
 
 
@@ -965,8 +1050,8 @@ async function instalarApp(){
   if(!eventoInstalacao){
 
     alert(
-      "A instalação automática não está disponível neste momento.\n\n" +
-      "No Android, verifique se o navegador é compatível e se a página foi aberta pelo endereço oficial do App RH."
+      "A instalação automática ainda não foi liberada pelo navegador.\n\n" +
+      "Verifique se você está acessando o App RH pelo GitHub Pages oficial e usando um navegador compatível."
     );
 
     return;
@@ -974,20 +1059,43 @@ async function instalarApp(){
   }
 
 
-  eventoInstalacao.prompt();
+  try{
+
+    eventoInstalacao.prompt();
 
 
-  const resultado =
-    await eventoInstalacao.userChoice;
+    const resultado =
+      await eventoInstalacao.userChoice;
 
-
-  if(
-    resultado &&
-    resultado.outcome === "accepted"
-  ){
 
     console.log(
-      "App instalado pelo usuário."
+      "Resultado da instalação:",
+      resultado
+    );
+
+
+    if(
+      resultado &&
+      resultado.outcome === "accepted"
+    ){
+
+      console.log(
+        "Usuário aceitou instalar o App RH."
+      );
+
+    }else{
+
+      console.log(
+        "Usuário cancelou a instalação."
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Erro durante a instalação:",
+      error
     );
 
   }
@@ -1045,26 +1153,50 @@ function entrarSistema(){
 
 function mostrarJaInstalado(){
 
-  document
-    .getElementById("conteudo")
-    .classList.add("hidden");
+  const conteudo =
+    document.getElementById(
+      "conteudo"
+    );
 
 
-  document
-    .getElementById("jaInstalado")
-    .style.display = "block";
+  const instalado =
+    document.getElementById(
+      "jaInstalado"
+    );
+
+
+  if(conteudo){
+
+    conteudo.classList.add(
+      "hidden"
+    );
+
+  }
+
+
+  if(instalado){
+
+    instalado.style.display =
+      "block";
+
+  }
 
 }
 
 
 /* =====================================================
-   DETECTAR INSTALAÇÃO
+   INSTALAÇÃO CONCLUÍDA
 ===================================================== */
 
 
 window.addEventListener(
   "appinstalled",
   function(){
+
+    console.log(
+      "App RH instalado."
+    );
+
 
     eventoInstalacao = null;
 
@@ -1082,6 +1214,17 @@ window.addEventListener(
 document.addEventListener(
   "DOMContentLoaded",
   function(){
+
+    /*
+      Primeiro registra o Service Worker.
+    */
+
+    registrarServiceWorker();
+
+
+    /*
+      Depois identifica o dispositivo.
+    */
 
     detectarSistema();
 
