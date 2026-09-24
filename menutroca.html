@@ -107,12 +107,22 @@ body {
 
     justify-content: center;
 
+    transition: background .15s ease,
+                transform .15s ease;
+
+}
+
+
+.btn-voltar:hover {
+
+    background: rgba(255,255,255,0.20);
+
 }
 
 
 .btn-voltar:active {
 
-    transform: scale(0.96);
+    transform: scale(0.94);
 
 }
 
@@ -192,7 +202,17 @@ body {
 
     transition:
         transform 0.15s ease,
-        box-shadow 0.15s ease;
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+
+}
+
+
+.menu-button:hover {
+
+    box-shadow:
+        0 5px 14px rgba(15,23,42,0.10),
+        0 2px 4px rgba(15,23,42,0.05);
 
 }
 
@@ -253,6 +273,15 @@ body {
 .icon-assinar {
 
     background: #fef3c7;
+
+}
+
+
+/* ÍCONE DA ASSINATURA */
+
+.icon-upload {
+
+    background: #ede9fe;
 
 }
 
@@ -361,7 +390,7 @@ body {
         class="btn-voltar"
         type="button"
         onclick="voltarHome()"
-        aria-label="Voltar"
+        aria-label="Voltar para a página inicial"
     >
         ←
     </button>
@@ -489,25 +518,32 @@ body {
             </div>
 
         </button>
- <button
+
+
+
+        <!-- =================================================
+             ENVIAR ASSINATURA
+        ================================================== -->
+
+        <button
             class="menu-button"
             type="button"
             onclick="abrirPagina('upload.html', this)"
         >
 
-            <div class="menu-icon icon-solicitar">
-                📝✍️
+            <div class="menu-icon icon-upload">
+                📝
             </div>
 
 
             <div class="menu-info">
 
                 <div class="menu-title">
-                    Faça Upload da Sua Assinatua
+                    Cadastrar minha assinatura
                 </div>
 
                 <div class="menu-description">
-                    Para assinar uma troca vocé precisará tirá uma foto da sua assinatura.
+                    Envie uma foto da sua assinatura para utilizá-la nas trocas de plantão
                 </div>
 
             </div>
@@ -518,6 +554,7 @@ body {
             </div>
 
         </button>
+
 
     </div>
 
@@ -550,37 +587,103 @@ function abrirPagina(pagina, botao) {
 
 function voltarHome() {
 
-    const dados = localStorage.getItem("usuario");
+    /*
+     * TENTA RECUPERAR O USUÁRIO SALVO
+     */
+
+    const dados =
+        localStorage.getItem("usuario");
+
+
+    /*
+     * SE NÃO EXISTIR USUÁRIO,
+     * VOLTA PARA O LOGIN
+     */
 
     if (!dados) {
 
-        window.location.href = "./login.html";
+        window.location.href =
+            "./login.html";
 
         return;
 
     }
 
+
+    /*
+     * TENTA LER O USUÁRIO
+     */
+
     try {
 
-        const usuario = JSON.parse(dados);
+        const usuario =
+            JSON.parse(dados);
+
+
+        /*
+         * RECUPERA O NOME
+         */
 
         const nome =
             usuario.nome ||
             usuario.nomeCompleto ||
             usuario.NOME ||
             usuario["NOME COMPLETO"] ||
+            localStorage.getItem("nomeUsuario") ||
             "Usuário";
+
+
+        /*
+         * RECUPERA O ID
+         */
 
         const id =
             usuario.id ||
+            usuario.idUsuario ||
             usuario.ID ||
+            usuario.IDUSUARIO ||
+            usuario["ID USUARIO"] ||
+            localStorage.getItem("idUsuario") ||
             "";
+
+
+        /*
+         * GARANTE QUE NOME E ID
+         * CONTINUEM SALVOS
+         */
+
+        if (nome) {
+
+            localStorage.setItem(
+                "nomeUsuario",
+                String(nome).trim()
+            );
+
+        }
+
+
+        if (id) {
+
+            localStorage.setItem(
+                "idUsuario",
+                String(id).trim()
+            );
+
+        }
+
+
+        /*
+         * VOLTA PARA A HOME
+         *
+         * Envia nome e ID pela URL.
+         */
 
         window.location.href =
             "./home.html?nome=" +
             encodeURIComponent(nome) +
             "&id=" +
             encodeURIComponent(id);
+
 
     } catch (erro) {
 
@@ -589,9 +692,20 @@ function voltarHome() {
             erro
         );
 
-        localStorage.removeItem("usuario");
 
-        window.location.href = "./login.html";
+        /*
+         * SOMENTE REMOVE O LOGIN
+         * SE O CONTEÚDO DO LOCALSTORAGE
+         * ESTIVER REALMENTE INVÁLIDO.
+         */
+
+        localStorage.removeItem(
+            "usuario"
+        );
+
+
+        window.location.href =
+            "./login.html";
 
     }
 
