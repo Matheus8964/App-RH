@@ -550,7 +550,50 @@ function abrirPagina(pagina, botao) {
 
 function voltarHome() {
 
-    window.location.href = "./home.html";
+    const dados = localStorage.getItem("usuario");
+
+    if (!dados) {
+
+        window.location.href = "./login.html";
+
+        return;
+
+    }
+
+    try {
+
+        const usuario = JSON.parse(dados);
+
+        const nome =
+            usuario.nome ||
+            usuario.nomeCompleto ||
+            usuario.NOME ||
+            usuario["NOME COMPLETO"] ||
+            "Usuário";
+
+        const id =
+            usuario.id ||
+            usuario.ID ||
+            "";
+
+        window.location.href =
+            "./home.html?nome=" +
+            encodeURIComponent(nome) +
+            "&id=" +
+            encodeURIComponent(id);
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao recuperar usuário:",
+            erro
+        );
+
+        localStorage.removeItem("usuario");
+
+        window.location.href = "./login.html";
+
+    }
 
 }
 
