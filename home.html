@@ -1451,251 +1451,266 @@
 
     function carregarUsuario() {
 
+  /*
+   * ===================================================
+   * LÊ OS PARÂMETROS DA URL
+   *
+   * Exemplo:
+   *
+   * home.html?nome=Joao&id=001
+   * ===================================================
+   */
 
-      /*
-       * LÊ OS PARÂMETROS DA URL
-       *
-       * Exemplo:
-       *
-       * home.html?nome=Joao&id=001
-       */
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
 
-      const params =
-        new URLSearchParams(
-          window.location.search
-        );
 
+  const nomeURL =
+    params.get("nome");
 
-      const nomeURL =
-        params.get("nome");
 
+  const idURL =
+    params.get("id");
 
-      const idURL =
-        params.get("id");
 
+  /*
+   * ===================================================
+   * ELEMENTOS DA TELA
+   * ===================================================
+   */
 
-      /*
-       * ELEMENTOS DA TELA
-       */
+  const elementoNome =
+    document.getElementById(
+      "nomeUsuario"
+    );
 
-      const elementoNome =
-        document.getElementById(
-          "nomeUsuario"
-        );
 
+  const elementoId =
+    document.getElementById(
+      "idUsuario"
+    );
 
-      const elementoId =
-        document.getElementById(
-          "idUsuario"
-        );
 
+  /*
+   * ===================================================
+   * TENTA RECUPERAR O USUÁRIO COMPLETO
+   * DO LOCALSTORAGE
+   * ===================================================
+   */
 
-      /*
-       * ===================================================
-       * PRIMEIRO: TENTA PEGAR O USUÁRIO COMPLETO
-       * DO LOCALSTORAGE
-       * ===================================================
-       */
+  let usuario = null;
 
-      let usuario = null;
 
+  try {
 
-      try {
+    const dados =
+      localStorage.getItem(
+        "usuario"
+      );
 
-        const dados =
-          localStorage.getItem(
-            "usuario"
-          );
 
+    if (dados) {
 
-        if (dados) {
-
-          usuario =
-            JSON.parse(dados);
-
-        }
-
-      } catch (erro) {
-
-        console.error(
-          "Erro ao ler usuário:",
-          erro
-        );
-
-      }
-
-
-      /*
-       * VARIÁVEIS
-       */
-
-      let nome = "";
-
-      let id = "";
-
-
-      /*
-       * ===================================================
-       * PEGA O NOME E ID DO OBJETO USUÁRIO
-       * ===================================================
-       */
-
-      if (usuario) {
-
-
-        nome =
-          usuario.nome ||
-          usuario.nomeCompleto ||
-          usuario.NOME ||
-          usuario["NOME COMPLETO"] ||
-          "";
-
-
-        id =
-          usuario.id ||
-          usuario.idUsuario ||
-          usuario.ID ||
-          usuario.IDUSUARIO ||
-          usuario["ID USUARIO"] ||
-          "";
-
-      }
-
-
-      /*
-       * ===================================================
-       * SE NÃO ACHOU NO LOCALSTORAGE,
-       * PEGA DA URL
-       * ===================================================
-       */
-
-      if (!nome) {
-
-        nome =
-          nomeURL ||
-          "";
-
-      }
-
-
-      if (!id) {
-
-        id =
-          idURL ||
-          "";
-
-      }
-
-
-      /*
-       * ===================================================
-       * SALVA NOME
-       * ===================================================
-       */
-
-      if (
-        nome &&
-        nome.trim() !== ""
-      ) {
-
-        nome =
-          nome.trim();
-
-
-        localStorage.setItem(
-          "nomeUsuario",
-          nome
-        );
-
-      }
-
-
-      /*
-       * ===================================================
-       * SALVA ID
-       * ===================================================
-       */
-
-      if (
-        id &&
-        String(id).trim() !== ""
-      ) {
-
-        id =
-          String(id).trim();
-
-
-        localStorage.setItem(
-          "idUsuario",
-          id
-        );
-
-      }
-
-
-      /*
-       * ===================================================
-       * MOSTRA NOME
-       * ===================================================
-       */
-
-      if (elementoNome) {
-
-        elementoNome.textContent =
-          nome ||
-          "Usuário";
-
-      }
-
-
-      /*
-       * ===================================================
-       * MOSTRA ID
-       * ===================================================
-       */
-
-      if (elementoId) {
-
-        elementoId.textContent =
-          "ID: " +
-          (
-            id ||
-            "Não informado"
-          );
-
-      }
-
-
-      /*
-       * ===================================================
-       * REMOVE NOME E ID DA URL
-       *
-       * Exemplo:
-       *
-       * ANTES:
-       *
-       * home.html?nome=Joao&id=001
-       *
-       * DEPOIS:
-       *
-       * home.html
-       * ===================================================
-       */
-
-      if (
-        params.has("nome") ||
-        params.has("id")
-      ) {
-
-        window.history.replaceState(
-          {},
-          document.title,
-          window.location.pathname
-        );
-
-      }
+      usuario =
+        JSON.parse(dados);
 
     }
+
+  } catch (erro) {
+
+    console.error(
+      "Erro ao ler usuário:",
+      erro
+    );
+
+  }
+
+
+  /*
+   * ===================================================
+   * VARIÁVEIS
+   * ===================================================
+   */
+
+  let nome = "";
+
+  let id = "";
+
+
+  /*
+   * ===================================================
+   * PEGA NOME E ID DO USUÁRIO
+   * ===================================================
+   */
+
+  if (usuario) {
+
+    nome =
+      usuario.nome ||
+      usuario.nomeCompleto ||
+      usuario.NOME ||
+      usuario["NOME COMPLETO"] ||
+      "";
+
+
+    id =
+      usuario.id ||
+      usuario.idUsuario ||
+      usuario.ID ||
+      usuario.IDUSUARIO ||
+      usuario["ID USUARIO"] ||
+      "";
+
+  }
+
+
+  /*
+   * ===================================================
+   * SE NÃO ENCONTROU O NOME NO LOCALSTORAGE,
+   * PEGA DA URL
+   * ===================================================
+   */
+
+  if (
+    !nome &&
+    nomeURL
+  ) {
+
+    nome =
+      nomeURL;
+
+  }
+
+
+  /*
+   * ===================================================
+   * SE NÃO ENCONTROU O ID NO LOCALSTORAGE,
+   * PEGA DA URL
+   * ===================================================
+   */
+
+  if (
+    !id &&
+    idURL
+  ) {
+
+    id =
+      idURL;
+
+  }
+
+
+  /*
+   * ===================================================
+   * LIMPA E SALVA NOME
+   * ===================================================
+   */
+
+  if (
+    nome &&
+    String(nome).trim() !== ""
+  ) {
+
+    nome =
+      String(nome).trim();
+
+
+    localStorage.setItem(
+      "nomeUsuario",
+      nome
+    );
+
+  }
+
+
+  /*
+   * ===================================================
+   * LIMPA E SALVA ID
+   * ===================================================
+   */
+
+  if (
+    id &&
+    String(id).trim() !== ""
+  ) {
+
+    id =
+      String(id).trim();
+
+
+    localStorage.setItem(
+      "idUsuario",
+      id
+    );
+
+  }
+
+
+  /*
+   * ===================================================
+   * MOSTRA NOME
+   * ===================================================
+   */
+
+  if (elementoNome) {
+
+    elementoNome.textContent =
+      nome ||
+      "Usuário";
+
+  }
+
+
+  /*
+   * ===================================================
+   * MOSTRA ID
+   * ===================================================
+   */
+
+  if (elementoId) {
+
+    elementoId.textContent =
+      "ID: " +
+      (
+        id ||
+        "Não informado"
+      );
+
+  }
+
+
+  /*
+   * ===================================================
+   * REMOVE OS PARÂMETROS DA URL
+   *
+   * Exemplo:
+   *
+   * ANTES:
+   * home.html?nome=Joao&id=001
+   *
+   * DEPOIS:
+   * home.html
+   *
+   * Os dados continuam salvos no localStorage.
+   * ===================================================
+   */
+
+  if (
+    params.has("nome") ||
+    params.has("id")
+  ) {
+
+    window.history.replaceState(
+      {},
+      document.title,
+      window.location.pathname
+    );
+
+  }
+
+}
 
 
     /* =====================================================
