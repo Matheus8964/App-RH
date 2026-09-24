@@ -288,6 +288,29 @@
 
 
     /* ================================
+       ID DO USUÁRIO
+    ================================= */
+
+    .user-id {
+
+      margin-top: 4px;
+
+      font-size: 11px;
+
+      font-weight: 500;
+
+      color:
+        rgba(255,255,255,0.65);
+
+      white-space: nowrap;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+    }
+
+
+    /* ================================
        CONTEÚDO
     ================================= */
 
@@ -616,9 +639,12 @@
     .icon-suporte {
       background: #fef2f2;
     }
-.icon-alarme{
-  background: #fff7ed;
-}
+
+
+    .icon-alarme {
+      background: #fff7ed;
+    }
+
 
     /* ================================
        RODAPÉ
@@ -964,7 +990,9 @@
 <body>
 
 
-  <!-- CARREGAMENTO -->
+  <!-- =====================================================
+       CARREGAMENTO
+  ====================================================== -->
 
   <div
     class="loading"
@@ -984,13 +1012,16 @@
   </div>
 
 
-
-  <!-- APLICATIVO -->
+  <!-- =====================================================
+       APLICATIVO
+  ====================================================== -->
 
   <div class="app">
 
 
-    <!-- CABEÇALHO -->
+    <!-- ===================================================
+         CABEÇALHO
+    ==================================================== -->
 
     <header class="header">
 
@@ -1025,8 +1056,9 @@
       </div>
 
 
-
-      <!-- USUÁRIO -->
+      <!-- =================================================
+           USUÁRIO CONECTADO
+      ================================================== -->
 
       <div class="user-card">
 
@@ -1052,6 +1084,14 @@
           </div>
 
 
+          <div
+            class="user-id"
+            id="idUsuario"
+          >
+            ID: carregando...
+          </div>
+
+
         </div>
 
 
@@ -1061,8 +1101,9 @@
     </header>
 
 
-
-    <!-- CONTEÚDO -->
+    <!-- =================================================
+         CONTEÚDO
+    ================================================== -->
 
     <main class="content">
 
@@ -1091,13 +1132,16 @@
       </div>
 
 
-
-      <!-- MENU -->
+      <!-- =================================================
+           MENU
+      ================================================== -->
 
       <div class="menu">
 
 
-        <!-- TROCA -->
+        <!-- =================================================
+             TROCA
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1130,8 +1174,9 @@
         </button>
 
 
-
-        <!-- FOLGA -->
+        <!-- =================================================
+             FOLGA
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1164,8 +1209,9 @@
         </button>
 
 
-
-        <!-- ATESTADO -->
+        <!-- =================================================
+             ATESTADO
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1198,8 +1244,9 @@
         </button>
 
 
-
-        <!-- BANCO DE HORAS -->
+        <!-- =================================================
+             BANCO DE HORAS
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1232,8 +1279,9 @@
         </button>
 
 
-
-        <!-- TREINAMENTOS -->
+        <!-- =================================================
+             TREINAMENTOS
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1266,8 +1314,9 @@
         </button>
 
 
-
-        <!-- SUPORTE -->
+        <!-- =================================================
+             SUPORTE
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1288,6 +1337,44 @@
 
             <div class="menu-description">
               Entre em contato com o suporte do sistema
+            </div>
+
+          </div>
+
+
+          <div class="arrow">
+            ›
+          </div>
+
+        </button>
+
+
+        <!-- =================================================
+             ALARME
+        ================================================== -->
+
+        <button
+          class="menu-button"
+          type="button"
+          onclick="abrirPagina('alarme', this)"
+        >
+
+          <div class="menu-icon icon-alarme">
+            ⏰
+          </div>
+
+
+          <div class="menu-info">
+
+            <div class="menu-title">
+              Alarme
+            </div>
+
+            <div class="menu-description">
+              Crie um cronômetro e receba uma notificação
+            </div>
+
+          </div>
 
 
           <div class="arrow">
@@ -1298,45 +1385,14 @@
 
 
       </div>
-            <!-- ALARME -->
-
-<button
-  class="menu-button"
-  type="button"
-  onclick="abrirPagina('alarme', this)"
->
-
-  <div class="menu-icon icon-alarme">
-    ⏰
-  </div>
-
-  <div class="menu-info">
-
-    <div class="menu-title">
-      Alarme
-    </div>
-
-    <div class="menu-description">
-      Crie um cronômetro e receba uma notificação
-    </div>
-
-  </div>
-
-  <div class="arrow">
-    ›
-  </div>
-
-</button>
-          </div>
-             </div>
-
 
 
     </main>
 
 
-
-    <!-- RODAPÉ -->
+    <!-- =====================================================
+         RODAPÉ
+    ====================================================== -->
 
     <footer class="footer">
 
@@ -1354,100 +1410,359 @@
   </div>
 
 
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
 
-<script>
-
-function carregarUsuario() {
-
-  const params = new URLSearchParams(window.location.search);
-
-  const nomeURL = params.get("nome");
-
-  const elemento = document.getElementById("nomeUsuario");
+  <script>
 
 
-  if (nomeURL && nomeURL.trim() !== "") {
+    /* =====================================================
+       CARREGAR USUÁRIO
+    ====================================================== */
 
-    const nome = nomeURL.trim();
+    function carregarUsuario() {
 
-    localStorage.setItem("nomeUsuario", nome);
 
-    if (elemento) {
-      elemento.textContent = nome;
+      /*
+       * LÊ OS PARÂMETROS DA URL
+       *
+       * Exemplo:
+       *
+       * home.html?nome=Joao&id=001
+       */
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+
+      const nomeURL =
+        params.get("nome");
+
+
+      const idURL =
+        params.get("id");
+
+
+      /*
+       * ELEMENTOS DA TELA
+       */
+
+      const elementoNome =
+        document.getElementById(
+          "nomeUsuario"
+        );
+
+
+      const elementoId =
+        document.getElementById(
+          "idUsuario"
+        );
+
+
+      /*
+       * ===================================================
+       * PRIMEIRO: TENTA PEGAR O USUÁRIO COMPLETO
+       * DO LOCALSTORAGE
+       * ===================================================
+       */
+
+      let usuario = null;
+
+
+      try {
+
+        const dados =
+          localStorage.getItem(
+            "usuario"
+          );
+
+
+        if (dados) {
+
+          usuario =
+            JSON.parse(dados);
+
+        }
+
+      } catch (erro) {
+
+        console.error(
+          "Erro ao ler usuário:",
+          erro
+        );
+
+      }
+
+
+      /*
+       * VARIÁVEIS
+       */
+
+      let nome = "";
+
+      let id = "";
+
+
+      /*
+       * ===================================================
+       * PEGA O NOME E ID DO OBJETO USUÁRIO
+       * ===================================================
+       */
+
+      if (usuario) {
+
+
+        nome =
+          usuario.nome ||
+          usuario.nomeCompleto ||
+          usuario.NOME ||
+          usuario["NOME COMPLETO"] ||
+          "";
+
+
+        id =
+          usuario.id ||
+          usuario.idUsuario ||
+          usuario.ID ||
+          usuario.IDUSUARIO ||
+          usuario["ID USUARIO"] ||
+          "";
+
+      }
+
+
+      /*
+       * ===================================================
+       * SE NÃO ACHOU NO LOCALSTORAGE,
+       * PEGA DA URL
+       * ===================================================
+       */
+
+      if (!nome) {
+
+        nome =
+          nomeURL ||
+          "";
+
+      }
+
+
+      if (!id) {
+
+        id =
+          idURL ||
+          "";
+
+      }
+
+
+      /*
+       * ===================================================
+       * SALVA NOME
+       * ===================================================
+       */
+
+      if (
+        nome &&
+        nome.trim() !== ""
+      ) {
+
+        nome =
+          nome.trim();
+
+
+        localStorage.setItem(
+          "nomeUsuario",
+          nome
+        );
+
+      }
+
+
+      /*
+       * ===================================================
+       * SALVA ID
+       * ===================================================
+       */
+
+      if (
+        id &&
+        String(id).trim() !== ""
+      ) {
+
+        id =
+          String(id).trim();
+
+
+        localStorage.setItem(
+          "idUsuario",
+          id
+        );
+
+      }
+
+
+      /*
+       * ===================================================
+       * MOSTRA NOME
+       * ===================================================
+       */
+
+      if (elementoNome) {
+
+        elementoNome.textContent =
+          nome ||
+          "Usuário";
+
+      }
+
+
+      /*
+       * ===================================================
+       * MOSTRA ID
+       * ===================================================
+       */
+
+      if (elementoId) {
+
+        elementoId.textContent =
+          "ID: " +
+          (
+            id ||
+            "Não informado"
+          );
+
+      }
+
+
+      /*
+       * ===================================================
+       * REMOVE NOME E ID DA URL
+       *
+       * Exemplo:
+       *
+       * ANTES:
+       *
+       * home.html?nome=Joao&id=001
+       *
+       * DEPOIS:
+       *
+       * home.html
+       * ===================================================
+       */
+
+      if (
+        params.has("nome") ||
+        params.has("id")
+      ) {
+
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+
+      }
+
     }
 
-    window.history.replaceState(
-      {},
-      document.title,
-      window.location.pathname
+
+    /* =====================================================
+       ABRIR PÁGINA
+    ====================================================== */
+
+    function abrirPagina(
+      pagina,
+      botao
+    ) {
+
+
+      const paginas = {
+
+        troca:
+          "./menutroca.html",
+
+        folga:
+          "./folga.html",
+
+        atestados:
+          "./atestados.html",
+
+        banco:
+          "./banco.html",
+
+        treinamentos:
+          "./treinamentos.html",
+
+        suporte:
+          "./suporte.html",
+
+        alarme:
+          "./alarme.html"
+
+      };
+
+
+      const destino =
+        paginas[pagina];
+
+
+      if (!destino) {
+
+        return;
+
+      }
+
+
+      if (botao) {
+
+        botao.classList.add(
+          "carregando"
+        );
+
+      }
+
+
+      window.location.href =
+        destino;
+
+    }
+
+
+    /* =====================================================
+       INICIALIZAÇÃO
+    ====================================================== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+
+        carregarUsuario();
+
+
+        const loading =
+          document.getElementById(
+            "loading"
+          );
+
+
+        if (loading) {
+
+          loading.classList.add(
+            "hidden"
+          );
+
+        }
+
+      }
     );
 
-    return;
-  }
 
-
-  const nomeSalvo = localStorage.getItem("nomeUsuario");
-
-  if (elemento) {
-    elemento.textContent = nomeSalvo || "Usuário";
-  }
-}
-
-
-function abrirPagina(pagina, botao) {
-
-  const paginas = {
-
-    troca: "./menutroca.html",
-
-    folga: "./folga.html",
-
-    atestados: "./atestados.html",
-
-    banco: "./banco.html",
-
-    treinamentos: "./treinamentos.html",
-
-    suporte: "./suporte.html",
-    alarme: "./alarme.html",
-    
-
-  };
-
-
-  const destino = paginas[pagina];
-
-  if (!destino) {
-    return;
-  }
-
-
-  if (botao) {
-    botao.classList.add("carregando");
-  }
-
-
-  window.location.href = destino;
-}
-
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    carregarUsuario();
-
-    const loading =
-      document.getElementById("loading");
-
-    if (loading) {
-      loading.classList.add("hidden");
-    }
-
-  }
-);
-
-</script>
+  </script>
 
 
 </body>
