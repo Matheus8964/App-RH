@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,
+             initial-scale=1,
+             maximum-scale=1,
+             viewport-fit=cover"
+>
+
+<meta name="theme-color" content="#0f172a">
+
+<title>Protocolo de Troca</title>
+
+<style>
+
+/* ======================================================
+   RESET
+====================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #f1f5f9;
+
+    overflow-x: hidden;
+}
+
+
+/* ======================================================
+   SAFE AREA
+====================================================== */
+
+body {
+
+    padding-top: env(safe-area-inset-top);
+
+    padding-bottom: env(safe-area-inset-bottom);
+
+}
+
+
+/* ======================================================
+   CABEÇALHO
+====================================================== */
+
+.header {
+
+    height: 58px;
+
+    background: #0f172a;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 14px;
+
+    gap: 12px;
+
+    position: relative;
+
+    z-index: 10;
+
+}
+
+
+.btn-voltar {
+
+    border: 0;
+
+    background: rgba(255,255,255,0.12);
+
+    color: white;
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.btn-voltar:active {
+
+    transform: scale(0.96);
+
+}
+
+
+.titulo {
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+}
+
+
+/* ======================================================
+   CONTEÚDO
+====================================================== */
+
+.conteudo {
+
+    width: 100%;
+
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    padding: 18px 14px 30px;
+
+}
+
+
+/* ======================================================
+   MENU
+====================================================== */
+
+.menu {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+}
+
+
+/* ======================================================
+   BOTÕES DO MENU
+====================================================== */
+
+.menu-button {
+
+    width: 100%;
+
+    min-height: 82px;
+
+    border: 0;
+
+    border-radius: 16px;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    text-align: left;
+
+    padding: 14px 16px;
+
+    gap: 14px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 2px 6px rgba(15,23,42,0.06),
+        0 1px 2px rgba(15,23,42,0.04);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+
+}
+
+
+.menu-button:active {
+
+    transform: scale(0.985);
+
+    box-shadow:
+        0 1px 3px rgba(15,23,42,0.08);
+
+}
+
+
+/* ======================================================
+   ÍCONE
+====================================================== */
+
+.menu-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    min-width: 52px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 27px;
+
+}
+
+
+/* ======================================================
+   ÍCONES
+====================================================== */
+
+.icon-solicitar {
+
+    background: #dbeafe;
+
+}
+
+
+.icon-aceitar {
+
+    background: #dcfce7;
+
+}
+
+
+.icon-assinar {
+
+    background: #fef3c7;
+
+}
+
+
+/* ======================================================
+   INFORMAÇÕES
+====================================================== */
+
+.menu-info {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+.menu-title {
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    color: #0f172a;
+
+    margin-bottom: 5px;
+
+}
+
+
+.menu-description {
+
+    font-size: 13px;
+
+    line-height: 1.35;
+
+    color: #64748b;
+
+}
+
+
+/* ======================================================
+   SETA
+====================================================== */
+
+.arrow {
+
+    color: #94a3b8;
+
+    font-size: 30px;
+
+    line-height: 1;
+
+    margin-left: 4px;
+
+}
+
+
+/* ======================================================
+   RESPONSIVO
+====================================================== */
+
+@media (min-width: 700px) {
+
+    .conteudo {
+
+        padding-top: 25px;
+
+    }
+
+    .menu-button {
+
+        min-height: 88px;
+
+    }
+
+    .menu-title {
+
+        font-size: 17px;
+
+    }
+
+    .menu-description {
+
+        font-size: 14px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     CABEÇALHO
+===================================================== -->
+
+<header class="header">
+
+    <button
+        class="btn-voltar"
+        type="button"
+        onclick="voltarHome()"
+        aria-label="Voltar"
+    >
+        ←
+    </button>
+
+
+    <div class="titulo">
+        Protocolo de Troca
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     CONTEÚDO
+===================================================== -->
+
+<main class="conteudo">
+
+    <div class="menu">
+
+
+        <!-- =================================================
+             SOLICITAR TROCA
+        ================================================== -->
+
+        <button
+            class="menu-button"
+            type="button"
+            onclick="abrirPagina('solicitatroca.html', this)"
+        >
+
+            <div class="menu-icon icon-solicitar">
+                🔄
+            </div>
+
+
+            <div class="menu-info">
+
+                <div class="menu-title">
+                    Solicitar troca com colega
+                </div>
+
+                <div class="menu-description">
+                    Solicite uma troca de plantão com outro colega
+                </div>
+
+            </div>
+
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </button>
+
+
+
+        <!-- =================================================
+             ACEITAR TROCA
+        ================================================== -->
+
+        <button
+            class="menu-button"
+            type="button"
+            onclick="abrirPagina('aceitartroca.html', this)"
+        >
+
+            <div class="menu-icon icon-aceitar">
+                🤝
+            </div>
+
+
+            <div class="menu-info">
+
+                <div class="menu-title">
+                    Aceitar solicitação do colega
+                </div>
+
+                <div class="menu-description">
+                    Consulte e responda às solicitações de troca recebidas
+                </div>
+
+            </div>
+
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </button>
+
+
+
+        <!-- =================================================
+             ASSINAR TROCAS
+        ================================================== -->
+
+        <button
+            class="menu-button"
+            type="button"
+            onclick="abrirPagina('upload.html', this)"
+        >
+
+            <div class="menu-icon icon-assinar">
+                ✍️
+            </div>
+
+
+            <div class="menu-info">
+
+                <div class="menu-title">
+                    Assinar trocas
+                </div>
+
+                <div class="menu-description">
+                    Assine eletronicamente as trocas de plantão pendentes
+                </div>
+
+            </div>
+
+
+            <div class="arrow">
+                ›
+            </div>
+
+        </button>
+
+
+    </div>
+
+</main>
+
+
+
+<script>
+
+/* ======================================================
+   ABRIR PÁGINA
+====================================================== */
+
+function abrirPagina(pagina, botao) {
+
+    if (botao) {
+
+        botao.style.opacity = "0.7";
+
+    }
+
+    window.location.href = pagina;
+
+}
+
+
+/* ======================================================
+   VOLTAR PARA HOME
+====================================================== */
+
+function voltarHome() {
+
+    window.location.href = "./home.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>
