@@ -1,0 +1,1184 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Sistema de Folgas</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
+}
+
+body{
+
+  background:#f4f6f8;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  height:100vh;
+
+}
+
+.card{
+
+  width:400px;
+  max-width:90%;
+
+  background:#FFF;
+
+  padding:35px;
+
+  border-radius:10px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0,0,0,.15);
+
+}
+
+h2{
+
+  text-align:center;
+
+  margin-bottom:30px;
+
+  color:#1565C0;
+
+}
+
+label{
+
+  display:block;
+
+  margin-top:15px;
+  margin-bottom:5px;
+
+}
+
+input{
+
+  width:100%;
+
+  padding:12px;
+
+  border:1px solid #CCC;
+
+  border-radius:5px;
+
+  font-size:16px;
+
+}
+
+button{
+
+  margin-top:25px;
+
+  width:100%;
+
+  padding:14px;
+
+  border:none;
+
+  background:#1565C0;
+
+  color:#FFF;
+
+  font-size:16px;
+
+  cursor:pointer;
+
+  border-radius:5px;
+
+}
+
+button:hover{
+
+  background:#0D47A1;
+
+}
+
+#msg{
+
+  margin-top:15px;
+
+  text-align:center;
+
+  color:red;
+
+}
+
+
+/* =====================================================
+   TELA DE RECUPERAÇÃO
+===================================================== */
+
+#recuperandoIOS{
+
+  width:400px;
+  max-width:90%;
+
+  background:#FFF;
+
+  padding:35px;
+
+  border-radius:10px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0,0,0,.15);
+
+  text-align:center;
+
+}
+
+#recuperandoIOS h2{
+
+  margin-bottom:15px;
+
+}
+
+#recuperandoIOS p{
+
+  color:#555;
+
+  line-height:1.5;
+
+}
+
+
+/* =====================================================
+   BOLINHA
+===================================================== */
+
+.loader{
+
+  width:35px;
+
+  height:35px;
+
+  border:4px solid #ddd;
+
+  border-top:4px solid #1565C0;
+
+  border-radius:50%;
+
+  animation:girar .8s linear infinite;
+
+  margin:25px auto 0;
+
+}
+
+@keyframes girar{
+
+  from{
+    transform:rotate(0deg);
+  }
+
+  to{
+    transform:rotate(360deg);
+  }
+
+}
+
+
+/* =====================================================
+   ERRO DE CONEXÃO
+===================================================== */
+
+#erroConexao{
+
+  display:none;
+
+  margin-top:15px;
+
+  color:#b71c1c;
+
+  font-size:14px;
+
+  text-align:center;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     RECUPERANDO USUÁRIO
+===================================================== -->
+
+<div id="recuperandoIOS">
+
+  <h2>
+    iOS identificado
+  </h2>
+
+  <p>
+    Tentando retornar seu usuário...
+  </p>
+
+  <div class="loader"></div>
+
+  <div id="erroConexao">
+    Não foi possível verificar o usuário.
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<div
+  class="card"
+  id="cardLogin"
+  style="display:none"
+>
+
+  <h2>
+    Sistema de Folgas
+  </h2>
+
+
+  <label>
+    Nome Completo
+  </label>
+
+  <input
+    id="nome"
+    autocomplete="name"
+  >
+
+
+  <label>
+    Primeiros 4 dígitos do CPF
+  </label>
+
+  <input
+    id="cpf"
+    maxlength="4"
+    inputmode="numeric"
+    pattern="[0-9]*"
+    placeholder="Ex.: 6078"
+    autocomplete="off"
+  >
+
+
+  <button
+    type="button"
+    onclick="login()"
+    id="btnLogin"
+  >
+
+    Entrar
+
+  </button>
+
+
+  <div id="msg"></div>
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   CONFIGURAÇÃO
+===================================================== */
+
+/*
+ * COLOQUE AQUI A URL DO SEU WEB APP DO APPS SCRIPT.
+ *
+ * Exemplo:
+ *
+ * https://script.google.com/macros/s/XXXXXXXX/exec
+ */
+
+const URL_APPS_SCRIPT =
+  "COLE_AQUI_A_URL_DO_SEU_APPS_SCRIPT";
+
+
+const URL_HOME =
+  "https://matheus8964.github.io/App-RH/home.html";
+
+
+const NOME_BANCO =
+  "AppRH";
+
+
+const NOME_STORE =
+  "dados";
+
+
+const CHAVE_TOKEN =
+  "tokenUsuario";
+
+
+
+/* =====================================================
+   BANCO INDEXEDDB
+===================================================== */
+
+function abrirBanco(){
+
+  return new Promise(
+    function(resolve, reject){
+
+      const request =
+        indexedDB.open(
+          NOME_BANCO,
+          1
+        );
+
+
+      request.onupgradeneeded =
+        function(event){
+
+          const db =
+            event.target.result;
+
+
+          if(
+            !db.objectStoreNames.contains(
+              NOME_STORE
+            )
+          ){
+
+            db.createObjectStore(
+              NOME_STORE
+            );
+
+          }
+
+        };
+
+
+      request.onsuccess =
+        function(){
+
+          resolve(
+            request.result
+          );
+
+        };
+
+
+      request.onerror =
+        function(){
+
+          reject(
+            request.error
+          );
+
+        };
+
+    }
+  );
+
+}
+
+
+
+/* =====================================================
+   SALVAR TOKEN NO INDEXEDDB
+===================================================== */
+
+async function salvarToken(token){
+
+  if(!token){
+    return;
+  }
+
+
+  try{
+
+    const db =
+      await abrirBanco();
+
+
+    await new Promise(
+      function(resolve, reject){
+
+        const transacao =
+          db.transaction(
+            NOME_STORE,
+            "readwrite"
+          );
+
+
+        const store =
+          transacao.objectStore(
+            NOME_STORE
+          );
+
+
+        store.put(
+          token,
+          CHAVE_TOKEN
+        );
+
+
+        transacao.oncomplete =
+          function(){
+
+            resolve();
+
+          };
+
+
+        transacao.onerror =
+          function(){
+
+            reject(
+              transacao.error
+            );
+
+          };
+
+      }
+    );
+
+
+    db.close();
+
+  }
+  catch(erro){
+
+    console.error(
+      "Erro ao salvar token no IndexedDB:",
+      erro
+    );
+
+  }
+
+
+  /*
+   * Também salva no localStorage
+   * como segunda cópia.
+   */
+
+  try{
+
+    localStorage.setItem(
+      CHAVE_TOKEN,
+      token
+    );
+
+  }
+  catch(erro){
+
+    console.warn(
+      "Não foi possível salvar token no localStorage.",
+      erro
+    );
+
+  }
+
+}
+
+
+
+/* =====================================================
+   PEGAR TOKEN DO INDEXEDDB
+===================================================== */
+
+async function obterTokenIndexedDB(){
+
+  try{
+
+    const db =
+      await abrirBanco();
+
+
+    const token =
+      await new Promise(
+        function(resolve, reject){
+
+          const transacao =
+            db.transaction(
+              NOME_STORE,
+              "readonly"
+            );
+
+
+          const store =
+            transacao.objectStore(
+              NOME_STORE
+            );
+
+
+          const request =
+            store.get(
+              CHAVE_TOKEN
+            );
+
+
+          request.onsuccess =
+            function(){
+
+              resolve(
+                request.result || ""
+              );
+
+            };
+
+
+          request.onerror =
+            function(){
+
+              reject(
+                request.error
+              );
+
+            };
+
+        }
+      );
+
+
+    db.close();
+
+
+    if(token){
+      return token;
+    }
+
+  }
+  catch(erro){
+
+    console.error(
+      "Erro ao consultar IndexedDB:",
+      erro
+    );
+
+  }
+
+
+  /*
+   * Se não encontrou no IndexedDB,
+   * tenta localStorage.
+   */
+
+  try{
+
+    return (
+      localStorage.getItem(
+        CHAVE_TOKEN
+      ) || ""
+    );
+
+  }
+  catch(erro){
+
+    return "";
+
+  }
+
+}
+
+
+
+/* =====================================================
+   APAGAR TOKEN
+===================================================== */
+
+async function apagarToken(){
+
+  try{
+
+    const db =
+      await abrirBanco();
+
+
+    await new Promise(
+      function(resolve){
+
+        const transacao =
+          db.transaction(
+            NOME_STORE,
+            "readwrite"
+          );
+
+
+        const store =
+          transacao.objectStore(
+            NOME_STORE
+          );
+
+
+        store.delete(
+          CHAVE_TOKEN
+        );
+
+
+        transacao.oncomplete =
+          function(){
+
+            resolve();
+
+          };
+
+        transacao.onerror =
+          function(){
+
+            resolve();
+
+          };
+
+      }
+    );
+
+
+    db.close();
+
+  }
+  catch(erro){
+
+    console.error(
+      "Erro ao apagar token:",
+      erro
+    );
+
+  }
+
+
+  try{
+
+    localStorage.removeItem(
+      CHAVE_TOKEN
+    );
+
+  }
+  catch(erro){}
+
+}
+
+
+
+/* =====================================================
+   MOSTRAR LOGIN
+===================================================== */
+
+function mostrarLogin(){
+
+  document
+    .getElementById(
+      "recuperandoIOS"
+    )
+    .style.display =
+      "none";
+
+
+  document
+    .getElementById(
+      "cardLogin"
+    )
+    .style.display =
+      "block";
+
+}
+
+
+
+/* =====================================================
+   ENTRAR NO HOME
+===================================================== */
+
+function entrarNoSistema(
+  nome,
+  id
+){
+
+  window.location.href =
+    URL_HOME +
+    "?nome=" +
+    encodeURIComponent(nome) +
+    "&id=" +
+    encodeURIComponent(id);
+
+}
+
+
+
+/* =====================================================
+   CHAMAR APPS SCRIPT
+===================================================== */
+
+/*
+ * Usamos GET para manter a comunicação simples
+ * entre GitHub Pages e Google Apps Script.
+ *
+ * O Apps Script deverá receber:
+ *
+ * ?acao=validarToken&token=XXXX
+ *
+ * ou:
+ *
+ * ?acao=validarLogin&nome=XXXX&cpf=XXXX
+ */
+
+async function chamarAppsScript(
+  parametros
+){
+
+  const query =
+    new URLSearchParams(
+      parametros
+    );
+
+
+  const resposta =
+    await fetch(
+      URL_APPS_SCRIPT +
+      "?" +
+      query.toString(),
+      {
+        method:"GET",
+        cache:"no-store"
+      }
+    );
+
+
+  if(!resposta.ok){
+
+    throw new Error(
+      "Erro HTTP " +
+      resposta.status
+    );
+
+  }
+
+
+  return await resposta.json();
+
+}
+
+
+
+/* =====================================================
+   RECUPERAR USUÁRIO
+===================================================== */
+
+async function recuperarUsuario(){
+
+  /*
+   * Primeiro procura no armazenamento
+   * mais persistente do aplicativo.
+   */
+
+  const token =
+    await obterTokenIndexedDB();
+
+
+  /*
+   * NÃO EXISTE TOKEN
+   */
+
+  if(!token){
+
+    mostrarLogin();
+
+    return;
+
+  }
+
+
+  /*
+   * EXISTE TOKEN
+   *
+   * Envia para o Apps Script.
+   */
+
+  try{
+
+    const resposta =
+      await chamarAppsScript({
+
+        acao:
+          "validarToken",
+
+        token:
+          token
+
+      });
+
+
+    /*
+     * TOKEN INVÁLIDO
+     */
+
+    if(
+      !resposta ||
+      !resposta.sucesso
+    ){
+
+      await apagarToken();
+
+      mostrarLogin();
+
+      return;
+
+    }
+
+
+    /*
+     * TOKEN VÁLIDO
+     */
+
+    const nome =
+      resposta.nome ||
+      resposta.nomeCompleto ||
+      resposta.NOME ||
+      resposta["NOME COMPLETO"] ||
+      "Usuário";
+
+
+    const id =
+      resposta.id ||
+      resposta.idUsuario ||
+      resposta.ID ||
+      resposta.IDUSUARIO ||
+      resposta["ID USUARIO"] ||
+      "";
+
+
+    /*
+     * Salva novamente os dados
+     * retornados pelo servidor.
+     */
+
+    localStorage.setItem(
+      "usuario",
+      JSON.stringify(
+        resposta
+      )
+    );
+
+
+    localStorage.setItem(
+      "nomeUsuario",
+      nome
+    );
+
+
+    if(id){
+
+      localStorage.setItem(
+        "idUsuario",
+        String(id)
+      );
+
+    }
+
+
+    /*
+     * Se o Apps Script devolver
+     * um token novo, atualiza.
+     */
+
+    if(resposta.token){
+
+      await salvarToken(
+        resposta.token
+      );
+
+    }
+
+
+    /*
+     * Entra normalmente.
+     */
+
+    entrarNoSistema(
+      nome,
+      id
+    );
+
+  }
+  catch(erro){
+
+    console.error(
+      "Erro ao recuperar usuário:",
+      erro
+    );
+
+
+    /*
+     * Se não conseguiu consultar
+     * o Apps Script, mostra o login.
+     */
+
+    mostrarLogin();
+
+  }
+
+}
+
+
+
+/* =====================================================
+   LOGIN NORMAL
+===================================================== */
+
+async function login(){
+
+  const nome =
+    document
+      .getElementById(
+        "nome"
+      )
+      .value
+      .trim();
+
+
+  const cpf =
+    document
+      .getElementById(
+        "cpf"
+      )
+      .value
+      .trim();
+
+
+  const msg =
+    document.getElementById(
+      "msg"
+    );
+
+
+  const botao =
+    document.getElementById(
+      "btnLogin"
+    );
+
+
+  /*
+   * VALIDAÇÃO
+   */
+
+  if(!nome){
+
+    msg.textContent =
+      "Digite seu nome completo.";
+
+    return;
+
+  }
+
+
+  if(!cpf){
+
+    msg.textContent =
+      "Digite os 4 primeiros dígitos do CPF.";
+
+    return;
+
+  }
+
+
+  /*
+   * EVITA DUPLO CLIQUE
+   */
+
+  botao.disabled =
+    true;
+
+  botao.textContent =
+    "Verificando...";
+
+  msg.textContent =
+    "";
+
+
+  try{
+
+    /*
+     * Envia nome + CPF para
+     * o Apps Script.
+     */
+
+    const resposta =
+      await chamarAppsScript({
+
+        acao:
+          "validarLogin",
+
+        nome:
+          nome,
+
+        cpf:
+          cpf
+
+      });
+
+
+    /*
+     * LOGIN NEGADO
+     */
+
+    if(
+      !resposta ||
+      !resposta.sucesso
+    ){
+
+      msg.textContent =
+        resposta &&
+        resposta.mensagem
+          ? resposta.mensagem
+          : "Usuário não encontrado.";
+
+      botao.disabled =
+        false;
+
+      botao.textContent =
+        "Entrar";
+
+      return;
+
+    }
+
+
+    /*
+     * =================================================
+     * LOGIN ACEITO
+     * =================================================
+     */
+
+    const nomeUsuario =
+      resposta.nome ||
+      resposta.nomeCompleto ||
+      resposta.NOME ||
+      resposta["NOME COMPLETO"] ||
+      "Usuário";
+
+
+    const idUsuario =
+      resposta.id ||
+      resposta.idUsuario ||
+      resposta.ID ||
+      resposta.IDUSUARIO ||
+      resposta["ID USUARIO"] ||
+      "";
+
+
+    /*
+     * Salva o objeto completo
+     */
+
+    localStorage.setItem(
+      "usuario",
+      JSON.stringify(
+        resposta
+      )
+    );
+
+
+    /*
+     * Salva nome
+     */
+
+    localStorage.setItem(
+      "nomeUsuario",
+      nomeUsuario
+    );
+
+
+    /*
+     * Salva ID
+     */
+
+    if(idUsuario){
+
+      localStorage.setItem(
+        "idUsuario",
+        String(idUsuario)
+      );
+
+    }
+
+
+    /*
+     * =================================================
+     * SALVA O TOKEN
+     * =================================================
+     */
+
+    if(resposta.token){
+
+      await salvarToken(
+        resposta.token
+      );
+
+    }
+
+
+    /*
+     * Entra normalmente.
+     */
+
+    entrarNoSistema(
+      nomeUsuario,
+      idUsuario
+    );
+
+  }
+  catch(erro){
+
+    console.error(
+      "Erro no login:",
+      erro
+    );
+
+
+    msg.textContent =
+      "Erro ao realizar login. Tente novamente.";
+
+
+    botao.disabled =
+      false;
+
+    botao.textContent =
+      "Entrar";
+
+  }
+
+}
+
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+recuperarUsuario();
+
+</script>
+
+</body>
+
+</html>
