@@ -1,16 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<title>Teste de Tokens</title>
+<title>Teste Token GitHub</title>
 
 <style>
 
@@ -22,78 +18,33 @@
 body{
   margin:0;
   padding:20px;
+  min-height:100vh;
   background:#f4f6f8;
-  color:#222;
-}
-
-.container{
-  max-width:600px;
-  margin:auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
 .card{
+  width:420px;
+  max-width:100%;
   background:white;
-  padding:22px;
-  margin-bottom:15px;
+  padding:30px;
   border-radius:12px;
-  box-shadow:0 4px 15px rgba(0,0,0,.12);
+  box-shadow:0 5px 20px rgba(0,0,0,.15);
 }
 
 h1{
-  margin-top:0;
-  color:#1565C0;
   text-align:center;
+  color:#1565C0;
 }
 
-.token{
-  background:#f1f3f5;
-  padding:12px;
+.status{
+  padding:15px;
+  margin-top:20px;
+  background:#f5f5f5;
   border-radius:8px;
   word-break:break-all;
-  font-size:13px;
-}
-
-button{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  border:0;
-  border-radius:8px;
-  background:#1565C0;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#0D47A1;
-}
-
-button.apagar{
-  background:#b71c1c;
-}
-
-.resultado{
-  margin-top:10px;
-  padding:12px;
-  border-radius:8px;
-  background:#f5f5f5;
-}
-
-.linha{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 0;
-  border-bottom:1px solid #ddd;
-}
-
-.linha:last-child{
-  border-bottom:0;
-}
-
-.nome{
-  font-weight:bold;
 }
 
 .ok{
@@ -106,839 +57,146 @@ button.apagar{
   font-weight:bold;
 }
 
-.info{
-  color:#555;
-  line-height:1.5;
-  font-size:14px;
-}
-
-#status{
-  text-align:center;
-  margin-top:15px;
-  font-weight:bold;
-}
-
 </style>
 
 </head>
 
 <body>
 
-<div class="container">
-
 <div class="card">
 
 <h1>
-Teste de Tokens
+Teste de Token
 </h1>
 
-<p class="info">
-
-Esta página testa quais formas de armazenamento
-conseguem guardar um token mesmo depois de fechar
-e abrir novamente o aplicativo.
-
+<p>
+Esta página aguarda um token enviado pelo
+Apps Script.
 </p>
 
-<div class="token">
-
-<strong>Token utilizado:</strong><br><br>
-
-<span id="token"></span>
-
-</div>
-
-<button onclick="cadastrarTudo()">
-CADASTRAR TOKEN EM TUDO
-</button>
-
-<button onclick="testarTudo()">
-TESTAR O QUE SOBROU
-</button>
-
-<button
-  class="apagar"
-  onclick="apagarTudo()"
+<div
+  id="status"
+  class="status"
 >
-APAGAR TODOS OS TESTES
-</button>
-
-<div id="status"></div>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-Resultado
-</h2>
-
-<div class="linha">
-  <span class="nome">localStorage</span>
-  <span id="localStorageResultado">---</span>
-</div>
-
-<div class="linha">
-  <span class="nome">IndexedDB</span>
-  <span id="indexedDBResultado">---</span>
-</div>
-
-<div class="linha">
-  <span class="nome">sessionStorage</span>
-  <span id="sessionStorageResultado">---</span>
-</div>
-
-<div class="linha">
-  <span class="nome">Cache Storage</span>
-  <span id="cacheResultado">---</span>
-</div>
-
-<div class="linha">
-  <span class="nome">Cookie</span>
-  <span id="cookieResultado">---</span>
-</div>
-
-<div class="linha">
-  <span class="nome">Persistência do navegador</span>
-  <span id="persistenciaResultado">---</span>
+Aguardando token...
 </div>
 
 </div>
-
-
-<div class="card">
-
-<h2>
-Informações
-</h2>
-
-<div id="informacoes" class="info">
-Aguardando teste...
-</div>
-
-</div>
-
-</div>
-
 
 <script>
 
+const CHAVE_TOKEN =
+  "tokenTesteAppsScript";
 
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
 
-const TOKEN =
-"e2118074-1e60-44d1-baed-70b8f1b37671";
+/*
+ * Recebe mensagem enviada pela página
+ * do Apps Script.
+ */
 
-const CHAVE =
-"testeTokenRH";
+window.addEventListener(
+  "message",
+  function(event){
 
-const NOME_BANCO =
-"TesteTokens";
-
-const NOME_STORE =
-"tokens";
-
-
-document.getElementById("token").textContent =
-TOKEN;
-
-
-
-/* =====================================================
-   INDEXEDDB
-===================================================== */
-
-function abrirBanco(){
-
-  return new Promise(
-    function(resolve,reject){
-
-      const request =
-        indexedDB.open(
-          NOME_BANCO,
-          1
-        );
-
-      request.onupgradeneeded =
-        function(event){
-
-          const db =
-            event.target.result;
-
-          if(
-            !db.objectStoreNames.contains(
-              NOME_STORE
-            )
-          ){
-
-            db.createObjectStore(
-              NOME_STORE
-            );
-
-          }
-
-        };
-
-      request.onsuccess =
-        function(){
-
-          resolve(
-            request.result
-          );
-
-        };
-
-      request.onerror =
-        function(){
-
-          reject(
-            request.error
-          );
-
-        };
-
-    }
-  );
-
-}
-
-
-
-/* =====================================================
-   INDEXEDDB SALVAR
-===================================================== */
-
-async function salvarIndexedDB(){
-
-  const db =
-    await abrirBanco();
-
-  return new Promise(
-    function(resolve,reject){
-
-      const transacao =
-        db.transaction(
-          NOME_STORE,
-          "readwrite"
-        );
-
-      const store =
-        transacao.objectStore(
-          NOME_STORE
-        );
-
-      store.put(
-        TOKEN,
-        CHAVE
-      );
-
-      transacao.oncomplete =
-        function(){
-
-          db.close();
-
-          resolve();
-
-        };
-
-      transacao.onerror =
-        function(){
-
-          db.close();
-
-          reject(
-            transacao.error
-          );
-
-        };
-
-    }
-  );
-
-}
-
-
-
-/* =====================================================
-   INDEXEDDB LER
-===================================================== */
-
-async function lerIndexedDB(){
-
-  const db =
-    await abrirBanco();
-
-  return new Promise(
-    function(resolve,reject){
-
-      const transacao =
-        db.transaction(
-          NOME_STORE,
-          "readonly"
-        );
-
-      const store =
-        transacao.objectStore(
-          NOME_STORE
-        );
-
-      const request =
-        store.get(
-          CHAVE
-        );
-
-      request.onsuccess =
-        function(){
-
-          db.close();
-
-          resolve(
-            request.result || ""
-          );
-
-        };
-
-      request.onerror =
-        function(){
-
-          db.close();
-
-          reject(
-            request.error
-          );
-
-        };
-
-    }
-  );
-
-}
-
-
-
-/* =====================================================
-   CACHE STORAGE SALVAR
-===================================================== */
-
-async function salvarCache(){
-
-  const cache =
-    await caches.open(
-      "teste-tokens"
+    console.log(
+      "Mensagem recebida:",
+      event.data
     );
 
-  await cache.put(
 
-    new Request(
-      "https://teste-token.local/token"
-    ),
+    if(!event.data){
+      return;
+    }
 
-    new Response(
-      TOKEN
-    )
-
-  );
-
-}
-
-
-
-/* =====================================================
-   CACHE STORAGE LER
-===================================================== */
-
-async function lerCache(){
-
-  const cache =
-    await caches.open(
-      "teste-tokens"
-    );
-
-  const resposta =
-    await cache.match(
-      new Request(
-        "https://teste-token.local/token"
-      )
-    );
-
-  if(!resposta){
-    return "";
-  }
-
-  return await resposta.text();
-
-}
-
-
-
-/* =====================================================
-   COOKIE SALVAR
-===================================================== */
-
-function salvarCookie(){
-
-  document.cookie =
-    CHAVE +
-    "=" +
-    encodeURIComponent(TOKEN) +
-    "; max-age=31536000; path=/; SameSite=Lax";
-
-}
-
-
-
-/* =====================================================
-   COOKIE LER
-===================================================== */
-
-function lerCookie(){
-
-  const cookies =
-    document.cookie.split(";");
-
-  for(
-    const cookie of cookies
-  ){
-
-    const partes =
-      cookie.trim().split("=");
 
     if(
-      partes[0] === CHAVE
+      event.data.tipo !==
+      "TOKEN_APPS_SCRIPT"
     ){
 
-      return decodeURIComponent(
-        partes.slice(1).join("=")
-      );
+      return;
 
     }
 
-  }
 
-  return "";
-
-}
+    const token =
+      event.data.token;
 
 
+    if(!token){
 
-/* =====================================================
-   CADASTRAR TUDO
-===================================================== */
+      document.getElementById(
+        "status"
+      ).innerHTML =
+        '<span class="erro">' +
+        '❌ Token vazio' +
+        '</span>';
 
-async function cadastrarTudo(){
+      return;
 
-  const status =
-    document.getElementById(
-      "status"
-    );
+    }
 
-  status.textContent =
-    "Cadastrando token...";
 
-  try{
+    /*
+     * SALVA NO LOCALSTORAGE
+     */
 
     localStorage.setItem(
-      CHAVE,
-      TOKEN
+      CHAVE_TOKEN,
+      token
     );
 
-  }
-  catch(erro){}
 
-
-
-  try{
-
-    await salvarIndexedDB();
-
-  }
-  catch(erro){}
-
-
-
-  try{
-
-    sessionStorage.setItem(
-      CHAVE,
-      TOKEN
-    );
-
-  }
-  catch(erro){}
-
-
-
-  try{
-
-    await salvarCache();
-
-  }
-  catch(erro){}
-
-
-
-  try{
-
-    salvarCookie();
-
-  }
-  catch(erro){}
-
-
-
-  try{
-
-    if(
-      navigator.storage &&
-      navigator.storage.persist
-    ){
-
-      const persistente =
-        await navigator.storage.persist();
-
-      document.getElementById(
-        "persistenciaResultado"
-      ).textContent =
-        persistente
-          ? "ATIVA"
-          : "NÃO GARANTIDA";
-
-    }
-
-  }
-  catch(erro){}
-
-
-
-  status.textContent =
-    "TOKEN CADASTRADO. Agora feche completamente e abra novamente.";
-
-  await testarTudo();
-
-}
-
-
-
-/* =====================================================
-   TESTAR TUDO
-===================================================== */
-
-async function testarTudo(){
-
-  atualizar(
-    "localStorageResultado",
-    tentarLocalStorage()
-  );
-
-
-  try{
-
-    const valor =
-      await lerIndexedDB();
-
-    atualizar(
-      "indexedDBResultado",
-      valor === TOKEN
-    );
-
-  }
-  catch(erro){
-
-    atualizar(
-      "indexedDBResultado",
-      false
-    );
-
-  }
-
-
-  atualizar(
-    "sessionStorageResultado",
-    tentarSessionStorage()
-  );
-
-
-  try{
-
-    const valor =
-      await lerCache();
-
-    atualizar(
-      "cacheResultado",
-      valor === TOKEN
-    );
-
-  }
-  catch(erro){
-
-    atualizar(
-      "cacheResultado",
-      false
-    );
-
-  }
-
-
-  atualizar(
-    "cookieResultado",
-    lerCookie() === TOKEN
-  );
-
-
-  try{
-
-    if(
-      navigator.storage &&
-      navigator.storage.persisted
-    ){
-
-      const persistente =
-        await navigator.storage.persisted();
-
-      document.getElementById(
-        "persistenciaResultado"
-      ).textContent =
-        persistente
-          ? "ATIVA"
-          : "NÃO ATIVA";
-
-    }
-
-  }
-  catch(erro){}
-
-
-
-  const info =
     document.getElementById(
-      "informacoes"
-    );
+      "status"
+    ).innerHTML =
 
-  info.innerHTML =
+      '<span class="ok">' +
+      '✅ TOKEN RECEBIDO E SALVO' +
+      '</span>' +
 
-    "<strong>Origem:</strong> " +
-    location.origin +
+      '<br><br>' +
 
-    "<br><br>" +
+      '<strong>Token:</strong><br>' +
 
-    "<strong>Modo PWA:</strong> " +
-    (
-      window.matchMedia(
-        "(display-mode: standalone)"
-      ).matches
-      ? "SIM"
-      : "NÃO"
-    ) +
-
-    "<br><br>" +
-
-    "<strong>Navegador:</strong> " +
-    navigator.userAgent;
-
-}
-
-
-
-/* =====================================================
-   LOCAL STORAGE
-===================================================== */
-
-function tentarLocalStorage(){
-
-  try{
-
-    return (
-      localStorage.getItem(
-        CHAVE
-      ) === TOKEN
-    );
+      token;
 
   }
-  catch(erro){
+);
 
-    return false;
 
-  }
-
-}
-
-
-
-/* =====================================================
-   SESSION STORAGE
-===================================================== */
-
-function tentarSessionStorage(){
-
-  try{
-
-    return (
-      sessionStorage.getItem(
-        CHAVE
-      ) === TOKEN
-    );
-
-  }
-  catch(erro){
-
-    return false;
-
-  }
-
-}
-
-
-
-/* =====================================================
-   ATUALIZAR RESULTADO
-===================================================== */
-
-function atualizar(
-  elemento,
-  passou
-){
-
-  const el =
-    document.getElementById(
-      elemento
-    );
-
-  if(passou){
-
-    el.textContent =
-      "✅ SOBROU";
-
-    el.className =
-      "ok";
-
-  }
-  else{
-
-    el.textContent =
-      "❌ NÃO SOBROU";
-
-    el.className =
-      "erro";
-
-  }
-
-}
-
-
-
-/* =====================================================
-   APAGAR TUDO
-===================================================== */
-
-async function apagarTudo(){
-
-  try{
-
-    localStorage.removeItem(
-      CHAVE
-    );
-
-  }
-  catch(erro){}
-
-
-  try{
-
-    sessionStorage.removeItem(
-      CHAVE
-    );
-
-  }
-  catch(erro){}
-
-
-  try{
-
-    const db =
-      await abrirBanco();
-
-    await new Promise(
-      function(resolve){
-
-        const transacao =
-          db.transaction(
-            NOME_STORE,
-            "readwrite"
-          );
-
-        transacao
-          .objectStore(
-            NOME_STORE
-          )
-          .delete(
-            CHAVE
-          );
-
-        transacao.oncomplete =
-          resolve;
-
-        transacao.onerror =
-          resolve;
-
-      }
-    );
-
-    db.close();
-
-  }
-  catch(erro){}
-
-
-  try{
-
-    const cache =
-      await caches.open(
-        "teste-tokens"
-      );
-
-    await cache.delete(
-      new Request(
-        "https://teste-token.local/token"
-      )
-    );
-
-  }
-  catch(erro){}
-
-
-  try{
-
-    document.cookie =
-      CHAVE +
-      "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-  }
-  catch(erro){}
-
-
-  document.getElementById(
-    "status"
-  ).textContent =
-    "Todos os testes foram apagados.";
-
-  await testarTudo();
-
-}
-
-
-
-/* =====================================================
-   TESTAR AUTOMATICAMENTE AO ABRIR
-===================================================== */
+/*
+ * Ao abrir novamente,
+ * verifica se o token continua salvo.
+ */
 
 window.addEventListener(
   "load",
   function(){
 
-    testarTudo();
+    const token =
+      localStorage.getItem(
+        CHAVE_TOKEN
+      );
+
+
+    if(token){
+
+      document.getElementById(
+        "status"
+      ).innerHTML =
+
+        '<span class="ok">' +
+        '✅ TOKEN CONTINUA SALVO' +
+        '</span>' +
+
+        '<br><br>' +
+
+        '<strong>Token:</strong><br>' +
+
+        token;
+
+    }
 
   }
 );
