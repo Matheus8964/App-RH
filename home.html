@@ -780,6 +780,158 @@
     }
 
 
+    /* =====================================================
+       INÍCIO MODAL DE TESTE
+       APAGAR ESTE BLOCO DEPOIS DOS TESTES
+    ====================================================== */
+
+    .modal-teste {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 10000;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 20px;
+
+      background:
+        rgba(15,23,42,0.72);
+
+      backdrop-filter:
+        blur(5px);
+
+      -webkit-backdrop-filter:
+        blur(5px);
+    }
+
+
+    .modal-teste.hidden {
+
+      display: none;
+    }
+
+
+    .modal-teste-caixa {
+
+      width: 100%;
+
+      max-width: 430px;
+
+      background: white;
+
+      border-radius: 22px;
+
+      padding: 22px;
+
+      box-shadow:
+        0 25px 70px
+        rgba(0,0,0,0.30);
+    }
+
+
+    .modal-teste-titulo {
+
+      font-size: 19px;
+
+      font-weight: 800;
+
+      color: #0f172a;
+
+      margin-bottom: 7px;
+    }
+
+
+    .modal-teste-subtitulo {
+
+      font-size: 12px;
+
+      color: #64748b;
+
+      margin-bottom: 18px;
+    }
+
+
+    .modal-teste-item {
+
+      margin-bottom: 12px;
+
+      padding: 12px;
+
+      border-radius: 12px;
+
+      background: #f8fafc;
+
+      border: 1px solid #e2e8f0;
+
+      word-break: break-word;
+    }
+
+
+    .modal-teste-label {
+
+      display: block;
+
+      font-size: 10px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.7px;
+
+      color: #64748b;
+
+      margin-bottom: 5px;
+    }
+
+
+    .modal-teste-valor {
+
+      font-size: 12px;
+
+      color: #0f172a;
+
+      font-weight: 600;
+
+      line-height: 1.4;
+    }
+
+
+    .modal-teste-botao {
+
+      width: 100%;
+
+      border: 0;
+
+      border-radius: 13px;
+
+      padding: 13px;
+
+      margin-top: 6px;
+
+      background: #0f172a;
+
+      color: white;
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    /* =====================================================
+       FIM MODAL DE TESTE
+       APAGAR ESTE BLOCO DEPOIS DOS TESTES
+    ====================================================== */
+
+
     /* ================================
        TELAS PEQUENAS
     ================================= */
@@ -1013,6 +1165,109 @@
 
 
   <!-- =====================================================
+       INÍCIO MODAL DE TESTE
+       APAGAR ESTE BLOCO DEPOIS DOS TESTES
+  ====================================================== -->
+
+  <div
+    class="modal-teste hidden"
+    id="modalTeste"
+  >
+
+    <div class="modal-teste-caixa">
+
+      <div class="modal-teste-titulo">
+        🔐 Teste do armazenamento
+      </div>
+
+      <div class="modal-teste-subtitulo">
+        Dados encontrados no Local Storage
+      </div>
+
+
+      <div class="modal-teste-item">
+
+        <span class="modal-teste-label">
+          Token
+        </span>
+
+        <div
+          class="modal-teste-valor"
+          id="testeToken"
+        >
+          --
+        </div>
+
+      </div>
+
+
+      <div class="modal-teste-item">
+
+        <span class="modal-teste-label">
+          Nome
+        </span>
+
+        <div
+          class="modal-teste-valor"
+          id="testeNome"
+        >
+          --
+        </div>
+
+      </div>
+
+
+      <div class="modal-teste-item">
+
+        <span class="modal-teste-label">
+          ID
+        </span>
+
+        <div
+          class="modal-teste-valor"
+          id="testeId"
+        >
+          --
+        </div>
+
+      </div>
+
+
+      <div class="modal-teste-item">
+
+        <span class="modal-teste-label">
+          Usuário completo
+        </span>
+
+        <div
+          class="modal-teste-valor"
+          id="testeUsuario"
+        >
+          --
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="modal-teste-botao"
+        onclick="fecharModalTeste()"
+      >
+        OK, continuar
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- =====================================================
+       FIM MODAL DE TESTE
+       APAGAR ESTE BLOCO DEPOIS DOS TESTES
+  ====================================================== -->
+
+
+  <!-- =====================================================
        APLICATIVO
   ====================================================== -->
 
@@ -1208,7 +1463,12 @@
 
         </button>
 
-<button
+
+        <!-- =================================================
+             ASSINATURA
+        ================================================== -->
+
+        <button
           class="menu-button"
           type="button"
           onclick="abrirPagina('upload', this)"
@@ -1237,6 +1497,8 @@
           </div>
 
         </button>
+
+
         <!-- =================================================
              ATESTADO
         ================================================== -->
@@ -1446,271 +1708,344 @@
 
 
     /* =====================================================
-       CARREGAR USUÁRIO
+       CARREGAR USUÁRIO + TOKEN
     ====================================================== */
 
     function carregarUsuario() {
 
-  /*
-   * ===================================================
-   * LÊ OS PARÂMETROS DA URL
-   *
-   * Exemplo:
-   *
-   * home.html?nome=Joao&id=001
-   * ===================================================
-   */
 
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
+      /*
+       * ===================================================
+       * LÊ OS PARÂMETROS DA URL
+       *
+       * Exemplo:
+       *
+       * home.html?nome=Joao&id=001&token=ABC123
+       * ===================================================
+       */
 
-
-  const nomeURL =
-    params.get("nome");
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
 
 
-  const idURL =
-    params.get("id");
+      const nomeURL =
+        params.get("nome");
 
 
-  /*
-   * ===================================================
-   * ELEMENTOS DA TELA
-   * ===================================================
-   */
-
-  const elementoNome =
-    document.getElementById(
-      "nomeUsuario"
-    );
+      const idURL =
+        params.get("id");
 
 
-  const elementoId =
-    document.getElementById(
-      "idUsuario"
-    );
+      const tokenURL =
+        params.get("token");
 
 
-  /*
-   * ===================================================
-   * TENTA RECUPERAR O USUÁRIO COMPLETO
-   * DO LOCALSTORAGE
-   * ===================================================
-   */
+      /*
+       * ===================================================
+       * ELEMENTOS DA TELA
+       * ===================================================
+       */
 
-  let usuario = null;
+      const elementoNome =
+        document.getElementById(
+          "nomeUsuario"
+        );
 
 
-  try {
+      const elementoId =
+        document.getElementById(
+          "idUsuario"
+        );
 
-    const dados =
-      localStorage.getItem(
-        "usuario"
+
+      /*
+       * ===================================================
+       * TENTA RECUPERAR O USUÁRIO COMPLETO
+       * DO LOCALSTORAGE
+       * ===================================================
+       */
+
+      let usuario = null;
+
+
+      try {
+
+        const dados =
+          localStorage.getItem(
+            "usuario"
+          );
+
+
+        if (dados) {
+
+          usuario =
+            JSON.parse(dados);
+
+        }
+
+      } catch (erro) {
+
+        console.error(
+          "Erro ao ler usuário:",
+          erro
+        );
+
+      }
+
+
+      /*
+       * ===================================================
+       * VARIÁVEIS
+       * ===================================================
+       */
+
+      let nome = "";
+
+      let id = "";
+
+
+      /*
+       * ===================================================
+       * PEGA NOME E ID DO USUÁRIO
+       * ===================================================
+       */
+
+      if (usuario) {
+
+        nome =
+          usuario.nome ||
+          usuario.nomeCompleto ||
+          usuario.NOME ||
+          usuario["NOME COMPLETO"] ||
+          "";
+
+
+        id =
+          usuario.id ||
+          usuario.idUsuario ||
+          usuario.ID ||
+          usuario.IDUSUARIO ||
+          usuario["ID USUARIO"] ||
+          "";
+
+      }
+
+
+      /*
+       * ===================================================
+       * SE NÃO ENCONTROU O NOME NO LOCALSTORAGE,
+       * PEGA DA URL
+       * ===================================================
+       */
+
+      if (
+        !nome &&
+        nomeURL
+      ) {
+
+        nome =
+          nomeURL;
+
+      }
+
+
+      /*
+       * ===================================================
+       * SE NÃO ENCONTROU O ID NO LOCALSTORAGE,
+       * PEGA DA URL
+       * ===================================================
+       */
+
+      if (
+        !id &&
+        idURL
+      ) {
+
+        id =
+          idURL;
+
+      }
+
+
+      /*
+       * ===================================================
+       * SALVA NOME
+       * ===================================================
+       */
+
+      if (
+        nome &&
+        String(nome).trim() !== ""
+      ) {
+
+        nome =
+          String(nome).trim();
+
+
+        localStorage.setItem(
+          "nomeUsuario",
+          nome
+        );
+
+      }
+
+
+      /*
+       * ===================================================
+       * SALVA ID
+       * ===================================================
+       */
+
+      if (
+        id &&
+        String(id).trim() !== ""
+      ) {
+
+        id =
+          String(id).trim();
+
+
+        localStorage.setItem(
+          "idUsuario",
+          id
+        );
+
+      }
+
+
+      /*
+       * ===================================================
+       * TOKEN
+       *
+       * SE VEIO NA URL:
+       *   SALVA/ATUALIZA
+       *
+       * SE NÃO VEIO:
+       *   MANTÉM O TOKEN JÁ EXISTENTE
+       * ===================================================
+       */
+
+      let tokenSalvo = "";
+
+
+      try {
+
+        tokenSalvo =
+          localStorage.getItem(
+            "tokenUsuario"
+          ) || "";
+
+
+        /*
+         * Se o login enviou um token novo
+         * pela URL, salva esse token.
+         */
+
+        if (
+          tokenURL &&
+          String(tokenURL).trim() !== ""
+        ) {
+
+          tokenSalvo =
+            String(tokenURL).trim();
+
+
+          localStorage.setItem(
+            "tokenUsuario",
+            tokenSalvo
+          );
+
+        }
+
+      } catch (erro) {
+
+        console.error(
+          "Erro ao salvar token:",
+          erro
+        );
+
+      }
+
+
+      /*
+       * ===================================================
+       * MOSTRA NOME
+       * ===================================================
+       */
+
+      if (elementoNome) {
+
+        elementoNome.textContent =
+          nome ||
+          "Usuário";
+
+      }
+
+
+      /*
+       * ===================================================
+       * MOSTRA ID
+       * ===================================================
+       */
+
+      if (elementoId) {
+
+        elementoId.textContent =
+          "ID: " +
+          (
+            id ||
+            "Não informado"
+          );
+
+      }
+
+
+      /*
+       * ===================================================
+       * REMOVE OS PARÂMETROS DA URL
+       *
+       * IMPORTANTE:
+       *
+       * O TOKEN JÁ FOI SALVO ANTES DE REMOVER A URL.
+       *
+       * Depois disso a página fica:
+       *
+       * home.html
+       *
+       * ===================================================
+       */
+
+      if (
+        params.has("nome") ||
+        params.has("id") ||
+        params.has("token")
+      ) {
+
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+
+      }
+
+
+      /*
+       * ===================================================
+       * ABRE O MODAL DE TESTE
+       * ===================================================
+       */
+
+      abrirModalTeste(
+        tokenSalvo,
+        nome,
+        id,
+        usuario
       );
-
-
-    if (dados) {
-
-      usuario =
-        JSON.parse(dados);
 
     }
-
-  } catch (erro) {
-
-    console.error(
-      "Erro ao ler usuário:",
-      erro
-    );
-
-  }
-
-
-  /*
-   * ===================================================
-   * VARIÁVEIS
-   * ===================================================
-   */
-
-  let nome = "";
-
-  let id = "";
-
-
-  /*
-   * ===================================================
-   * PEGA NOME E ID DO USUÁRIO
-   * ===================================================
-   */
-
-  if (usuario) {
-
-    nome =
-      usuario.nome ||
-      usuario.nomeCompleto ||
-      usuario.NOME ||
-      usuario["NOME COMPLETO"] ||
-      "";
-
-
-    id =
-      usuario.id ||
-      usuario.idUsuario ||
-      usuario.ID ||
-      usuario.IDUSUARIO ||
-      usuario["ID USUARIO"] ||
-      "";
-
-  }
-
-
-  /*
-   * ===================================================
-   * SE NÃO ENCONTROU O NOME NO LOCALSTORAGE,
-   * PEGA DA URL
-   * ===================================================
-   */
-
-  if (
-    !nome &&
-    nomeURL
-  ) {
-
-    nome =
-      nomeURL;
-
-  }
-
-
-  /*
-   * ===================================================
-   * SE NÃO ENCONTROU O ID NO LOCALSTORAGE,
-   * PEGA DA URL
-   * ===================================================
-   */
-
-  if (
-    !id &&
-    idURL
-  ) {
-
-    id =
-      idURL;
-
-  }
-
-
-  /*
-   * ===================================================
-   * LIMPA E SALVA NOME
-   * ===================================================
-   */
-
-  if (
-    nome &&
-    String(nome).trim() !== ""
-  ) {
-
-    nome =
-      String(nome).trim();
-
-
-    localStorage.setItem(
-      "nomeUsuario",
-      nome
-    );
-
-  }
-
-
-  /*
-   * ===================================================
-   * LIMPA E SALVA ID
-   * ===================================================
-   */
-
-  if (
-    id &&
-    String(id).trim() !== ""
-  ) {
-
-    id =
-      String(id).trim();
-
-
-    localStorage.setItem(
-      "idUsuario",
-      id
-    );
-
-  }
-
-
-  /*
-   * ===================================================
-   * MOSTRA NOME
-   * ===================================================
-   */
-
-  if (elementoNome) {
-
-    elementoNome.textContent =
-      nome ||
-      "Usuário";
-
-  }
-
-
-  /*
-   * ===================================================
-   * MOSTRA ID
-   * ===================================================
-   */
-
-  if (elementoId) {
-
-    elementoId.textContent =
-      "ID: " +
-      (
-        id ||
-        "Não informado"
-      );
-
-  }
-
-
-  /*
-   * ===================================================
-   * REMOVE OS PARÂMETROS DA URL
-   *
-   * Exemplo:
-   *
-   * ANTES:
-   * home.html?nome=Joao&id=001
-   *
-   * DEPOIS:
-   * home.html
-   *
-   * Os dados continuam salvos no localStorage.
-   * ===================================================
-   */
-
-  if (
-    params.has("nome") ||
-    params.has("id")
-  ) {
-
-    window.history.replaceState(
-      {},
-      document.title,
-      window.location.pathname
-    );
-
-  }
-
-}
 
 
     /* =====================================================
@@ -1745,6 +2080,7 @@
 
         alarme:
           "./alarme.html",
+
         upload:
           "./upload.html"
 
@@ -1775,6 +2111,146 @@
         destino;
 
     }
+
+
+    /* =====================================================
+       INÍCIO MODAL DE TESTE
+       APAGAR ESTAS FUNÇÕES DEPOIS DOS TESTES
+    ====================================================== */
+
+
+    function abrirModalTeste(
+      token,
+      nome,
+      id,
+      usuario
+    ) {
+
+
+      const modal =
+        document.getElementById(
+          "modalTeste"
+        );
+
+
+      if (!modal) {
+
+        return;
+
+      }
+
+
+      const elementoToken =
+        document.getElementById(
+          "testeToken"
+        );
+
+
+      const elementoNome =
+        document.getElementById(
+          "testeNome"
+        );
+
+
+      const elementoId =
+        document.getElementById(
+          "testeId"
+        );
+
+
+      const elementoUsuario =
+        document.getElementById(
+          "testeUsuario"
+        );
+
+
+      if (elementoToken) {
+
+        elementoToken.textContent =
+          token ||
+          "❌ Nenhum token salvo";
+
+      }
+
+
+      if (elementoNome) {
+
+        elementoNome.textContent =
+          nome ||
+          "❌ Nenhum nome salvo";
+
+      }
+
+
+      if (elementoId) {
+
+        elementoId.textContent =
+          id ||
+          "❌ Nenhum ID salvo";
+
+      }
+
+
+      if (elementoUsuario) {
+
+        if (usuario) {
+
+          try {
+
+            elementoUsuario.textContent =
+              JSON.stringify(
+                usuario,
+                null,
+                2
+              );
+
+          } catch (erro) {
+
+            elementoUsuario.textContent =
+              "Usuário encontrado";
+
+          }
+
+        } else {
+
+          elementoUsuario.textContent =
+            "❌ Nenhum objeto 'usuario' salvo";
+
+        }
+
+      }
+
+
+      modal.classList.remove(
+        "hidden"
+      );
+
+    }
+
+
+    function fecharModalTeste() {
+
+      const modal =
+        document.getElementById(
+          "modalTeste"
+        );
+
+
+      if (modal) {
+
+        modal.classList.add(
+          "hidden"
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       FIM MODAL DE TESTE
+       APAGAR ESTAS FUNÇÕES DEPOIS DOS TESTES
+    ====================================================== */
 
 
     /* =====================================================
