@@ -56,44 +56,360 @@
   </main>
 
   <script>
-    const frame = document.getElementById('siteFrame');
-    const loading = document.getElementById('loading');
-    const offline = document.getElementById('offline');
-    const installButton = document.getElementById('install');
+  const frame = document.getElementById('siteFrame');
+  const loading = document.getElementById('loading');
+  const offline = document.getElementById('offline');
+  const installButton = document.getElementById('install');
 
-    frame.addEventListener('load', () => loading.classList.add('hidden'));
 
-    function updateConnection() {
-      offline.style.display = navigator.onLine ? 'none' : 'block';
+  // =====================================================
+  // CARREGAR DADOS DO INDEXEDDB
+  // =====================================================
+
+  function verificarIndexedDB() {
+
+    console.log("======================================");
+    console.log("🔎 VERIFICANDO INDEXEDDB");
+    console.log("======================================");
+
+
+    if (!window.indexedDB) {
+
+      console.error(
+        "❌ IndexedDB não está disponível neste navegador."
+      );
+
+      return;
     }
-    window.addEventListener('online', updateConnection);
-    window.addEventListener('offline', updateConnection);
-    updateConnection();
 
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(console.error);
+
+    const request = indexedDB.open("AppRH");
+
+
+    request.onsuccess = function(event) {
+
+      const db = event.target.result;
+
+      console.log("✅ Banco IndexedDB encontrado.");
+      console.log("📦 Nome do banco:", db.name);
+      console.log(
+        "📚 Object Stores:",
+        Array.from(db.objectStoreNames)
+      );
+
+
+      if (db.objectStoreNames.length === 0) {
+
+        console.warn(
+          "⚠️ O banco existe, mas não possui Object Store."
+        );
+
+        db.close();
+
+        return;
+      }
+
+
+      /*
+       * Tenta ler todas as Object Stores existentes.
+       */
+
+      Array.from(db.objectStoreNames).forEach(function(nomeStore) {
+
+        console.log("");
+        console.log(
+          "📂 Lendo Object Store:",
+          nomeStore
+        );
+
+
+        try {
+
+          const transaction =
+            db.transaction(
+              nomeStore,
+              "readonly"
+            );
+
+
+          const store =
+            transaction.objectStore(
+              nomeStore
+            );
+
+
+          const requestDados =
+            store.getAll();
+
+
+          requestDados.onsuccess =
+            function() {
+
+              console.log(
+                "📋 DADOS SALVOS NO INDEXEDDB [" +
+                nomeStore +
+                "]:",
+                requestDados.result
+              );
+
+
+              if (
+                !requestDados.result ||
+                requestDados.result.length === 0
+              ) {
+
+                console.warn(
+                  "⚠️ Nenhum dado encontrado nesta Object Store."
+                );
+
+              }
+
+            };
+
+
+          requestDados.onerror =
+            function() {
+
+              console.error(
+                "❌ Erro ao ler Object Store:",
+                nomeStore,
+                requestDados.error
+              );
+
+            };
+
+
+        } catch (erro) {
+
+          console.error(
+            "❌ Erro ao acessar Object Store:",
+            nomeStore,
+            erro
+          );
+
+        }
+
       });
+
+
+      console.log("");
+      console.log(
+        "======================================"
+      );
+      console.log(
+        "🔎 FIM DA VERIFICAÇÃO DO INDEXEDDB"
+      );
+      console.log(
+        "======================================"
+      );
+
+
+      /*
+       * NÃO fecha imediatamente aqui porque
+       * as leituras das Object Stores ainda
+       * podem estar acontecendo.
+       */
+
+
+      setTimeout(function() {
+
+        try {
+          db.close();
+        } catch (e) {}
+
+      }, 1000);
+
+    };
+
+
+    request.onerror = function(event) {
+
+      console.error(
+        "❌ Não foi possível abrir o IndexedDB:",
+        event.target.error
+      );
+
+    };
+
+
+    request.onupgradeneeded = function(event) {
+
+      const db = event.target.result;
+
+      console.warn(
+        "⚠️ O banco AppRH ainda não estava criado."
+      );
+
+      console.warn(
+        "Object Stores existentes:",
+        Array.from(db.objectStoreNames)
+      );
+
+    };
+
+  }
+
+
+  // =====================================================
+  // IFRAME
+  // =====================================================
+
+  frame.addEventListener(
+    'load',
+    () => {
+
+      loading.classList.add(
+        'hidden'
+      );
+
+      console.log(
+        "🌐 Iframe carregado."
+      );
+
     }
+  );
 
-    let deferredPrompt = null;
-    window.addEventListener('beforeinstallprompt', (event) => {
+
+  // =====================================================
+  // CONEXÃO
+  // =====================================================
+
+  function updateConnection() {
+
+    offline.style.display =
+      navigator.onLine
+        ? 'none'
+        : 'block';
+
+  }
+
+
+  window.addEventListener(
+    'online',
+    updateConnection
+  );
+
+
+  window.addEventListener(
+    'offline',
+    updateConnection
+  );
+
+
+  updateConnection();
+
+
+  // =====================================================
+  // SERVICE WORKER
+  // =====================================================
+
+  if ('serviceWorker' in navigator) {
+
+    window.addEventListener(
+      'load',
+      () => {
+
+        navigator.serviceWorker
+          .register('./sw.js')
+          .then(function(registration) {
+
+            console.log(
+              "✅ Service Worker registrado:",
+              registration.scope
+            );
+
+          })
+          .catch(function(error) {
+
+            console.error(
+              "❌ Erro no Service Worker:",
+              error
+            );
+
+          });
+
+      }
+    );
+
+  }
+
+
+  // =====================================================
+  // INSTALAÇÃO PWA
+  // =====================================================
+
+  let deferredPrompt = null;
+
+
+  window.addEventListener(
+    'beforeinstallprompt',
+    (event) => {
+
       event.preventDefault();
+
       deferredPrompt = event;
-      installButton.style.display = 'block';
-    });
 
-    installButton.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
+      installButton.style.display =
+        'block';
+
+    }
+  );
+
+
+  installButton.addEventListener(
+    'click',
+    async () => {
+
+      if (!deferredPrompt) {
+        return;
+      }
+
       deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
-      installButton.style.display = 'none';
-    });
 
-    window.addEventListener('appinstalled', () => {
-      installButton.style.display = 'none';
-    });
-  </script>
+      await deferredPrompt.userChoice;
+
+      deferredPrompt = null;
+
+      installButton.style.display =
+        'none';
+
+    }
+  );
+
+
+  window.addEventListener(
+    'appinstalled',
+    () => {
+
+      installButton.style.display =
+        'none';
+
+      console.log(
+        "📱 Aplicativo instalado."
+      );
+
+    }
+  );
+
+
+  // =====================================================
+  // INICIAR DIAGNÓSTICO
+  // =====================================================
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    function() {
+
+      console.log("");
+      console.log(
+        "🚀 App RH iniciado."
+      );
+
+      verificarIndexedDB();
+
+    }
+  );
+
+</script>
 </body>
 </html>
