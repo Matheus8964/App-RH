@@ -1,165 +1,457 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
   <meta name="theme-color" content="#0f172a">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="App RH">
-  <link rel="manifest" href="./manifest.json">
-  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+
+  <meta
+    name="mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+  >
+
+  <meta
+    name="apple-mobile-web-app-title"
+    content="App RH"
+  >
+
+  <link
+    rel="manifest"
+    href="./manifest.json"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    href="./icons/icon-192.png"
+  >
+
   <title>App RH</title>
+
+
   <style>
-    * { box-sizing: border-box; }
-    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; font-family: Arial, sans-serif; background: #0f172a; }
-    #app { width: 100%; height: 100%; position: relative; }
-    #siteFrame { width: 100%; height: 100%; border: 0; display: block; background: white; }
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    html,
+    body {
+
+      margin: 0;
+
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
+
+      font-family:
+        Arial,
+        sans-serif;
+
+      background:
+        #0f172a;
+
+    }
+
+
+    #app {
+
+      width: 100%;
+      height: 100%;
+
+      position: relative;
+
+    }
+
+
+    #siteFrame {
+
+      width: 100%;
+      height: 100%;
+
+      border: 0;
+
+      display: block;
+
+      background:
+        white;
+
+    }
+
+
     #loading {
-      position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 14px; background: #0f172a; color: white;
-      transition: opacity .25s ease;
-    }
-    #loading.hidden { opacity: 0; pointer-events: none; }
-    .spinner { width: 38px; height: 38px; border: 4px solid rgba(255,255,255,.25); border-top-color: white; border-radius: 50%; animation: spin .8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #offline {
-      display: none; position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 20;
-      padding: 12px 14px; border-radius: 12px; background: rgba(15,23,42,.95); color: white;
-      text-align: center; font-size: 14px;
-    }
-    #install {
-      display: none; position: fixed; right: 16px; bottom: 16px; z-index: 30;
-      border: 0; border-radius: 999px; padding: 12px 18px; background: #2563eb; color: white;
-      font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,.25); cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <main id="app">
-    <div id="loading">
-      <div class="spinner"></div>
-      <strong>Carregando...</strong>
-    </div>
 
-   <iframe
-  id="siteFrame"
-  title="Sistema RH"
-  src="https://script.google.com/a/*/macros/s/AKfycbzHA32fnNDd117Uc1SrRCZpGzz0L8YkIQ144SUpckVJ9t3eEaEHIbJYq3b0Ashnr5QyzQ/exec"
-  allow="fullscreen; clipboard-read; clipboard-write"
-  referrerpolicy="strict-origin-when-cross-origin">
-</iframe>
+      position: absolute;
 
-    <div id="offline">Sem conexão. </div>
-    <button id="install" type="button">Instalar aplicativo</button>
-  </main>
+      inset: 0;
 
-  <script>
-  const frame = document.getElementById('siteFrame');
-  const loading = document.getElementById('loading');
-  const offline = document.getElementById('offline');
-  const installButton = document.getElementById('install');
+      z-index: 100;
 
+      display: flex;
 
-  // =====================================================
-  // CARREGAR DADOS DO INDEXEDDB
-  // =====================================================
+      flex-direction: column;
 
-  function verificarIndexedDB() {
+      align-items: center;
 
-    console.log("======================================");
-    console.log("🔎 VERIFICANDO INDEXEDDB");
-    console.log("======================================");
+      justify-content: center;
 
+      gap: 14px;
 
-    if (!window.indexedDB) {
+      background:
+        #0f172a;
 
-      console.error(
-        "❌ IndexedDB não está disponível neste navegador."
-      );
+      color:
+        white;
 
-      return;
+      transition:
+        opacity .25s ease;
+
+      text-align: center;
+
+      padding:
+        20px;
+
     }
 
 
-    const request = indexedDB.open("AppRH");
+    #loading.hidden {
+
+      opacity: 0;
+
+      pointer-events: none;
+
+    }
 
 
-    request.onsuccess = function(event) {
+    .spinner {
 
-      const db = event.target.result;
+      width: 38px;
+      height: 38px;
 
-      console.log("✅ Banco IndexedDB encontrado.");
-      console.log("📦 Nome do banco:", db.name);
-      console.log(
-        "📚 Object Stores:",
-        Array.from(db.objectStoreNames)
-      );
+      border:
+        4px solid
+        rgba(255,255,255,.25);
+
+      border-top-color:
+        white;
+
+      border-radius:
+        50%;
+
+      animation:
+        spin .8s linear infinite;
+
+    }
 
 
-      if (db.objectStoreNames.length === 0) {
+    @keyframes spin {
 
-        console.warn(
-          "⚠️ O banco existe, mas não possui Object Store."
-        );
-
-        db.close();
-
-        return;
+      to {
+        transform:
+          rotate(360deg);
       }
 
-
-      /*
-       * Tenta ler todas as Object Stores existentes.
-       */
-
-      Array.from(db.objectStoreNames).forEach(function(nomeStore) {
-
-        console.log("");
-        console.log(
-          "📂 Lendo Object Store:",
-          nomeStore
-        );
+    }
 
 
-        try {
+    #loadingText {
 
-          const transaction =
-            db.transaction(
-              nomeStore,
-              "readonly"
+      font-size: 14px;
+
+      color:
+        rgba(255,255,255,.85);
+
+      line-height:
+        1.4;
+
+    }
+
+
+    #offline {
+
+      display: none;
+
+      position: absolute;
+
+      left: 12px;
+      right: 12px;
+
+      bottom: 12px;
+
+      z-index: 20;
+
+      padding:
+        12px
+        14px;
+
+      border-radius:
+        12px;
+
+      background:
+        rgba(15,23,42,.95);
+
+      color:
+        white;
+
+      text-align:
+        center;
+
+      font-size:
+        14px;
+
+    }
+
+
+    #install {
+
+      display: none;
+
+      position: fixed;
+
+      right: 16px;
+      bottom: 16px;
+
+      z-index: 30;
+
+      border: 0;
+
+      border-radius:
+        999px;
+
+      padding:
+        12px
+        18px;
+
+      background:
+        #2563eb;
+
+      color:
+        white;
+
+      font-weight:
+        700;
+
+      box-shadow:
+        0 8px 24px
+        rgba(0,0,0,.25);
+
+      cursor:
+        pointer;
+
+    }
+
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <main id="app">
+
+
+    <!-- =================================================
+         LOADING
+    ================================================== -->
+
+    <div id="loading">
+
+      <div class="spinner"></div>
+
+      <strong>
+        App RH
+      </strong>
+
+      <div id="loadingText">
+        Verificando acesso...
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         IFRAME
+    ================================================== -->
+
+    <iframe
+      id="siteFrame"
+      title="Sistema RH"
+      allow="fullscreen; clipboard-read; clipboard-write"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+
+
+    <!-- =================================================
+         OFFLINE
+    ================================================== -->
+
+    <div id="offline">
+      Sem conexão.
+    </div>
+
+
+    <!-- =================================================
+         INSTALAR
+    ================================================== -->
+
+    <button
+      id="install"
+      type="button"
+    >
+      Instalar aplicativo
+    </button>
+
+
+  </main>
+
+
+  <script>
+
+
+    /* =====================================================
+       CONFIGURAÇÃO
+    ===================================================== */
+
+    const URL_APP_RH =
+      "https://script.google.com/a/*/macros/s/AKfycbzHA32fnNDd117Uc1SrRCZpGzz0L8YkIQ144SUpckVJ9t3eEaEHIbJYq3b0Ashnr5QyzQ/exec";
+
+
+    const NOME_BANCO =
+      "AppRHDB";
+
+
+    const VERSAO_BANCO =
+      1;
+
+
+    const NOME_STORE =
+      "usuario";
+
+
+    const CHAVE_USUARIO =
+      "usuarioAtual";
+
+
+    const frame =
+      document.getElementById(
+        "siteFrame"
+      );
+
+
+    const loading =
+      document.getElementById(
+        "loading"
+      );
+
+
+    const loadingText =
+      document.getElementById(
+        "loadingText"
+      );
+
+
+    const offline =
+      document.getElementById(
+        "offline"
+      );
+
+
+    const installButton =
+      document.getElementById(
+        "install"
+      );
+
+
+    let redirecionamentoIniciado =
+      false;
+
+
+    /* =====================================================
+       MOSTRAR MENSAGEM
+    ===================================================== */
+
+    function mostrarMensagem(
+      mensagem
+    ) {
+
+      if(loadingText) {
+
+        loadingText.textContent =
+          mensagem;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       ABRIR INDEXEDDB
+    ===================================================== */
+
+    function abrirBancoRH() {
+
+      return new Promise(
+        function(resolve, reject) {
+
+          if(!window.indexedDB) {
+
+            reject(
+              new Error(
+                "IndexedDB não está disponível."
+              )
+            );
+
+            return;
+
+          }
+
+
+          const request =
+            indexedDB.open(
+              NOME_BANCO,
+              VERSAO_BANCO
             );
 
 
-          const store =
-            transaction.objectStore(
-              nomeStore
-            );
+          request.onupgradeneeded =
+            function(event) {
+
+              const db =
+                event.target.result;
 
 
-          const requestDados =
-            store.getAll();
-
-
-          requestDados.onsuccess =
-            function() {
-
-              console.log(
-                "📋 DADOS SALVOS NO INDEXEDDB [" +
-                nomeStore +
-                "]:",
-                requestDados.result
-              );
-
-
-              if (
-                !requestDados.result ||
-                requestDados.result.length === 0
+              if(
+                !db.objectStoreNames.contains(
+                  NOME_STORE
+                )
               ) {
 
-                console.warn(
-                  "⚠️ Nenhum dado encontrado nesta Object Store."
+                db.createObjectStore(
+                  NOME_STORE,
+                  {
+                    keyPath: "chave"
+                  }
                 );
 
               }
@@ -167,249 +459,549 @@
             };
 
 
-          requestDados.onerror =
-            function() {
+          request.onsuccess =
+            function(event) {
 
-              console.error(
-                "❌ Erro ao ler Object Store:",
-                nomeStore,
-                requestDados.error
+              resolve(
+                event.target.result
               );
 
             };
 
 
-        } catch (erro) {
+          request.onerror =
+            function(event) {
 
-          console.error(
-            "❌ Erro ao acessar Object Store:",
-            nomeStore,
-            erro
+              reject(
+                event.target.error ||
+                new Error(
+                  "Erro ao abrir IndexedDB."
+                )
+              );
+
+            };
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       LER USUÁRIO DO INDEXEDDB
+    ===================================================== */
+
+    async function obterUsuarioRH() {
+
+      const db =
+        await abrirBancoRH();
+
+
+      return new Promise(
+        function(resolve, reject) {
+
+
+          const transaction =
+            db.transaction(
+              [NOME_STORE],
+              "readonly"
+            );
+
+
+          const store =
+            transaction.objectStore(
+              NOME_STORE
+            );
+
+
+          const request =
+            store.get(
+              CHAVE_USUARIO
+            );
+
+
+          request.onsuccess =
+            function(event) {
+
+              resolve(
+                event.target.result ||
+                null
+              );
+
+            };
+
+
+          request.onerror =
+            function(event) {
+
+              reject(
+                event.target.error ||
+                new Error(
+                  "Erro ao buscar usuário."
+                )
+              );
+
+            };
+
+
+          transaction.oncomplete =
+            function() {
+
+              try {
+                db.close();
+              }
+              catch(e) {}
+
+            };
+
+
+          transaction.onerror =
+            function(event) {
+
+              reject(
+                event.target.error ||
+                new Error(
+                  "Erro na transação."
+                )
+              );
+
+            };
+
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       PEGAR TOKEN
+    ===================================================== */
+
+    async function obterTokenRH() {
+
+      try {
+
+        const usuario =
+          await obterUsuarioRH();
+
+
+        console.log(
+          "======================================"
+        );
+
+        console.log(
+          "🔎 APP RH - TOKEN"
+        );
+
+        console.log(
+          "======================================"
+        );
+
+        console.log(
+          "Usuário encontrado:",
+          usuario
+        );
+
+
+        if(!usuario) {
+
+          console.warn(
+            "⚠️ Nenhum usuário encontrado."
           );
+
+          return "";
 
         }
 
-      });
+
+        const token =
+          String(
+            usuario.token ||
+            ""
+          ).trim();
 
 
-      console.log("");
-      console.log(
-        "======================================"
+        console.log(
+          "Token encontrado:",
+          token
+        );
+
+
+        return token;
+
+
+      }
+      catch(erro) {
+
+        console.error(
+          "❌ Erro ao obter token:",
+          erro
+        );
+
+        return "";
+
+      }
+
+    }
+
+
+    /* =====================================================
+       REDIRECIONAR PARA O SISTEMA
+    ===================================================== */
+
+    async function iniciarSistema() {
+
+
+      if(redirecionamentoIniciado) {
+
+        return;
+
+      }
+
+
+      redirecionamentoIniciado =
+        true;
+
+
+      mostrarMensagem(
+        "Verificando token..."
       );
-      console.log(
-        "🔎 FIM DA VERIFICAÇÃO DO INDEXEDDB"
+
+
+      const token =
+        await obterTokenRH();
+
+
+      /* ===================================================
+         TOKEN ENCONTRADO
+      =================================================== */
+
+      if(token) {
+
+
+        console.log(
+          "======================================"
+        );
+
+        console.log(
+          "✅ TOKEN ENCONTRADO"
+        );
+
+        console.log(
+          "Redirecionando com token..."
+        );
+
+        console.log(
+          "======================================"
+        );
+
+
+        mostrarMensagem(
+          "Token encontrado. Redirecionando..."
+        );
+
+
+        /*
+         * encodeURIComponent evita problemas
+         * caso o token contenha caracteres especiais.
+         */
+
+        const urlComToken =
+          URL_APP_RH +
+          "?page=login&token=" +
+          encodeURIComponent(
+            token
+          );
+
+
+        console.log(
+          "URL FINAL:",
+          urlComToken
+        );
+
+
+        /*
+         * Pequeno atraso para que o usuário
+         * consiga visualizar a mensagem.
+         */
+
+        setTimeout(
+          function() {
+
+            window.location.replace(
+              urlComToken
+            );
+
+          },
+          700
+        );
+
+
+        return;
+
+      }
+
+
+      /* ===================================================
+         TOKEN NÃO ENCONTRADO
+      =================================================== */
+
+      console.warn(
+        "⚠️ TOKEN NÃO ENCONTRADO"
       );
-      console.log(
-        "======================================"
+
+
+      mostrarMensagem(
+        "Token não encontrado. Redirecionando..."
       );
 
 
       /*
-       * NÃO fecha imediatamente aqui porque
-       * as leituras das Object Stores ainda
-       * podem estar acontecendo.
+       * Sem token:
+       * vai para a URL normal.
        */
 
+      setTimeout(
+        function() {
 
-      setTimeout(function() {
+          window.location.replace(
+            URL_APP_RH
+          );
 
-        try {
-          db.close();
-        } catch (e) {}
-
-      }, 1000);
-
-    };
-
-
-    request.onerror = function(event) {
-
-      console.error(
-        "❌ Não foi possível abrir o IndexedDB:",
-        event.target.error
-      );
-
-    };
-
-
-    request.onupgradeneeded = function(event) {
-
-      const db = event.target.result;
-
-      console.warn(
-        "⚠️ O banco AppRH ainda não estava criado."
-      );
-
-      console.warn(
-        "Object Stores existentes:",
-        Array.from(db.objectStoreNames)
-      );
-
-    };
-
-  }
-
-
-  // =====================================================
-  // IFRAME
-  // =====================================================
-
-  frame.addEventListener(
-    'load',
-    () => {
-
-      loading.classList.add(
-        'hidden'
-      );
-
-      console.log(
-        "🌐 Iframe carregado."
+        },
+        700
       );
 
     }
-  );
 
 
-  // =====================================================
-  // CONEXÃO
-  // =====================================================
+    /* =====================================================
+       IFRAME
+       
+       IMPORTANTE:
+       O iframe só recebe a URL depois que o token
+       for verificado.
+    ===================================================== */
 
-  function updateConnection() {
-
-    offline.style.display =
-      navigator.onLine
-        ? 'none'
-        : 'block';
-
-  }
-
-
-  window.addEventListener(
-    'online',
-    updateConnection
-  );
+    /*
+     * NÃO colocamos src diretamente no HTML.
+     *
+     * Isso evita que o Google Apps Script abra primeiro
+     * sem token.
+     */
 
 
-  window.addEventListener(
-    'offline',
-    updateConnection
-  );
+    frame.addEventListener(
+      "load",
+      function() {
+
+        loading.classList.add(
+          "hidden"
+        );
 
 
-  updateConnection();
-
-
-  // =====================================================
-  // SERVICE WORKER
-  // =====================================================
-
-  if ('serviceWorker' in navigator) {
-
-    window.addEventListener(
-      'load',
-      () => {
-
-        navigator.serviceWorker
-          .register('./sw.js')
-          .then(function(registration) {
-
-            console.log(
-              "✅ Service Worker registrado:",
-              registration.scope
-            );
-
-          })
-          .catch(function(error) {
-
-            console.error(
-              "❌ Erro no Service Worker:",
-              error
-            );
-
-          });
+        console.log(
+          "🌐 Iframe carregado."
+        );
 
       }
     );
 
-  }
 
+    /* =====================================================
+       CONEXÃO
+    ===================================================== */
 
-  // =====================================================
-  // INSTALAÇÃO PWA
-  // =====================================================
+    function updateConnection() {
 
-  let deferredPrompt = null;
-
-
-  window.addEventListener(
-    'beforeinstallprompt',
-    (event) => {
-
-      event.preventDefault();
-
-      deferredPrompt = event;
-
-      installButton.style.display =
-        'block';
+      offline.style.display =
+        navigator.onLine
+          ? "none"
+          : "block";
 
     }
-  );
 
 
-  installButton.addEventListener(
-    'click',
-    async () => {
+    window.addEventListener(
+      "online",
+      updateConnection
+    );
 
-      if (!deferredPrompt) {
-        return;
+
+    window.addEventListener(
+      "offline",
+      updateConnection
+    );
+
+
+    updateConnection();
+
+
+    /* =====================================================
+       SERVICE WORKER
+    ===================================================== */
+
+    if(
+      "serviceWorker" in navigator
+    ) {
+
+      window.addEventListener(
+        "load",
+        function() {
+
+          navigator.serviceWorker
+            .register(
+              "./sw.js"
+            )
+            .then(
+              function(registration) {
+
+                console.log(
+                  "✅ Service Worker registrado:",
+                  registration.scope
+                );
+
+              }
+            )
+            .catch(
+              function(error) {
+
+                console.error(
+                  "❌ Erro no Service Worker:",
+                  error
+                );
+
+              }
+            );
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       INSTALAÇÃO PWA
+    ===================================================== */
+
+    let deferredPrompt =
+      null;
+
+
+    window.addEventListener(
+      "beforeinstallprompt",
+      function(event) {
+
+        event.preventDefault();
+
+
+        deferredPrompt =
+          event;
+
+
+        installButton.style.display =
+          "block";
+
       }
-
-      deferredPrompt.prompt();
-
-      await deferredPrompt.userChoice;
-
-      deferredPrompt = null;
-
-      installButton.style.display =
-        'none';
-
-    }
-  );
+    );
 
 
-  window.addEventListener(
-    'appinstalled',
-    () => {
+    installButton.addEventListener(
+      "click",
+      async function() {
 
-      installButton.style.display =
-        'none';
+        if(!deferredPrompt) {
 
-      console.log(
-        "📱 Aplicativo instalado."
-      );
+          return;
 
-    }
-  );
+        }
 
 
-  // =====================================================
-  // INICIAR DIAGNÓSTICO
-  // =====================================================
+        deferredPrompt.prompt();
 
-  document.addEventListener(
-    'DOMContentLoaded',
-    function() {
 
-      console.log("");
-      console.log(
-        "🚀 App RH iniciado."
-      );
+        await deferredPrompt.userChoice;
 
-      verificarIndexedDB();
 
-    }
-  );
+        deferredPrompt =
+          null;
 
-</script>
+
+        installButton.style.display =
+          "none";
+
+      }
+    );
+
+
+    window.addEventListener(
+      "appinstalled",
+      function() {
+
+        installButton.style.display =
+          "none";
+
+
+        console.log(
+          "📱 Aplicativo instalado."
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       INICIALIZAÇÃO
+    ===================================================== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+        console.log("");
+        console.log(
+          "======================================"
+        );
+
+        console.log(
+          "🚀 APP RH INICIADO"
+        );
+
+        console.log(
+          "======================================"
+        );
+
+        console.log(
+          "Banco:",
+          NOME_BANCO
+        );
+
+        console.log(
+          "Store:",
+          NOME_STORE
+        );
+
+        console.log(
+          "Chave:",
+          CHAVE_USUARIO
+        );
+
+
+        /*
+         * Primeiro verifica o token.
+         * Somente depois faz o redirecionamento.
+         */
+
+        iniciarSistema();
+
+      }
+    );
+
+
+  </script>
+
+
 </body>
+
 </html>
