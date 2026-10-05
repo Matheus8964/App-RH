@@ -1,582 +1,99 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width,
-             initial-scale=1,
-             maximum-scale=1,
-             viewport-fit=cover"
->
-
-<meta name="theme-color" content="#0f172a">
-
-<meta
-    name="apple-mobile-web-app-capable"
-    content="yes"
->
-
-<meta
-    name="apple-mobile-web-app-status-bar-style"
-    content="black-translucent"
->
-
-<meta
-    name="apple-mobile-web-app-title"
-    content="App RH"
->
-
-<link rel="manifest" href="./manifest.json">
-
-<title>App RH</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #0f172a;
-    font-family: Arial, sans-serif;
-}
-
-/* =====================================================
-   WEBVIEW
-===================================================== */
-
-#siteFrame {
-
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    border: 0;
-
-    background: white;
-
-    display: none;
-}
-
-/* =====================================================
-   TELA DE CARREGAMENTO
-===================================================== */
-
-#loadingScreen {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 99999;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    flex-direction: column;
-
-    padding: 30px;
-
-    text-align: center;
-
-    background:
-        linear-gradient(
-            180deg,
-            #0f172a 0%,
-            #172554 55%,
-            #f1f5f9 100%
-        );
-
-    color: white;
-}
-
-/* =====================================================
-   ÍCONE
-===================================================== */
-
-.logo {
-
-    width: 76px;
-    height: 76px;
-
-    border-radius: 22px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(255,255,255,0.12);
-
-    border: 1px solid rgba(255,255,255,0.18);
-
-    font-size: 38px;
-
-    margin-bottom: 22px;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.25);
-}
-
-/* =====================================================
-   TEXTO
-===================================================== */
-
-#statusTitle {
-
-    font-size: 20px;
-
-    font-weight: 600;
-
-    margin-bottom: 8px;
-}
-
-#statusMessage {
-
-    font-size: 14px;
-
-    line-height: 1.5;
-
-    max-width: 320px;
-
-    color: rgba(255,255,255,0.82);
-}
-
-/* =====================================================
-   LOADER
-===================================================== */
-
-.loader {
-
-    width: 42px;
-    height: 42px;
-
-    margin-top: 25px;
-
-    border: 4px solid rgba(255,255,255,0.25);
-
-    border-top-color: white;
-
-    border-radius: 50%;
-
-    animation:
-        girar 0.8s linear infinite;
-}
-
-@keyframes girar {
-
-    from {
-        transform: rotate(0deg);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="App RH">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <title>App RH</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; font-family: Arial, sans-serif; background: #0f172a; }
+    #app { width: 100%; height: 100%; position: relative; }
+    #siteFrame { width: 100%; height: 100%; border: 0; display: block; background: white; }
+    #loading {
+      position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px; background: #0f172a; color: white;
+      transition: opacity .25s ease;
     }
-
-    to {
-        transform: rotate(360deg);
+    #loading.hidden { opacity: 0; pointer-events: none; }
+    .spinner { width: 38px; height: 38px; border: 4px solid rgba(255,255,255,.25); border-top-color: white; border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #offline {
+      display: none; position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 20;
+      padding: 12px 14px; border-radius: 12px; background: rgba(15,23,42,.95); color: white;
+      text-align: center; font-size: 14px;
     }
-
-}
-
-</style>
-
+    #install {
+      display: none; position: fixed; right: 16px; bottom: 16px; z-index: 30;
+      border: 0; border-radius: 999px; padding: 12px 18px; background: #2563eb; color: white;
+      font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,.25); cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
+  <main id="app">
+    <div id="loading">
+      <div class="spinner"></div>
+      <strong>Carregando...</strong>
+    </div>
 
-<!-- =====================================================
-     WEBVIEW / IFRAME
-===================================================== -->
-
-<iframe
-    id="siteFrame"
-    title="Sistema RH"
-    allow="fullscreen; clipboard-read; clipboard-write"
-    referrerpolicy="strict-origin-when-cross-origin">
+    <iframe
+  id="siteFrame"
+  title="App RH"
+  src="https://script.google.com/a/*/macros/s/AKfycbzHA32fnNDd117Uc1SrRCZpGzz0L8YkIQ144SUpckVJ9t3eEaEHIbJYq3b0Ashnr5QyzQ/exec"
+  allow="fullscreen; clipboard-read; clipboard-write"
+  referrerpolicy="no-referrer">
 </iframe>
 
+    <div id="offline">Sem conexão. </div>
+    <button id="install" type="button">Instalar aplicativo</button>
+  </main>
 
-<!-- =====================================================
-     TELA DE STATUS
-===================================================== -->
+  <script>
+    const frame = document.getElementById('siteFrame');
+    const loading = document.getElementById('loading');
+    const offline = document.getElementById('offline');
+    const installButton = document.getElementById('install');
 
-<div id="loadingScreen">
+    frame.addEventListener('load', () => loading.classList.add('hidden'));
 
-    <div class="logo">
-        👥
-    </div>
+    function updateConnection() {
+      offline.style.display = navigator.onLine ? 'none' : 'block';
+    }
+    window.addEventListener('online', updateConnection);
+    window.addEventListener('offline', updateConnection);
+    updateConnection();
 
-    <div id="statusTitle">
-        App RH
-    </div>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(console.error);
+      });
+    }
 
-    <div id="statusMessage">
-        Verificando usuário...
-    </div>
-
-    <div class="loader"></div>
-
-</div>
-
-
-<script>
-
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
-
-const URL_APP_RH =
-    "https://script.google.com/a/*/macros/s/AKfycbzHA32fnNDd117Uc1SrRCZpGzz0L8YkIQ144SUpckVJ9t3eEaEHIbJYq3b0Ashnr5QyzQ/exec";
-
-
-/* =====================================================
-   ELEMENTOS
-===================================================== */
-
-const frame =
-    document.getElementById("siteFrame");
-
-const loadingScreen =
-    document.getElementById("loadingScreen");
-
-const statusTitle =
-    document.getElementById("statusTitle");
-
-const statusMessage =
-    document.getElementById("statusMessage");
-
-
-/* =====================================================
-   ABRIR INDEXEDDB
-===================================================== */
-
-function abrirBancoRH() {
-
-    return new Promise(function(resolve, reject) {
-
-        if (!window.indexedDB) {
-
-            reject(
-                new Error(
-                    "IndexedDB não está disponível neste navegador."
-                )
-            );
-
-            return;
-        }
-
-        const request =
-            indexedDB.open("AppRHDB", 1);
-
-
-        request.onupgradeneeded =
-            function(event) {
-
-                const db =
-                    event.target.result;
-
-                if (
-                    !db.objectStoreNames.contains("usuario")
-                ) {
-
-                    db.createObjectStore(
-                        "usuario",
-                        {
-                            keyPath: "chave"
-                        }
-                    );
-
-                }
-
-            };
-
-
-        request.onsuccess =
-            function(event) {
-
-                resolve(
-                    event.target.result
-                );
-
-            };
-
-
-        request.onerror =
-            function(event) {
-
-                reject(
-                    event.target.error ||
-                    new Error(
-                        "Erro ao abrir IndexedDB."
-                    )
-                );
-
-            };
-
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      deferredPrompt = event;
+      installButton.style.display = 'block';
     });
 
-}
-
-
-/* =====================================================
-   OBTER USUÁRIO
-===================================================== */
-
-async function obterUsuarioRH() {
-
-    const db =
-        await abrirBancoRH();
-
-    return new Promise(
-        function(resolve, reject) {
-
-            const transaction =
-                db.transaction(
-                    ["usuario"],
-                    "readonly"
-                );
-
-            const store =
-                transaction.objectStore(
-                    "usuario"
-                );
-
-            const request =
-                store.get("usuarioAtual");
-
-
-            request.onsuccess =
-                function(event) {
-
-                    resolve(
-                        event.target.result || null
-                    );
-
-                };
-
-
-            request.onerror =
-                function(event) {
-
-                    reject(
-                        event.target.error ||
-                        new Error(
-                            "Erro ao buscar usuário."
-                        )
-                    );
-
-                };
-
-
-            transaction.oncomplete =
-                function() {
-
-                    db.close();
-
-                };
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   ATUALIZAR STATUS
-===================================================== */
-
-function atualizarStatus(titulo, mensagem) {
-
-    statusTitle.textContent =
-        titulo;
-
-    statusMessage.textContent =
-        mensagem;
-
-}
-
-
-/* =====================================================
-   CARREGAR WEBVIEW
-===================================================== */
-
-async function carregarWebView() {
-
-    try {
-
-        atualizarStatus(
-            "App RH",
-            "Verificando token de acesso..."
-        );
-
-
-        const usuario =
-            await obterUsuarioRH();
-
-
-        let token = "";
-
-        if (usuario && usuario.token) {
-
-            token =
-                String(usuario.token).trim();
-
-        }
-
-
-        /* =================================================
-           TOKEN ENCONTRADO
-        ================================================= */
-
-        if (token) {
-
-            atualizarStatus(
-                "Token encontrado",
-                "Carregando o sistema..."
-            );
-
-
-            const urlCompleta =
-                URL_APP_RH +
-                "?page=login&token=" +
-                encodeURIComponent(token);
-
-
-            console.log(
-                "URL carregada no WebView:",
-                urlCompleta
-            );
-
-
-            /*
-             * IMPORTANTE:
-             *
-             * NÃO redireciona a página.
-             *
-             * Apenas altera o endereço do iframe.
-             */
-
-            frame.src =
-                urlCompleta;
-
-        }
-
-
-        /* =================================================
-           TOKEN NÃO ENCONTRADO
-        ================================================= */
-
-        else {
-
-            atualizarStatus(
-                "Token não encontrado",
-                "Carregando o sistema..."
-            );
-
-
-            console.log(
-                "Token não encontrado."
-            );
-
-
-            /*
-             * Sem token:
-             * carrega somente a URL original.
-             */
-
-            frame.src =
-                URL_APP_RH;
-
-        }
-
-    }
-
-    catch (erro) {
-
-        console.error(
-            "Erro ao verificar token:",
-            erro
-        );
-
-
-        atualizarStatus(
-            "Carregando sistema",
-            "Não foi possível recuperar o token. Abrindo o sistema normalmente..."
-        );
-
-
-        /*
-         * Mesmo se o IndexedDB apresentar erro,
-         * o sistema continua abrindo normalmente.
-         */
-
-        frame.src =
-            URL_APP_RH;
-
-    }
-
-}
-
-
-/* =====================================================
-   QUANDO O WEBVIEW TERMINAR DE CARREGAR
-===================================================== */
-
-frame.addEventListener(
-    "load",
-    function() {
-
-        /*
-         * Dá um pequeno tempo para a página
-         * começar a renderizar antes de esconder
-         * a tela de carregamento.
-         */
-
-        setTimeout(
-            function() {
-
-                loadingScreen.style.display =
-                    "none";
-
-                frame.style.display =
-                    "block";
-
-            },
-            300
-        );
-
-    }
-);
-
-
-/* =====================================================
-   INICIAR
-===================================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        carregarWebView();
-
-    }
-);
-
-</script>
-
-
+    installButton.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installButton.style.display = 'none';
+    });
+
+    window.addEventListener('appinstalled', () => {
+      installButton.style.display = 'none';
+    });
+  </script>
 </body>
-
 </html>
