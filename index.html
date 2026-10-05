@@ -75,6 +75,7 @@
         navigator.serviceWorker.register('./sw.js').catch(console.error);
       });
     }
+    
 
     let deferredPrompt = null;
     window.addEventListener('beforeinstallprompt', (event) => {
