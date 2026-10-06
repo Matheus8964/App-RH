@@ -1977,531 +1977,121 @@
 
     async function carregarUsuario() {
 
-      console.log("");
-      console.log(
-        "========================================"
-      );
-      console.log(
-        "🚀 INICIANDO CARREGAMENTO DO USUÁRIO"
-      );
-      console.log(
-        "========================================"
-      );
+    console.log("=================================");
+    console.log("INICIANDO CARREGAMENTO DO HOME");
+    console.log("=================================");
 
+    const params = new URLSearchParams(window.location.search);
 
-      const url =
-        obterParametrosURL();
+    const nome = (params.get("nome") || "").trim();
+    const id = (params.get("id") || "").trim();
+    const token = (params.get("token") || "").trim();
 
+    console.log("Nome recebido:", nome);
+    console.log("ID recebido:", id);
+    console.log("Token recebido:", token);
 
-      console.log(
-        "PARÂMETROS DA URL:",
-        url.dados
-      );
+    // ==========================================
+    // SALVAR TOKEN NO LOCAL STORAGE
+    // ==========================================
 
+    if (token) {
 
-      const elementoNome =
-        document.getElementById(
-          "nomeUsuario"
-        );
-
-
-      const elementoId =
-        document.getElementById(
-          "idUsuario"
-        );
-
-
-
-      /* =================================================
-         PRIMEIRO:
-         VERIFICA SE VEIO TOKEN PELA URL
-      ================================================= */
-
-      if (
-        url.token
-      ) {
-
-        console.log(
-          "🔥 TOKEN RECEBIDO PELA URL:"
-        );
-
-        console.log(
-          url.token
-        );
-
-
-        const usuarioURL = {
-
-          nome:
-            url.nome,
-
-          id:
-            url.id,
-
-          token:
-            url.token
-
-        };
-
-
-        const dadosURL = {
-
-          usuario:
-            usuarioURL,
-
-          nome:
-            url.nome,
-
-          id:
-            url.id,
-
-          token:
-            url.token,
-
-          parametrosURL:
-            url.dados
-
-        };
-
-
-        /*
-         * SALVA IMEDIATAMENTE.
-         *
-         * NÃO ESPERA MODAL.
-         * NÃO ESPERA CLIQUE.
-         */
-
-        await salvarLoginNoDispositivo(
-          dadosURL
-        );
-
-
-        console.log(
-          "🔥 TOKEN DA URL FOI ENVIADO PARA PERSISTÊNCIA"
-        );
-
-      }
-
-
-
-      /* =================================================
-         AGORA PROCURA USUÁRIO SALVO
-      ================================================= */
-
-      let usuario =
-        lerUsuarioSalvo();
-
-
-
-      /* =================================================
-         SE NÃO EXISTIR LOCAL/SESSION,
-         TENTA INDEXED DB
-      ================================================= */
-
-      if (!usuario) {
-
-        console.log(
-          "Local/Session não possuem usuário."
-        );
-
-        console.log(
-          "Tentando IndexedDB..."
-        );
-
-
-        const recuperado =
-          await lerLoginIndexedDB();
-
-
-        if (
-          recuperado &&
-          recuperado.usuario
-        ) {
-
-          console.log(
-            "🔥 LOGIN ENCONTRADO NO INDEXED DB:",
-            recuperado
-          );
-
-
-          usuario =
-            recuperado.usuario;
-
-
-          /*
-           * Restaura tudo no Local Storage
-           */
-
-          gravarLocal(
-            "usuario",
-            JSON.stringify(
-              recuperado.usuario
-            )
-          );
-
-
-          gravarLocal(
-            "nomeUsuario",
-            recuperado.nome || ""
-          );
-
-
-          gravarLocal(
-            "idUsuario",
-            recuperado.id || ""
-          );
-
-
-          gravarLocal(
-            "tokenUsuario",
-            recuperado.token || ""
-          );
-
-
-          gravarLocal(
-            "parametrosURL",
-            JSON.stringify(
-              recuperado.parametrosURL || {}
-            )
-          );
-
-
-          gravarLocal(
-            "loginSalvoNoDispositivo",
-            "true"
-          );
-
-
-          salvarSessao(
-            recuperado
-          );
-
-        }
-
-      }
-
-
-
-      /* =================================================
-         LÊ OS DADOS SALVOS
-      ================================================= */
-
-      const nomeSalvo =
-        lerLocal(
-          "nomeUsuario"
-        ) ||
-        sessionStorage.getItem(
-          "nomeUsuario"
-        ) ||
-        "";
-
-
-      const idSalvo =
-        lerLocal(
-          "idUsuario"
-        ) ||
-        sessionStorage.getItem(
-          "idUsuario"
-        ) ||
-        "";
-
-
-      const tokenSalvo =
-        lerLocal(
-          "tokenUsuario"
-        ) ||
-        sessionStorage.getItem(
-          "tokenUsuario"
-        ) ||
-        "";
-
-
-
-      /* =================================================
-         MONTA DADOS FINAIS
-      ================================================= */
-
-      const nome =
-        (
-          url.nome ||
-
-          (
-            usuario &&
-            (
-              usuario.nome ||
-              usuario.nomeCompleto ||
-              usuario.NOME ||
-              usuario["NOME COMPLETO"]
-            )
-          ) ||
-
-          nomeSalvo ||
-
-          ""
-        ).trim();
-
-
-      const id =
-        String(
-
-          url.id ||
-
-          (
-            usuario &&
-            (
-              usuario.id ||
-              usuario.idUsuario ||
-              usuario.ID ||
-              usuario.IDUSUARIO ||
-              usuario["ID USUARIO"]
-            )
-          ) ||
-
-          idSalvo ||
-
-          ""
-
-        ).trim();
-
-
-      const token =
-        String(
-
-          url.token ||
-
-          (
-            usuario &&
-            usuario.token
-          ) ||
-
-          tokenSalvo ||
-
-          ""
-
-        ).trim();
-
-
-
-      const usuarioFinal = {
-
-        ...(usuario || {}),
-
-        nome:
-          nome,
-
-        id:
-          id,
-
-        token:
-          token
-
-      };
-
-
-      const dadosLogin = {
-
-        usuario:
-          usuarioFinal,
-
-        nome:
-          nome,
-
-        id:
-          id,
-
-        token:
-          token,
-
-        parametrosURL:
-          url.dados
-
-      };
-
-
-
-      /* =================================================
-         MOSTRA NA TELA
-      ================================================= */
-
-      if (elementoNome) {
-
-        elementoNome.textContent =
-          nome ||
-          "Usuário";
-
-      }
-
-
-      if (elementoId) {
-
-        elementoId.textContent =
-          "ID: " +
-          (
-            id ||
-            "Não informado"
-          );
-
-      }
-
-
-
-      /* =================================================
-         SEGURANÇA EXTRA:
-         SE TEM TOKEN, GARANTE NOVAMENTE A PERSISTÊNCIA
-      ================================================= */
-
-      if (
-        token &&
-        nome &&
-        id
-      ) {
-
-        const tokenAgora =
-          lerLocal(
-            "tokenUsuario"
-          );
-
-
-        if (
-          tokenAgora !== token
-        ) {
-
-          console.warn(
-            "⚠️ Token ainda não estava no Local Storage."
-          );
-
-
-          await salvarLoginNoDispositivo(
-            dadosLogin
-          );
-
-        } else {
-
-          console.log(
-            "✅ TOKEN JÁ ESTÁ PERSISTIDO:",
-            tokenAgora
-          );
-
-        }
-
-      }
-
-
-
-      /* =================================================
-         MOSTRA DIAGNÓSTICO FINAL
-      ================================================= */
-
-      console.log("");
-      console.log(
-        "========================================"
-      );
-      console.log(
-        "🔍 DIAGNÓSTICO FINAL DO LOGIN"
-      );
-      console.log(
-        "========================================"
-      );
-
-
-      console.log(
-        "URL:",
-        window.location.href
-      );
-
-
-      console.log(
-        "Nome:",
-        nome
-      );
-
-
-      console.log(
-        "ID:",
-        id
-      );
-
-
-      console.log(
-        "Token recebido:",
-        token
-      );
-
-
-      console.log(
-        "Token no Local Storage:",
-        lerLocal(
-          "tokenUsuario"
-        )
-      );
-
-
-      console.log(
-        "Usuário no Local Storage:",
-        lerLocal(
-          "usuario"
-        )
-      );
-
-
-      console.log(
-        "Login persistido:",
-        lerLocal(
-          "loginSalvoNoDispositivo"
-        )
-      );
-
-
-      console.log(
-        "========================================"
-      );
-
-
-
-      /* =================================================
-         REMOVE TOKEN DA URL SOMENTE DEPOIS
-         DE TODA A PERSISTÊNCIA
-      ================================================= */
-
-      if (
-        Object.keys(
-          url.dados
-        ).length > 0
-      ) {
+        console.log("🔐 Tentando salvar token no localStorage...");
 
         try {
 
-          sessionStorage.setItem(
-            "parametrosURL",
-            JSON.stringify(
-              url.dados
-            )
-          );
+            localStorage.setItem("tokenUsuario", token);
 
-        } catch (erro) {}
+            const tokenSalvo =
+                localStorage.getItem("tokenUsuario");
 
+            console.log(
+                "Token salvo no localStorage:",
+                tokenSalvo
+            );
 
+            if (tokenSalvo === token) {
 
-        /*
-         * Só agora limpamos a URL.
-         *
-         * O token já foi salvo.
-         */
+                console.log(
+                    "✅ TOKEN SALVO COM SUCESSO NO LOCALSTORAGE"
+                );
+
+            } else {
+
+                console.error(
+                    "❌ TOKEN FOI SALVO, MAS NÃO FOI RECUPERADO"
+                );
+            }
+
+        } catch (erro) {
+
+            console.error(
+                "❌ ERRO AO SALVAR TOKEN NO LOCALSTORAGE:",
+                erro
+            );
+        }
+
+    } else {
+
+        console.warn(
+            "⚠️ Nenhum token encontrado na URL."
+        );
+    }
+
+    // ==========================================
+    // SALVAR DADOS BÁSICOS
+    // ==========================================
+
+    if (nome) {
+        localStorage.setItem("nomeUsuario", nome);
+    }
+
+    if (id) {
+        localStorage.setItem("idUsuario", id);
+    }
+
+    // ==========================================
+    // MOSTRAR NA TELA
+    // ==========================================
+
+    const elementoNome =
+        document.getElementById("nomeUsuario");
+
+    const elementoId =
+        document.getElementById("idUsuario");
+
+    if (elementoNome) {
+        elementoNome.textContent =
+            nome || "Usuário";
+    }
+
+    if (elementoId) {
+        elementoId.textContent =
+            "ID: " + (id || "Não informado");
+    }
+
+    console.log("=================================");
+    console.log("FINAL DO CARREGAMENTO");
+    console.log(
+        "TOKEN ATUAL NO LOCALSTORAGE:",
+        localStorage.getItem("tokenUsuario")
+    );
+    console.log("=================================");
+
+    // ==========================================
+    // LIMPAR TOKEN DA URL
+    // ==========================================
+
+    if (params.toString()) {
 
         window.history.replaceState(
-          {},
-          document.title,
-          window.location.pathname
+            {},
+            document.title,
+            window.location.pathname
         );
-
-
-        console.log(
-          "🧹 Parâmetros removidos da URL após persistência."
-        );
-
-      }
-
     }
+}
 
 
 
@@ -2574,40 +2164,17 @@
        INICIALIZAÇÃO
     ====================================================== */
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      async function() {
+   document.addEventListener("DOMContentLoaded", function() {
 
-        try {
+    carregarUsuario();
 
-          await carregarUsuario();
+    const loading = document.getElementById("loading");
 
-        } catch (erro) {
+    if (loading) {
+        loading.classList.add("hidden");
+    }
 
-          console.error(
-            "🚨 ERRO CRÍTICO AO CARREGAR USUÁRIO:",
-            erro
-          );
-
-        }
-
-
-        const loading =
-          document.getElementById(
-            "loading"
-          );
-
-
-        if (loading) {
-
-          loading.classList.add(
-            "hidden"
-          );
-
-        }
-
-      }
-    );
+});
 
   </script>
 
