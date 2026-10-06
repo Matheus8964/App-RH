@@ -23,7 +23,6 @@
 
   <title>App RH</title>
 
-
   <style>
 
     * {
@@ -31,13 +30,11 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-
     html {
       width: 100%;
       min-height: 100%;
       background: #f1f5f9;
     }
-
 
     body {
       margin: 0;
@@ -75,18 +72,11 @@
       padding-right: env(safe-area-inset-right);
     }
 
-
     button {
       font-family: inherit;
     }
 
-
-    /* ================================
-       CONTAINER
-    ================================= */
-
     .app {
-
       width: 100%;
       max-width: 620px;
 
@@ -103,13 +93,7 @@
       position: relative;
     }
 
-
-    /* ================================
-       CABEÇALHO
-    ================================= */
-
     .header {
-
       color: white;
 
       padding:
@@ -118,40 +102,27 @@
         30px;
     }
 
-
     .header-top {
-
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
-
       gap: 15px;
     }
 
-
     .brand {
-
       display: flex;
-
       align-items: center;
-
       gap: 13px;
     }
 
-
     .logo {
-
       width: 52px;
       height: 52px;
-
       min-width: 52px;
 
       border-radius: 16px;
 
       display: flex;
-
       align-items: center;
       justify-content: center;
 
@@ -170,21 +141,16 @@
         0 8px 25px rgba(0,0,0,0.15);
     }
 
-
     .brand-text h1 {
-
       margin: 0;
 
       font-size: 23px;
-
       font-weight: 800;
 
       letter-spacing: -0.5px;
     }
 
-
     .brand-text span {
-
       display: block;
 
       margin-top: 3px;
@@ -195,17 +161,10 @@
         rgba(255,255,255,0.68);
     }
 
-
-    /* ================================
-       USUÁRIO
-    ================================= */
-
     .user-card {
-
       margin-top: 22px;
 
       display: flex;
-
       align-items: center;
 
       gap: 13px;
@@ -226,18 +185,14 @@
       -webkit-backdrop-filter: blur(12px);
     }
 
-
     .user-icon {
-
       width: 42px;
       height: 42px;
-
       min-width: 42px;
 
       border-radius: 50%;
 
       display: flex;
-
       align-items: center;
       justify-content: center;
 
@@ -247,17 +202,12 @@
       font-size: 20px;
     }
 
-
     .user-info {
-
       min-width: 0;
-
       flex: 1;
     }
 
-
     .user-label {
-
       font-size: 10px;
 
       text-transform: uppercase;
@@ -268,54 +218,34 @@
         rgba(255,255,255,0.58);
     }
 
-
     .user-name {
-
       margin-top: 3px;
 
       font-size: 15px;
-
       font-weight: 700;
 
       color: white;
 
       white-space: nowrap;
-
       overflow: hidden;
-
       text-overflow: ellipsis;
     }
 
-
-    /* ================================
-       ID DO USUÁRIO
-    ================================= */
-
     .user-id {
-
       margin-top: 4px;
 
       font-size: 11px;
-
       font-weight: 500;
 
       color:
         rgba(255,255,255,0.65);
 
       white-space: nowrap;
-
       overflow: hidden;
-
       text-overflow: ellipsis;
     }
 
-
-    /* ================================
-       CONTEÚDO
-    ================================= */
-
     .content {
-
       background:
         rgba(255,255,255,0.97);
 
@@ -335,9 +265,7 @@
         rgba(255,255,255,0.8);
     }
 
-
     .section-title {
-
       display: flex;
 
       align-items: center;
@@ -349,12 +277,9 @@
       padding-left: 2px;
     }
 
-
     .section-title-icon {
-
       width: 34px;
       height: 34px;
-
       min-width: 34px;
 
       border-radius: 10px;
@@ -369,27 +294,20 @@
       font-size: 17px;
     }
 
-
     .section-title-text {
-
       min-width: 0;
     }
 
-
     .section-title-text h2 {
-
       margin: 0;
 
       font-size: 17px;
-
       font-weight: 800;
 
       letter-spacing: -0.2px;
     }
 
-
     .section-title-text p {
-
       margin:
         2px
         0
@@ -400,13 +318,7 @@
       color: #64748b;
     }
 
-
-    /* ================================
-       MENU
-    ================================= */
-
     .menu {
-
       display: flex;
 
       flex-direction: column;
@@ -414,9 +326,7 @@
       gap: 11px;
     }
 
-
     .menu-button {
-
       width: 100%;
 
       min-height: 72px;
@@ -462,9 +372,7 @@
       -webkit-appearance: none;
     }
 
-
     .menu-button::after {
-
       content: "";
 
       position: absolute;
@@ -483,9 +391,7 @@
         opacity 0.15s ease;
     }
 
-
     .menu-button:hover {
-
       background: #f8fafc;
 
       box-shadow:
@@ -496,15 +402,11 @@
         translateY(-1px);
     }
 
-
     .menu-button:hover::after {
-
       opacity: 1;
     }
 
-
     .menu-button:active {
-
       transform:
         scale(0.985);
 
@@ -514,15 +416,11 @@
       box-shadow: none;
     }
 
-
     .menu-button:focus {
-
       outline: none;
     }
 
-
     .menu-button:focus-visible {
-
       outline:
         3px solid
         rgba(37,99,235,0.25);
@@ -530,9 +428,7 @@
       outline-offset: 2px;
     }
 
-
     .menu-icon {
-
       width: 47px;
       height: 47px;
 
@@ -548,17 +444,12 @@
       font-size: 21px;
     }
 
-
     .menu-info {
-
       flex: 1;
-
       min-width: 0;
     }
 
-
     .menu-title {
-
       font-size: 14px;
 
       font-weight: 750;
@@ -568,9 +459,7 @@
       line-height: 1.25;
     }
 
-
     .menu-description {
-
       margin-top: 4px;
 
       font-size: 11px;
@@ -580,9 +469,7 @@
       color: #64748b;
     }
 
-
     .arrow {
-
       width: 28px;
       height: 28px;
 
@@ -606,52 +493,35 @@
       font-weight: 600;
     }
 
-
-    /* ================================
-       CORES
-    ================================= */
-
     .icon-troca {
       background: #eff6ff;
     }
-
 
     .icon-folga {
       background: #f0fdf4;
     }
 
-
     .icon-atestado {
       background: #fff7ed;
     }
-
 
     .icon-banco {
       background: #f5f3ff;
     }
 
-
     .icon-treinamento {
       background: #ecfeff;
     }
-
 
     .icon-suporte {
       background: #fef2f2;
     }
 
-
     .icon-alarme {
       background: #fff7ed;
     }
 
-
-    /* ================================
-       RODAPÉ
-    ================================= */
-
     .footer {
-
       text-align: center;
 
       margin-top: 19px;
@@ -666,20 +536,12 @@
       line-height: 1.5;
     }
 
-
     .footer strong {
-
       color:
         #64748b;
     }
 
-
-    /* ================================
-       LOADING
-    ================================= */
-
     .loading {
-
       position: fixed;
 
       inset: 0;
@@ -699,27 +561,18 @@
         visibility 0.3s ease;
     }
 
-
     .loading.hidden {
-
       opacity: 0;
-
       visibility: hidden;
-
       pointer-events: none;
     }
 
-
     .loading-content {
-
       text-align: center;
-
       color: white;
     }
 
-
     .spinner {
-
       width: 38px;
       height: 38px;
 
@@ -741,85 +594,54 @@
         14px;
     }
 
-
     .loading-text {
-
       font-size: 12px;
 
       color:
         rgba(255,255,255,0.65);
     }
 
-
     @keyframes girar {
-
       to {
-
         transform:
           rotate(360deg);
       }
     }
 
-
-    /* ================================
-       BOTÃO CARREGANDO
-    ================================= */
-
     .menu-button.carregando {
-
       pointer-events: none;
-
       opacity: 0.7;
     }
 
-
     .menu-button.carregando .arrow {
-
       animation:
         girar 0.7s linear infinite;
     }
 
-
-    /* ================================
-       TELAS PEQUENAS
-    ================================= */
-
     @media (max-width: 380px) {
 
       .app {
-
         padding-left: 14px;
         padding-right: 14px;
-
         padding-top: 18px;
       }
 
-
       .header {
-
         padding-bottom: 22px;
       }
 
-
       .brand-text h1 {
-
         font-size: 21px;
       }
 
-
       .logo {
-
         width: 47px;
         height: 47px;
-
         min-width: 47px;
-
         font-size: 22px;
       }
 
-
       .content {
-
         padding:
           19px
           14px
@@ -828,9 +650,7 @@
         border-radius: 24px;
       }
 
-
       .menu-button {
-
         min-height: 67px;
 
         padding:
@@ -840,9 +660,7 @@
         gap: 10px;
       }
 
-
       .menu-icon {
-
         width: 43px;
         height: 43px;
 
@@ -851,119 +669,75 @@
         font-size: 19px;
       }
 
-
       .menu-title {
-
         font-size: 13px;
       }
 
-
       .menu-description {
-
         font-size: 10px;
       }
     }
 
-
-    /* ================================
-       ALTURA PEQUENA
-    ================================= */
-
     @media (max-height: 700px) {
 
       .app {
-
         padding-top: 14px;
       }
 
-
       .header {
-
         padding-bottom: 17px;
       }
 
-
       .user-card {
-
         margin-top: 15px;
       }
 
-
       .content {
-
         padding-top: 16px;
       }
 
-
       .menu {
-
         gap: 8px;
       }
 
-
       .menu-button {
-
         min-height: 62px;
       }
     }
 
-
-    /* ================================
-       TABLET / DESKTOP
-    ================================= */
-
     @media (min-width: 700px) {
 
       body {
-
         display: flex;
-
         justify-content: center;
       }
 
-
       .app {
-
         padding-top: 40px;
       }
 
-
       .header {
-
         padding-bottom: 35px;
       }
 
-
       .content {
-
         padding:
           25px
           23px;
       }
 
-
       .menu-button {
-
         min-height: 78px;
       }
 
-
       .menu-title {
-
         font-size: 15px;
       }
 
-
       .menu-description {
-
         font-size: 12px;
       }
     }
-
-
-    /* ================================
-       ACESSIBILIDADE
-    ================================= */
 
     @media (prefers-reduced-motion: reduce) {
 
@@ -982,35 +756,11 @@
       }
     }
 
-
-
-    /* ================================
-       MODAL - GUARDAR LOGIN
-    ================================= */
-    .login-modal-backdrop{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.72);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
-    .login-modal-backdrop.visible{display:flex}
-    .login-modal{width:min(100%,430px);background:#fff;border-radius:24px;padding:25px 22px 20px;box-shadow:0 25px 70px rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.9);animation:modalEntrar .2s ease-out}
-    .login-modal-icon{width:54px;height:54px;margin:0 auto 14px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:#eff6ff;font-size:25px}
-    .login-modal h2{margin:0;text-align:center;font-size:19px;color:#0f172a}
-    .login-modal p{margin:12px 0 0;text-align:center;font-size:13px;line-height:1.55;color:#475569}
-    .login-modal-warning{margin-top:14px;padding:12px 13px;border-radius:14px;background:#f8fafc;border:1px solid #e2e8f0;font-size:12px;line-height:1.5;color:#334155;text-align:center}
-    .login-modal-actions{display:flex;gap:10px;margin-top:18px}
-    .login-modal-actions button{flex:1;min-height:46px;border:0;border-radius:13px;padding:10px 12px;font-weight:700;cursor:pointer;font-size:13px}
-    .login-modal-no{background:#f1f5f9;color:#334155}
-    .login-modal-yes{background:#2563eb;color:#fff;box-shadow:0 7px 18px rgba(37,99,235,.25)}
-    @keyframes modalEntrar{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-
   </style>
 
 </head>
 
-
 <body>
-
-
-  <!-- =====================================================
-       CARREGAMENTO
-  ====================================================== -->
 
   <div
     class="loading"
@@ -1030,46 +780,17 @@
   </div>
 
 
-
-
-  <!-- MODAL - GUARDAR LOGIN NO DISPOSITIVO -->
-  <div class="login-modal-backdrop" id="modalGuardarLogin" role="dialog" aria-modal="true" aria-labelledby="tituloGuardarLogin">
-    <div class="login-modal">
-      <div class="login-modal-icon">🔐</div>
-      <h2 id="tituloGuardarLogin">Guardar seu login neste dispositivo?</h2>
-      <p>Podemos guardar seus dados de acesso neste dispositivo para que você não precise fazer o login novamente toda vez que abrir o App RH.</p>
-      <div class="login-modal-warning"><strong>Aviso:</strong><br>tentaremos forçar o seu dispositivo a guardar na memória o seu login usando os recursos de armazenamento disponíveis do aplicativo, como Local Storage e IndexedDB.</div>
-      <div class="login-modal-actions">
-        <button type="button" class="login-modal-no" onclick="responderGuardarLogin(false)">Não guardar</button>
-        <button type="button" class="login-modal-yes" onclick="responderGuardarLogin(true)">Sim, guardar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- =====================================================
-       APLICATIVO
-  ====================================================== -->
-
   <div class="app">
-
-
-    <!-- ===================================================
-         CABEÇALHO
-    ==================================================== -->
 
     <header class="header">
 
-
       <div class="header-top">
 
-
         <div class="brand">
-
 
           <div class="logo">
             👥
           </div>
-
 
           <div class="brand-text">
 
@@ -1083,32 +804,22 @@
 
           </div>
 
-
         </div>
-
 
       </div>
 
 
-      <!-- =================================================
-           USUÁRIO CONECTADO
-      ================================================== -->
-
       <div class="user-card">
-
 
         <div class="user-icon">
           👤
         </div>
 
-
         <div class="user-info">
-
 
           <div class="user-label">
             Usuário conectado
           </div>
-
 
           <div
             class="user-name"
@@ -1117,7 +828,6 @@
             Carregando...
           </div>
 
-
           <div
             class="user-id"
             id="idUsuario"
@@ -1125,30 +835,20 @@
             ID: carregando...
           </div>
 
-
         </div>
 
-
       </div>
-
 
     </header>
 
 
-    <!-- =================================================
-         CONTEÚDO
-    ================================================== -->
-
     <main class="content">
 
-
       <div class="section-title">
-
 
         <div class="section-title-icon">
           📋
         </div>
-
 
         <div class="section-title-text">
 
@@ -1162,20 +862,10 @@
 
         </div>
 
-
       </div>
 
 
-      <!-- =================================================
-           MENU
-      ================================================== -->
-
       <div class="menu">
-
-
-        <!-- =================================================
-             TROCA
-        ================================================== -->
 
         <button
           class="menu-button"
@@ -1186,7 +876,6 @@
           <div class="menu-icon icon-troca">
             🔄
           </div>
-
 
           <div class="menu-info">
 
@@ -1200,17 +889,12 @@
 
           </div>
 
-
           <div class="arrow">
             ›
           </div>
 
         </button>
 
-
-        <!-- =================================================
-             FOLGA
-        ================================================== -->
 
         <button
           class="menu-button"
@@ -1221,7 +905,6 @@
           <div class="menu-icon icon-folga">
             📅
           </div>
-
 
           <div class="menu-info">
 
@@ -1235,14 +918,14 @@
 
           </div>
 
-
           <div class="arrow">
             ›
           </div>
 
         </button>
 
-<button
+
+        <button
           class="menu-button"
           type="button"
           onclick="abrirPagina('upload', this)"
@@ -1251,7 +934,6 @@
           <div class="menu-icon icon-troca">
             📝✍️
           </div>
-
 
           <div class="menu-info">
 
@@ -1265,15 +947,12 @@
 
           </div>
 
-
           <div class="arrow">
             ›
           </div>
 
         </button>
-        <!-- =================================================
-             ATESTADO
-        ================================================== -->
+
 
         <button
           class="menu-button"
@@ -1284,7 +963,6 @@
           <div class="menu-icon icon-atestado">
             📄
           </div>
-
 
           <div class="menu-info">
 
@@ -1298,17 +976,12 @@
 
           </div>
 
-
           <div class="arrow">
             ›
           </div>
 
         </button>
 
-
-        <!-- =================================================
-             BANCO DE HORAS
-        ================================================== -->
 
         <button
           class="menu-button"
@@ -1319,7 +992,6 @@
           <div class="menu-icon icon-banco">
             ⏱️
           </div>
-
 
           <div class="menu-info">
 
@@ -1333,17 +1005,12 @@
 
           </div>
 
-
           <div class="arrow">
             ›
           </div>
 
         </button>
 
-
-        <!-- =================================================
-             TREINAMENTOS
-        ================================================== -->
 
         <button
           class="menu-button"
@@ -1354,7 +1021,6 @@
           <div class="menu-icon icon-treinamento">
             🎓
           </div>
-
 
           <div class="menu-info">
 
@@ -1368,17 +1034,12 @@
 
           </div>
 
-
           <div class="arrow">
             ›
           </div>
 
         </button>
 
-
-        <!-- =================================================
-             SUPORTE
-        ================================================== -->
 
         <button
           class="menu-button"
@@ -1389,7 +1050,6 @@
           <div class="menu-icon icon-suporte">
             🛠️
           </div>
-
 
           <div class="menu-info">
 
@@ -1403,17 +1063,12 @@
 
           </div>
 
-
           <div class="arrow">
             ›
           </div>
 
         </button>
 
-
-        <!-- =================================================
-             ALARME
-        ================================================== -->
 
         <button
           class="menu-button"
@@ -1424,7 +1079,6 @@
           <div class="menu-icon icon-alarme">
             ⏰
           </div>
-
 
           <div class="menu-info">
 
@@ -1438,23 +1092,16 @@
 
           </div>
 
-
           <div class="arrow">
             ›
           </div>
 
         </button>
 
-
       </div>
-
 
     </main>
 
-
-    <!-- =====================================================
-         RODAPÉ
-    ====================================================== -->
 
     <footer class="footer">
 
@@ -1468,206 +1115,1395 @@
 
     </footer>
 
-
   </div>
 
 
-  <!-- =====================================================
-       JAVASCRIPT
-  ====================================================== -->
-
   <script>
+
+    /* =====================================================
+       CONFIGURAÇÃO DO LOGIN
+    ====================================================== */
+
+    const BANCO_LOGIN = "AppRHLoginDB";
+    const STORE_LOGIN = "login";
+    const CHAVE_LOGIN = "usuarioAtual";
+
+
+
+    /* =====================================================
+       PEGAR PARÂMETROS DA URL
+    ====================================================== */
+
+    function obterParametrosURL() {
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+      const dados = {};
+
+      params.forEach(
+        function(valor, chave) {
+
+          dados[chave] = valor;
+
+        }
+      );
+
+      return {
+
+        params: params,
+
+        dados: dados,
+
+        nome:
+          (params.get("nome") || "")
+          .trim(),
+
+        id:
+          (params.get("id") || "")
+          .trim(),
+
+        token:
+          (params.get("token") || "")
+          .trim()
+
+      };
+
+    }
+
+
+
+    /* =====================================================
+       LOCAL STORAGE — LEITURA SEGURA
+    ====================================================== */
+
+    function lerLocal(chave) {
+
+      try {
+
+        return localStorage.getItem(chave) || "";
+
+      } catch (erro) {
+
+        console.error(
+          "ERRO AO LER LOCAL STORAGE:",
+          erro
+        );
+
+        return "";
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       LOCAL STORAGE — GRAVAÇÃO SEGURA
+    ====================================================== */
+
+    function gravarLocal(chave, valor) {
+
+      try {
+
+        localStorage.setItem(
+          chave,
+          String(valor ?? "")
+        );
+
+        const teste =
+          localStorage.getItem(chave);
+
+        if (teste === String(valor ?? "")) {
+
+          console.log(
+            "✅ LOCAL STORAGE GRAVOU:",
+            chave,
+            teste
+          );
+
+          return true;
+
+        }
+
+        console.error(
+          "❌ LOCAL STORAGE NÃO CONFIRMOU:",
+          chave
+        );
+
+        return false;
+
+      } catch (erro) {
+
+        console.error(
+          "❌ ERRO GRAVANDO LOCAL STORAGE:",
+          chave,
+          erro
+        );
+
+        return false;
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       INDEXED DB
+    ====================================================== */
+
+    function abrirBancoLogin() {
+
+      return new Promise(
+        function(resolve, reject) {
+
+          if (!window.indexedDB) {
+
+            reject(
+              new Error(
+                "IndexedDB não disponível."
+              )
+            );
+
+            return;
+
+          }
+
+          const request =
+            indexedDB.open(
+              BANCO_LOGIN,
+              1
+            );
+
+
+          request.onupgradeneeded =
+            function(evento) {
+
+              const db =
+                evento.target.result;
+
+              if (
+                !db.objectStoreNames.contains(
+                  STORE_LOGIN
+                )
+              ) {
+
+                db.createObjectStore(
+                  STORE_LOGIN,
+                  {
+                    keyPath: "chave"
+                  }
+                );
+
+              }
+
+            };
+
+
+          request.onsuccess =
+            function(evento) {
+
+              resolve(
+                evento.target.result
+              );
+
+            };
+
+
+          request.onerror =
+            function() {
+
+              reject(
+                request.error ||
+                new Error(
+                  "Erro ao abrir IndexedDB."
+                )
+              );
+
+            };
+
+        }
+      );
+
+    }
+
+
+
+    /* =====================================================
+       SALVAR LOGIN NO INDEXED DB
+    ====================================================== */
+
+    async function salvarLoginIndexedDB(dados) {
+
+      const db =
+        await abrirBancoLogin();
+
+
+      return new Promise(
+        function(resolve, reject) {
+
+          const transaction =
+            db.transaction(
+              STORE_LOGIN,
+              "readwrite"
+            );
+
+
+          const store =
+            transaction.objectStore(
+              STORE_LOGIN
+            );
+
+
+          store.put({
+
+            chave:
+              CHAVE_LOGIN,
+
+            usuario:
+              dados.usuario,
+
+            nome:
+              dados.nome,
+
+            id:
+              dados.id,
+
+            token:
+              dados.token,
+
+            parametrosURL:
+              dados.parametrosURL,
+
+            salvoEm:
+              new Date().toISOString()
+
+          });
+
+
+          transaction.oncomplete =
+            function() {
+
+              db.close();
+
+              console.log(
+                "✅ LOGIN SALVO NO INDEXED DB"
+              );
+
+              resolve(true);
+
+            };
+
+
+          transaction.onerror =
+            function() {
+
+              db.close();
+
+              reject(
+                transaction.error ||
+                new Error(
+                  "Erro ao salvar IndexedDB."
+                )
+              );
+
+            };
+
+        }
+      );
+
+    }
+
+
+
+    /* =====================================================
+       LER INDEXED DB
+    ====================================================== */
+
+    async function lerLoginIndexedDB() {
+
+      try {
+
+        const db =
+          await abrirBancoLogin();
+
+
+        return await new Promise(
+          function(resolve, reject) {
+
+            const transaction =
+              db.transaction(
+                STORE_LOGIN,
+                "readonly"
+              );
+
+
+            const store =
+              transaction.objectStore(
+                STORE_LOGIN
+              );
+
+
+            const request =
+              store.get(
+                CHAVE_LOGIN
+              );
+
+
+            request.onsuccess =
+              function() {
+
+                const resultado =
+                  request.result || null;
+
+                db.close();
+
+                resolve(
+                  resultado
+                );
+
+              };
+
+
+            request.onerror =
+              function() {
+
+                db.close();
+
+                reject(
+                  request.error
+                );
+
+              };
+
+          }
+        );
+
+      } catch (erro) {
+
+        console.warn(
+          "⚠️ IndexedDB não pôde ser lido:",
+          erro
+        );
+
+        return null;
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       COOKIE
+    ====================================================== */
+
+    function salvarCookieLogin(dados) {
+
+      try {
+
+        const valor =
+          encodeURIComponent(
+            JSON.stringify({
+              nome: dados.nome,
+              id: dados.id,
+              token: dados.token
+            })
+          );
+
+
+        document.cookie =
+          "appRHLogin=" +
+          valor +
+          "; max-age=31536000; path=/; SameSite=Lax";
+
+
+        console.log(
+          "🍪 COOKIE DE LOGIN GRAVADO"
+        );
+
+        return true;
+
+      } catch (erro) {
+
+        console.warn(
+          "⚠️ Cookie não disponível:",
+          erro
+        );
+
+        return false;
+
+      }
+
+    }
+
+
+
+    /* =====================================================
+       SESSION STORAGE
+    ====================================================== */
+
+    function salvarSessao(dados) {
+
+      let sucesso = false;
+
+      try {
+
+        sessionStorage.setItem(
+          "usuario",
+          JSON.stringify(
+            dados.usuario
+          )
+        );
+
+        sessionStorage.setItem(
+          "nomeUsuario",
+          dados.nome
+        );
+
+        sessionStorage.setItem(
+          "idUsuario",
+          dados.id
+        );
+
+        sessionStorage.setItem(
+          "tokenUsuario",
+          dados.token
+        );
+
+        sessionStorage.setItem(
+          "parametrosURL",
+          JSON.stringify(
+            dados.parametrosURL
+          )
+        );
+
+
+        if (
+          sessionStorage.getItem(
+            "tokenUsuario"
+          ) === dados.token
+        ) {
+
+          sucesso = true;
+
+          console.log(
+            "✅ SESSION STORAGE GRAVOU O TOKEN"
+          );
+
+        }
+
+      } catch (erro) {
+
+        console.warn(
+          "⚠️ Session Storage não disponível:",
+          erro
+        );
+
+      }
+
+      return sucesso;
+
+    }
+
+
+
+    /* =====================================================
+       FUNÇÃO PRINCIPAL DE PERSISTÊNCIA
+       
+       ESTA É A FUNÇÃO MAIS IMPORTANTE.
+       
+       O TOKEN É GRAVADO EM VÁRIOS LUGARES.
+    ====================================================== */
+
+    async function salvarLoginNoDispositivo(dados) {
+
+      console.log("");
+      console.log(
+        "========================================"
+      );
+      console.log(
+        "🔐 INICIANDO PERSISTÊNCIA DO LOGIN"
+      );
+      console.log(
+        "========================================"
+      );
+
+      console.log(
+        "Nome:",
+        dados.nome
+      );
+
+      console.log(
+        "ID:",
+        dados.id
+      );
+
+      console.log(
+        "TOKEN:",
+        dados.token
+      );
+
+
+      if (!dados.token) {
+
+        console.error(
+          "❌ NÃO FOI POSSÍVEL SALVAR: TOKEN VAZIO"
+        );
+
+        return false;
+
+      }
+
+
+
+      /* =================================================
+         1 — LOCAL STORAGE
+      ================================================= */
+
+      const localUsuario =
+        gravarLocal(
+          "usuario",
+          JSON.stringify(
+            dados.usuario
+          )
+        );
+
+
+      const localNome =
+        gravarLocal(
+          "nomeUsuario",
+          dados.nome
+        );
+
+
+      const localId =
+        gravarLocal(
+          "idUsuario",
+          dados.id
+        );
+
+
+      const localToken =
+        gravarLocal(
+          "tokenUsuario",
+          dados.token
+        );
+
+
+      const localParametros =
+        gravarLocal(
+          "parametrosURL",
+          JSON.stringify(
+            dados.parametrosURL
+          )
+        );
+
+
+      const localMarcador =
+        gravarLocal(
+          "loginSalvoNoDispositivo",
+          "true"
+        );
+
+
+      gravarLocal(
+        "loginSalvoEm",
+        new Date().toISOString()
+      );
+
+
+
+      /* =================================================
+         CONFIRMAÇÃO DO LOCAL STORAGE
+      ================================================= */
+
+      const tokenLocal =
+        lerLocal(
+          "tokenUsuario"
+        );
+
+
+      console.log(
+        "🔎 TOKEN APÓS GRAVAÇÃO:",
+        tokenLocal
+      );
+
+
+      if (
+        tokenLocal === dados.token
+      ) {
+
+        console.log(
+          "🔥🔥🔥 TOKEN ESTÁ NO LOCAL STORAGE 🔥🔥🔥"
+        );
+
+      } else {
+
+        console.error(
+          "❌ TOKEN NÃO FOI CONFIRMADO NO LOCAL STORAGE"
+        );
+
+      }
+
+
+
+      /* =================================================
+         2 — INDEXED DB
+      ================================================= */
+
+      let indexed = false;
+
+      try {
+
+        await salvarLoginIndexedDB(
+          dados
+        );
+
+        const testeIndexed =
+          await lerLoginIndexedDB();
+
+
+        if (
+          testeIndexed &&
+          testeIndexed.token === dados.token
+        ) {
+
+          indexed = true;
+
+          console.log(
+            "🔥 TOKEN CONFIRMADO NO INDEXED DB"
+          );
+
+        } else {
+
+          console.error(
+            "❌ INDEXED DB NÃO CONFIRMOU O TOKEN"
+          );
+
+        }
+
+      } catch (erro) {
+
+        console.error(
+          "❌ ERRO NO INDEXED DB:",
+          erro
+        );
+
+      }
+
+
+
+      /* =================================================
+         3 — COOKIE
+      ================================================= */
+
+      const cookie =
+        salvarCookieLogin(
+          dados
+        );
+
+
+
+      /* =================================================
+         4 — SESSION STORAGE
+      ================================================= */
+
+      const session =
+        salvarSessao(
+          dados
+        );
+
+
+
+      /* =================================================
+         RESULTADO FINAL
+      ================================================= */
+
+      console.log("");
+      console.log(
+        "========================================"
+      );
+      console.log(
+        "📦 RESULTADO DA PERSISTÊNCIA"
+      );
+      console.log(
+        "========================================"
+      );
+
+
+      console.table({
+
+        localStorage:
+          localToken === dados.token,
+
+        indexedDB:
+          indexed,
+
+        cookie:
+          cookie,
+
+        sessionStorage:
+          session,
+
+        token:
+          dados.token
+
+      });
+
+
+      console.log(
+        "========================================"
+      );
+
+
+      if (
+        localToken === dados.token ||
+        indexed
+      ) {
+
+        console.log(
+          "✅ LOGIN PERSISTIDO COM SUCESSO"
+        );
+
+        return true;
+
+      }
+
+
+      console.error(
+        "🚨🚨🚨 NENHUM MÉTODO CONFIRMOU O TOKEN 🚨🚨🚨"
+      );
+
+      return false;
+
+    }
+
+
+
+    /* =====================================================
+       LER USUÁRIO SALVO
+    ====================================================== */
+
+    function lerUsuarioSalvo() {
+
+      /* Primeiro tenta Local Storage */
+
+      try {
+
+        const local =
+          localStorage.getItem(
+            "usuario"
+          );
+
+        if (local) {
+
+          const usuario =
+            JSON.parse(local);
+
+          if (usuario) {
+
+            console.log(
+              "✅ Usuário recuperado do Local Storage:",
+              usuario
+            );
+
+            return usuario;
+
+          }
+
+        }
+
+      } catch (erro) {
+
+        console.warn(
+          "Erro lendo usuário do Local Storage:",
+          erro
+        );
+
+      }
+
+
+
+      /* Depois tenta Session Storage */
+
+      try {
+
+        const sessao =
+          sessionStorage.getItem(
+            "usuario"
+          );
+
+        if (sessao) {
+
+          const usuario =
+            JSON.parse(sessao);
+
+          if (usuario) {
+
+            console.log(
+              "✅ Usuário recuperado do Session Storage:",
+              usuario
+            );
+
+            return usuario;
+
+          }
+
+        }
+
+      } catch (erro) {
+
+        console.warn(
+          "Erro lendo usuário do Session Storage:",
+          erro
+        );
+
+      }
+
+
+      return null;
+
+    }
+
 
 
     /* =====================================================
        CARREGAR USUÁRIO
     ====================================================== */
 
-    const BANCO_LOGIN = "AppRHLoginDB";
-    const STORE_LOGIN = "login";
-    const CHAVE_LOGIN = "usuarioAtual";
-    let dadosLoginAtual = null;
+    async function carregarUsuario() {
 
-    function obterParametrosURL(){
-      const params=new URLSearchParams(window.location.search);
-      const dados={};
-      params.forEach(function(valor,chave){ dados[chave]=valor; });
-      return {
-        params:params,
-        dados:dados,
-        nome:(params.get("nome")||"").trim(),
-        id:(params.get("id")||"").trim(),
-        token:(params.get("token")||"").trim()
-      };
-    }
+      console.log("");
+      console.log(
+        "========================================"
+      );
+      console.log(
+        "🚀 INICIANDO CARREGAMENTO DO USUÁRIO"
+      );
+      console.log(
+        "========================================"
+      );
 
-    function abrirBancoLogin(){
-      return new Promise(function(resolve,reject){
-        if(!window.indexedDB){ reject(new Error("IndexedDB não disponível.")); return; }
-        const req=indexedDB.open(BANCO_LOGIN,1);
-        req.onupgradeneeded=function(e){
-          const db=e.target.result;
-          if(!db.objectStoreNames.contains(STORE_LOGIN)) db.createObjectStore(STORE_LOGIN,{keyPath:"chave"});
+
+      const url =
+        obterParametrosURL();
+
+
+      console.log(
+        "PARÂMETROS DA URL:",
+        url.dados
+      );
+
+
+      const elementoNome =
+        document.getElementById(
+          "nomeUsuario"
+        );
+
+
+      const elementoId =
+        document.getElementById(
+          "idUsuario"
+        );
+
+
+
+      /* =================================================
+         PRIMEIRO:
+         VERIFICA SE VEIO TOKEN PELA URL
+      ================================================= */
+
+      if (
+        url.token
+      ) {
+
+        console.log(
+          "🔥 TOKEN RECEBIDO PELA URL:"
+        );
+
+        console.log(
+          url.token
+        );
+
+
+        const usuarioURL = {
+
+          nome:
+            url.nome,
+
+          id:
+            url.id,
+
+          token:
+            url.token
+
         };
-        req.onsuccess=function(e){resolve(e.target.result)};
-        req.onerror=function(){reject(req.error||new Error("Erro ao abrir IndexedDB."))};
-      });
-    }
 
-    async function salvarLoginIndexedDB(dados){
-      const db=await abrirBancoLogin();
-      return new Promise(function(resolve,reject){
-        const tx=db.transaction(STORE_LOGIN,"readwrite");
-        tx.objectStore(STORE_LOGIN).put({chave:CHAVE_LOGIN,...dados,salvoEm:new Date().toISOString()});
-        tx.oncomplete=function(){db.close();resolve(true)};
-        tx.onerror=function(){db.close();reject(tx.error||new Error("Erro ao salvar IndexedDB."))};
-      });
-    }
 
-    async function lerLoginIndexedDB(){
-      try{
-        const db=await abrirBancoLogin();
-        return await new Promise(function(resolve,reject){
-          const tx=db.transaction(STORE_LOGIN,"readonly");
-          const req=tx.objectStore(STORE_LOGIN).get(CHAVE_LOGIN);
-          req.onsuccess=function(){db.close();resolve(req.result||null)};
-          req.onerror=function(){db.close();reject(req.error)};
-        });
-      }catch(e){ console.warn("IndexedDB não pôde ser lido:",e); return null; }
-    }
+        const dadosURL = {
 
-    async function apagarLoginIndexedDB(){
-      try{
-        const db=await abrirBancoLogin();
-        await new Promise(function(resolve,reject){
-          const tx=db.transaction(STORE_LOGIN,"readwrite");
-          tx.objectStore(STORE_LOGIN).delete(CHAVE_LOGIN);
-          tx.oncomplete=resolve; tx.onerror=function(){reject(tx.error)};
-        });
-        db.close();
-      }catch(e){console.warn("Não foi possível apagar IndexedDB:",e)}
-    }
+          usuario:
+            usuarioURL,
 
-    function salvarCookieLogin(dados){
-      try{
-        document.cookie="appRHLogin="+encodeURIComponent(JSON.stringify(dados))+"; max-age="+(60*60*24*365)+"; path=/; SameSite=Lax";
-      }catch(e){console.warn("Cookie não disponível:",e)}
-    }
+          nome:
+            url.nome,
 
-    function salvarSessao(dados){
-      try{
-        sessionStorage.setItem("usuario",JSON.stringify(dados.usuario));
-        sessionStorage.setItem("nomeUsuario",dados.nome);
-        sessionStorage.setItem("idUsuario",dados.id);
-        sessionStorage.setItem("tokenUsuario",dados.token);
-        sessionStorage.setItem("parametrosURL",JSON.stringify(dados.parametrosURL));
-      }catch(e){console.warn("Session Storage não disponível:",e)}
-    }
+          id:
+            url.id,
 
-    async function salvarLoginNoDispositivo(dados){
-      let local=false,indexed=false;
-      try{
-        localStorage.setItem("usuario",JSON.stringify(dados.usuario));
-        localStorage.setItem("nomeUsuario",dados.nome);
-        localStorage.setItem("idUsuario",dados.id);
-        localStorage.setItem("tokenUsuario",dados.token);
-        localStorage.setItem("parametrosURL",JSON.stringify(dados.parametrosURL));
-        localStorage.setItem("loginSalvoNoDispositivo","true");
-        localStorage.setItem("loginSalvoEm",new Date().toISOString());
-        local=true;
-      }catch(e){console.warn("Local Storage não disponível:",e)}
-      try{await salvarLoginIndexedDB(dados);indexed=true}catch(e){console.warn("IndexedDB não disponível:",e)}
-      salvarCookieLogin(dados);
-      salvarSessao(dados);
-      console.log("LOGIN PERSISTIDO:",{localStorage:local,indexedDB:indexed,cookie:true,sessionStorage:true});
-    }
+          token:
+            url.token,
 
-    function mostrarModalGuardarLogin(dados){
-      dadosLoginAtual=dados;
-      const modal=document.getElementById("modalGuardarLogin");
-      if(modal) modal.classList.add("visible");
-    }
+          parametrosURL:
+            url.dados
 
-    async function responderGuardarLogin(guardar){
-      const modal=document.getElementById("modalGuardarLogin");
-      if(modal) modal.classList.remove("visible");
-      if(!dadosLoginAtual)return;
-      if(guardar){
-        await salvarLoginNoDispositivo(dadosLoginAtual);
-      }else{
-        salvarSessao(dadosLoginAtual);
-        console.log("Login NÃO será persistido no dispositivo; somente nesta sessão.");
+        };
+
+
+        /*
+         * SALVA IMEDIATAMENTE.
+         *
+         * NÃO ESPERA MODAL.
+         * NÃO ESPERA CLIQUE.
+         */
+
+        await salvarLoginNoDispositivo(
+          dadosURL
+        );
+
+
+        console.log(
+          "🔥 TOKEN DA URL FOI ENVIADO PARA PERSISTÊNCIA"
+        );
+
       }
-      dadosLoginAtual=null;
-    }
 
-    function lerUsuarioSalvo(){
-      try{
-        const local=localStorage.getItem("usuario");
-        if(local) return JSON.parse(local);
-      }catch(e){console.warn("Erro no Local Storage:",e)}
-      try{
-        const sess=sessionStorage.getItem("usuario");
-        if(sess) return JSON.parse(sess);
-      }catch(e){console.warn("Erro no Session Storage:",e)}
-      return null;
-    }
 
-    async function carregarUsuario(){
-      const url=obterParametrosURL();
-      const elementoNome=document.getElementById("nomeUsuario");
-      const elementoId=document.getElementById("idUsuario");
-      let usuario=lerUsuarioSalvo();
 
-      /* Se o Local Storage foi apagado, tenta recuperar o login do IndexedDB. */
-      if(!usuario){
-        const recuperado=await lerLoginIndexedDB();
-        if(recuperado && recuperado.usuario){
-          usuario=recuperado.usuario;
-          try{
-            localStorage.setItem("usuario",JSON.stringify(recuperado.usuario));
-            localStorage.setItem("nomeUsuario",recuperado.nome||"");
-            localStorage.setItem("idUsuario",recuperado.id||"");
-            localStorage.setItem("tokenUsuario",recuperado.token||"");
-            localStorage.setItem("parametrosURL",JSON.stringify(recuperado.parametrosURL||{}));
-            localStorage.setItem("loginSalvoNoDispositivo","true");
-          }catch(e){console.warn("Não foi possível restaurar IndexedDB para Local Storage:",e)}
-          salvarSessao(recuperado);
+      /* =================================================
+         AGORA PROCURA USUÁRIO SALVO
+      ================================================= */
+
+      let usuario =
+        lerUsuarioSalvo();
+
+
+
+      /* =================================================
+         SE NÃO EXISTIR LOCAL/SESSION,
+         TENTA INDEXED DB
+      ================================================= */
+
+      if (!usuario) {
+
+        console.log(
+          "Local/Session não possuem usuário."
+        );
+
+        console.log(
+          "Tentando IndexedDB..."
+        );
+
+
+        const recuperado =
+          await lerLoginIndexedDB();
+
+
+        if (
+          recuperado &&
+          recuperado.usuario
+        ) {
+
+          console.log(
+            "🔥 LOGIN ENCONTRADO NO INDEXED DB:",
+            recuperado
+          );
+
+
+          usuario =
+            recuperado.usuario;
+
+
+          /*
+           * Restaura tudo no Local Storage
+           */
+
+          gravarLocal(
+            "usuario",
+            JSON.stringify(
+              recuperado.usuario
+            )
+          );
+
+
+          gravarLocal(
+            "nomeUsuario",
+            recuperado.nome || ""
+          );
+
+
+          gravarLocal(
+            "idUsuario",
+            recuperado.id || ""
+          );
+
+
+          gravarLocal(
+            "tokenUsuario",
+            recuperado.token || ""
+          );
+
+
+          gravarLocal(
+            "parametrosURL",
+            JSON.stringify(
+              recuperado.parametrosURL || {}
+            )
+          );
+
+
+          gravarLocal(
+            "loginSalvoNoDispositivo",
+            "true"
+          );
+
+
+          salvarSessao(
+            recuperado
+          );
+
         }
+
       }
 
-      const nomeSalvo=localStorage.getItem("nomeUsuario")||sessionStorage.getItem("nomeUsuario")||"";
-      const idSalvo=localStorage.getItem("idUsuario")||sessionStorage.getItem("idUsuario")||"";
-      const tokenSalvo=localStorage.getItem("tokenUsuario")||sessionStorage.getItem("tokenUsuario")||"";
 
-      const nome=(url.nome||(usuario&&(usuario.nome||usuario.nomeCompleto||usuario.NOME||usuario["NOME COMPLETO"]))||nomeSalvo||"").trim();
-      const id=String(url.id||(usuario&&(usuario.id||usuario.idUsuario||usuario.ID||usuario.IDUSUARIO||usuario["ID USUARIO"]))||idSalvo||"").trim();
-      const token=String(url.token||(usuario&&usuario.token)||tokenSalvo||"").trim();
 
-      const usuarioFinal={...(usuario||{}),nome:nome,id:id,token:token};
-      const temDadosURL=Object.keys(url.dados).length>0;
-      const temLoginURL=!!(url.nome||url.id||url.token);
-      const dadosLogin={usuario:usuarioFinal,nome:nome,id:id,token:token,parametrosURL:url.dados};
+      /* =================================================
+         LÊ OS DADOS SALVOS
+      ================================================= */
 
-      console.log("TODOS OS PARÂMETROS RECEBIDOS PELA URL:",url.dados);
-      console.log("nome:",url.nome,"id:",url.id,"token:",url.token);
+      const nomeSalvo =
+        lerLocal(
+          "nomeUsuario"
+        ) ||
+        sessionStorage.getItem(
+          "nomeUsuario"
+        ) ||
+        "";
 
-      if(elementoNome) elementoNome.textContent=nome||"Usuário";
-      if(elementoId) elementoId.textContent="ID: "+(id||"Não informado");
 
-      if(temLoginURL && nome && id && token){
-        const tokenSalvoLocal=localStorage.getItem("tokenUsuario")||"";
-        const jaPersistido=localStorage.getItem("loginSalvoNoDispositivo")==="true" && tokenSalvoLocal===token;
-        if(!jaPersistido) mostrarModalGuardarLogin(dadosLogin);
-      }else if(nome||id){
-        salvarSessao(dadosLogin);
+      const idSalvo =
+        lerLocal(
+          "idUsuario"
+        ) ||
+        sessionStorage.getItem(
+          "idUsuario"
+        ) ||
+        "";
+
+
+      const tokenSalvo =
+        lerLocal(
+          "tokenUsuario"
+        ) ||
+        sessionStorage.getItem(
+          "tokenUsuario"
+        ) ||
+        "";
+
+
+
+      /* =================================================
+         MONTA DADOS FINAIS
+      ================================================= */
+
+      const nome =
+        (
+          url.nome ||
+
+          (
+            usuario &&
+            (
+              usuario.nome ||
+              usuario.nomeCompleto ||
+              usuario.NOME ||
+              usuario["NOME COMPLETO"]
+            )
+          ) ||
+
+          nomeSalvo ||
+
+          ""
+        ).trim();
+
+
+      const id =
+        String(
+
+          url.id ||
+
+          (
+            usuario &&
+            (
+              usuario.id ||
+              usuario.idUsuario ||
+              usuario.ID ||
+              usuario.IDUSUARIO ||
+              usuario["ID USUARIO"]
+            )
+          ) ||
+
+          idSalvo ||
+
+          ""
+
+        ).trim();
+
+
+      const token =
+        String(
+
+          url.token ||
+
+          (
+            usuario &&
+            usuario.token
+          ) ||
+
+          tokenSalvo ||
+
+          ""
+
+        ).trim();
+
+
+
+      const usuarioFinal = {
+
+        ...(usuario || {}),
+
+        nome:
+          nome,
+
+        id:
+          id,
+
+        token:
+          token
+
+      };
+
+
+      const dadosLogin = {
+
+        usuario:
+          usuarioFinal,
+
+        nome:
+          nome,
+
+        id:
+          id,
+
+        token:
+          token,
+
+        parametrosURL:
+          url.dados
+
+      };
+
+
+
+      /* =================================================
+         MOSTRA NA TELA
+      ================================================= */
+
+      if (elementoNome) {
+
+        elementoNome.textContent =
+          nome ||
+          "Usuário";
+
       }
 
-      if(temDadosURL){
-        try{sessionStorage.setItem("parametrosURL",JSON.stringify(url.dados))}catch(e){}
-        window.history.replaceState({},document.title,window.location.pathname);
+
+      if (elementoId) {
+
+        elementoId.textContent =
+          "ID: " +
+          (
+            id ||
+            "Não informado"
+          );
+
       }
+
+
+
+      /* =================================================
+         SEGURANÇA EXTRA:
+         SE TEM TOKEN, GARANTE NOVAMENTE A PERSISTÊNCIA
+      ================================================= */
+
+      if (
+        token &&
+        nome &&
+        id
+      ) {
+
+        const tokenAgora =
+          lerLocal(
+            "tokenUsuario"
+          );
+
+
+        if (
+          tokenAgora !== token
+        ) {
+
+          console.warn(
+            "⚠️ Token ainda não estava no Local Storage."
+          );
+
+
+          await salvarLoginNoDispositivo(
+            dadosLogin
+          );
+
+        } else {
+
+          console.log(
+            "✅ TOKEN JÁ ESTÁ PERSISTIDO:",
+            tokenAgora
+          );
+
+        }
+
+      }
+
+
+
+      /* =================================================
+         MOSTRA DIAGNÓSTICO FINAL
+      ================================================= */
+
+      console.log("");
+      console.log(
+        "========================================"
+      );
+      console.log(
+        "🔍 DIAGNÓSTICO FINAL DO LOGIN"
+      );
+      console.log(
+        "========================================"
+      );
+
+
+      console.log(
+        "URL:",
+        window.location.href
+      );
+
+
+      console.log(
+        "Nome:",
+        nome
+      );
+
+
+      console.log(
+        "ID:",
+        id
+      );
+
+
+      console.log(
+        "Token recebido:",
+        token
+      );
+
+
+      console.log(
+        "Token no Local Storage:",
+        lerLocal(
+          "tokenUsuario"
+        )
+      );
+
+
+      console.log(
+        "Usuário no Local Storage:",
+        lerLocal(
+          "usuario"
+        )
+      );
+
+
+      console.log(
+        "Login persistido:",
+        lerLocal(
+          "loginSalvoNoDispositivo"
+        )
+      );
+
+
+      console.log(
+        "========================================"
+      );
+
+
+
+      /* =================================================
+         REMOVE TOKEN DA URL SOMENTE DEPOIS
+         DE TODA A PERSISTÊNCIA
+      ================================================= */
+
+      if (
+        Object.keys(
+          url.dados
+        ).length > 0
+      ) {
+
+        try {
+
+          sessionStorage.setItem(
+            "parametrosURL",
+            JSON.stringify(
+              url.dados
+            )
+          );
+
+        } catch (erro) {}
+
+
+
+        /*
+         * Só agora limpamos a URL.
+         *
+         * O token já foi salvo.
+         */
+
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+
+
+        console.log(
+          "🧹 Parâmetros removidos da URL após persistência."
+        );
+
+      }
+
     }
+
+
 
     /* =====================================================
        ABRIR PÁGINA
@@ -1677,7 +2513,6 @@
       pagina,
       botao
     ) {
-
 
       const paginas = {
 
@@ -1701,6 +2536,7 @@
 
         alarme:
           "./alarme.html",
+
         upload:
           "./upload.html"
 
@@ -1733,6 +2569,7 @@
     }
 
 
+
     /* =====================================================
        INICIALIZAÇÃO
     ====================================================== */
@@ -1741,8 +2578,18 @@
       "DOMContentLoaded",
       async function() {
 
+        try {
 
-        await carregarUsuario();
+          await carregarUsuario();
+
+        } catch (erro) {
+
+          console.error(
+            "🚨 ERRO CRÍTICO AO CARREGAR USUÁRIO:",
+            erro
+          );
+
+        }
 
 
         const loading =
@@ -1762,9 +2609,7 @@
       }
     );
 
-
   </script>
-
 
 </body>
 
