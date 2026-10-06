@@ -1250,274 +1250,164 @@ content="black-translucent"
 
     function carregarUsuario() {
 
-      console.log("");
-      console.log(
-        "======================================"
+  console.log("================================");
+  console.log("🚀 CARREGANDO HOME");
+  console.log("================================");
+
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  const tokenURL = (
+    params.get("token") || ""
+  ).trim();
+
+  const nomeURL = (
+    params.get("nome") || ""
+  ).trim();
+
+  const idURL = (
+    params.get("id") || ""
+  ).trim();
+
+
+  console.log("URL:", window.location.href);
+  console.log("TOKEN DA URL:", tokenURL);
+  console.log("NOME DA URL:", nomeURL);
+  console.log("ID DA URL:", idURL);
+
+
+  // =====================================================
+  // RECEBEU TOKEN PELA URL
+  // =====================================================
+
+  if (tokenURL) {
+
+    localStorage.setItem(
+      "tokenUsuario",
+      tokenURL
+    );
+
+    console.log(
+      "✅ TOKEN SALVO NO LOCALSTORAGE"
+    );
+  }
+
+
+  // =====================================================
+  // RECEBEU NOME
+  // =====================================================
+
+  if (nomeURL) {
+
+    localStorage.setItem(
+      "nomeUsuario",
+      nomeURL
+    );
+
+    console.log(
+      "✅ NOME SALVO NO LOCALSTORAGE"
+    );
+  }
+
+
+  // =====================================================
+  // RECEBEU ID
+  // =====================================================
+
+  if (idURL) {
+
+    localStorage.setItem(
+      "idUsuario",
+      idURL
+    );
+
+    console.log(
+      "✅ ID SALVO NO LOCALSTORAGE"
+    );
+  }
+
+
+  // =====================================================
+  // RECUPERA DO LOCALSTORAGE
+  // =====================================================
+
+  const token = localStorage.getItem(
+    "tokenUsuario"
+  );
+
+  const nome = localStorage.getItem(
+    "nomeUsuario"
+  );
+
+  const id = localStorage.getItem(
+    "idUsuario"
+  );
+
+
+  console.log("================================");
+  console.log("📦 LOCALSTORAGE");
+  console.log("TOKEN:", token);
+  console.log("NOME:", nome);
+  console.log("ID:", id);
+  console.log("================================");
+
+
+  // =====================================================
+  // MOSTRAR NA TELA
+  // =====================================================
+
+  const elementoNome =
+    document.getElementById("nomeUsuario");
+
+  const elementoId =
+    document.getElementById("idUsuario");
+
+
+  if (elementoNome) {
+
+    elementoNome.textContent =
+      nome || "Usuário";
+  }
+
+
+  if (elementoId) {
+
+    elementoId.textContent =
+      "ID: " + (
+        id || "Não informado"
       );
-      console.log(
-        "🚀 INICIANDO CARREGAMENTO DO HOME"
-      );
-      console.log(
-        "======================================"
-      );
-
-
-      const dados =
-        obterParametrosURL();
-
-
-      console.log(
-        "URL:",
-        window.location.href
-      );
-
-      console.log(
-        "ORIGEM:",
-        window.location.origin
-      );
-
-      console.log(
-        "NOME RECEBIDO:",
-        dados.nome
-      );
-
-      console.log(
-        "ID RECEBIDO:",
-        dados.id
-      );
-
-      console.log(
-        "TOKEN RECEBIDO:",
-        dados.token
-      );
-
-
-      /* =================================================
-         SE VEIO TOKEN PELA URL
-         
-         GRAVA IMEDIATAMENTE.
-      ================================================= */
-
-      if (dados.token) {
-
-        console.log(
-          "🔐 TOKEN ENCONTRADO NA URL."
-        );
-
-        const salvouToken =
-          salvarLocal(
-            CHAVE_TOKEN,
-            dados.token
-          );
-
-
-        if (!salvouToken) {
-
-          console.error(
-            "🚨 NÃO FOI POSSÍVEL SALVAR O TOKEN."
-          );
-
-        }
-
-      } else {
-
-        console.log(
-          "ℹ️ Nenhum token na URL."
-        );
-
-      }
-
-
-      /* =================================================
-         NOME
-      ================================================= */
-
-      if (dados.nome) {
-
-        salvarLocal(
-          CHAVE_NOME,
-          dados.nome
-        );
-
-      }
-
-
-      /* =================================================
-         ID
-      ================================================= */
-
-      if (dados.id) {
-
-        salvarLocal(
-          CHAVE_ID,
-          dados.id
-        );
-
-      }
-
-
-      /* =================================================
-         RECUPERAR O QUE REALMENTE ESTÁ NO STORAGE
-         
-         NÃO usamos a variável da URL aqui.
-         
-         Pegamos diretamente do localStorage.
-      ================================================= */
-
-      const tokenFinal =
-        lerLocal(CHAVE_TOKEN);
-
-      const nomeFinal =
-        lerLocal(CHAVE_NOME);
-
-      const idFinal =
-        lerLocal(CHAVE_ID);
-
-
-      console.log("");
-      console.log(
-        "======================================"
-      );
-      console.log(
-        "📦 DADOS RECUPERADOS DO LOCALSTORAGE"
-      );
-      console.log(
-        "======================================"
-      );
-
-      console.log(
-        "TOKEN:",
-        tokenFinal
-      );
-
-      console.log(
-        "NOME:",
-        nomeFinal
-      );
-
-      console.log(
-        "ID:",
-        idFinal
-      );
-
-
-      /* =================================================
-         CONFIRMAR TOKEN
-      ================================================= */
-
-      if (tokenFinal) {
-
-        console.log(
-          "🔥 TOKEN ESTÁ PERSISTIDO NO LOCALSTORAGE"
-        );
-
-      } else {
-
-        console.error(
-          "🚨 TOKEN NÃO EXISTE NO LOCALSTORAGE"
-        );
-
-      }
-
-
-      /* =================================================
-         MOSTRAR USUÁRIO NA TELA
-      ================================================= */
-
-      const elementoNome =
-        document.getElementById(
-          "nomeUsuario"
-        );
-
-      const elementoId =
-        document.getElementById(
-          "idUsuario"
-        );
-
-
-      if (elementoNome) {
-
-        elementoNome.textContent =
-          nomeFinal ||
-          "Usuário";
-
-      }
-
-
-      if (elementoId) {
-
-        elementoId.textContent =
-          "ID: " +
-          (
-            idFinal ||
-            "Não informado"
-          );
-
-      }
-
-
-      /* =================================================
-         LIMPAR PARÂMETROS DA URL
-         
-         IMPORTANTE:
-         
-         replaceState NÃO APAGA LOCALSTORAGE.
-         
-         Antes e depois verificamos o token.
-      ================================================= */
-
-      if (dados.params.toString()) {
-
-        console.log(
-          "🔵 TOKEN ANTES DO replaceState:",
-          localStorage.getItem(
-            CHAVE_TOKEN
-          )
-        );
-
-
-        window.history.replaceState(
-          {},
-          document.title,
-          window.location.pathname
-        );
-
-
-        console.log(
-          "🟢 TOKEN DEPOIS DO replaceState:",
-          localStorage.getItem(
-            CHAVE_TOKEN
-          )
-        );
-
-      }
-
-
-      console.log("");
-      console.log(
-        "======================================"
-      );
-      console.log(
-        "🏁 HOME FINALIZADO"
-      );
-      console.log(
-        "TOKEN PERSISTIDO:",
-        localStorage.getItem(
-          CHAVE_TOKEN
-        )
-      );
-      console.log(
-        "======================================"
-      );
-console.log("=================================");
-console.log("TESTE LOCALSTORAGE");
-console.log("ORIGEM:", window.location.origin);
-console.log("TOKEN:", localStorage.getItem("tokenUsuario"));
-console.log("NOME:", localStorage.getItem("nomeUsuario"));
-console.log("ID:", localStorage.getItem("idUsuario"));
-console.log("=================================");
-    }
-
+  }
+
+
+  // =====================================================
+  // LIMPAR OS DADOS DA URL
+  //
+  // NÃO MEXE NO LOCALSTORAGE
+  // =====================================================
+
+  if (
+    tokenURL ||
+    nomeURL ||
+    idURL
+  ) {
+
+    window.history.replaceState(
+      null,
+      document.title,
+      window.location.pathname
+    );
+
+    console.log(
+      "🧹 Parâmetros removidos da URL."
+    );
+
+    console.log(
+      "🔐 TOKEN CONTINUA:",
+      localStorage.getItem("tokenUsuario")
+    );
+  }
+}
 
     /* =====================================================
        ABRIR PÁGINAS
