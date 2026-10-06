@@ -1,661 +1,1617 @@
 <!DOCTYPE html>
 
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Sistema RH</title>
+<head>
+
+  <meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+
+>
+
+  <meta name="theme-color" content="#0f172a">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta
+name="apple-mobile-web-app-status-bar-style"
+content="black-translucent"
+
+>
+
+  <meta name="apple-mobile-web-app-title" content="App RH">
+
+  <title>App RH</title>
 
   <style>
+
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      width: 100%;
+      min-height: 100%;
+      background: #f1f5f9;
     }
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #222;
+      padding: 0;
+
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+      background:
+        linear-gradient(
+          160deg,
+          #0f172a 0%,
+          #172554 35%,
+          #f1f5f9 35.1%,
+          #f1f5f9 100%
+        );
+
+      color: #0f172a;
+
+      overflow-x: hidden;
+
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
     }
 
-    #loading {
-      position: fixed;
-      inset: 0;
-      background: white;
+    button {
+      font-family: inherit;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 620px;
+
+      min-height: 100vh;
+      min-height: 100dvh;
+
+      margin: 0 auto;
+
+      padding:
+        24px
+        20px
+        calc(30px + env(safe-area-inset-bottom));
+
+      position: relative;
+    }
+
+    .header {
+      color: white;
+
+      padding:
+        8px
+        2px
+        30px;
+    }
+
+    .header-top {
       display: flex;
       align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      font-size: 18px;
-    }
-
-    #loading.hidden {
-      display: none;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .topo {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-    }
-
-    .topo h1 {
-      margin: 0 0 8px;
-      font-size: 24px;
-    }
-
-    .topo p {
-      margin: 4px 0;
-      color: #555;
-    }
-
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      justify-content: space-between;
       gap: 15px;
     }
 
-    .botao {
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .logo {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+
+      border-radius: 16px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        rgba(255,255,255,0.14);
+
+      border:
+        1px solid rgba(255,255,255,0.18);
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      font-size: 25px;
+
+      box-shadow:
+        0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .brand-text h1 {
+      margin: 0;
+
+      font-size: 23px;
+      font-weight: 800;
+
+      letter-spacing: -0.5px;
+    }
+
+    .brand-text span {
+      display: block;
+
+      margin-top: 3px;
+
+      font-size: 12px;
+
+      color:
+        rgba(255,255,255,0.68);
+    }
+
+    .user-card {
+      margin-top: 22px;
+
+      display: flex;
+      align-items: center;
+
+      gap: 13px;
+
+      padding:
+        14px
+        16px;
+
+      border-radius: 18px;
+
+      background:
+        rgba(255,255,255,0.10);
+
+      border:
+        1px solid rgba(255,255,255,0.13);
+
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .user-icon {
+      width: 42px;
+      height: 42px;
+      min-width: 42px;
+
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        rgba(255,255,255,0.15);
+
+      font-size: 20px;
+    }
+
+    .user-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .user-label {
+      font-size: 10px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1px;
+
+      color:
+        rgba(255,255,255,0.58);
+    }
+
+    .user-name {
+      margin-top: 3px;
+
+      font-size: 15px;
+      font-weight: 700;
+
+      color: white;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-id {
+      margin-top: 4px;
+
+      font-size: 11px;
+      font-weight: 500;
+
+      color:
+        rgba(255,255,255,0.65);
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .content {
+      background:
+        rgba(255,255,255,0.97);
+
+      border-radius: 28px;
+
+      padding:
+        22px
+        18px
+        20px;
+
+      box-shadow:
+        0 20px 55px
+        rgba(15,23,42,0.16);
+
+      border:
+        1px solid
+        rgba(255,255,255,0.8);
+    }
+
+    .section-title {
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      margin-bottom: 17px;
+
+      padding-left: 2px;
+    }
+
+    .section-title-icon {
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
+
+      border-radius: 10px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background: #eff6ff;
+
+      font-size: 17px;
+    }
+
+    .section-title-text {
+      min-width: 0;
+    }
+
+    .section-title-text h2 {
+      margin: 0;
+
+      font-size: 17px;
+      font-weight: 800;
+
+      letter-spacing: -0.2px;
+    }
+
+    .section-title-text p {
+      margin:
+        2px
+        0
+        0;
+
+      font-size: 11px;
+
+      color: #64748b;
+    }
+
+    .menu {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 11px;
+    }
+
+    .menu-button {
+      width: 100%;
+
+      min-height: 72px;
+
       border: 0;
-      border-radius: 12px;
-      background: white;
-      padding: 25px 15px;
+
+      border-radius: 18px;
+
+      padding:
+        10px
+        13px;
+
+      display: flex;
+
+      align-items: center;
+
+      text-align: left;
+
+      gap: 13px;
+
+      background: #ffffff;
+
+      border:
+        1px solid
+        #e2e8f0;
+
       cursor: pointer;
-      font-size: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-      transition: .2s;
+
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+
+      box-shadow:
+        0 3px 10px
+        rgba(15,23,42,0.04);
+
+      position: relative;
+
+      overflow: hidden;
+
+      appearance: none;
+      -webkit-appearance: none;
     }
 
-    .botao:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0,0,0,.12);
+    .menu-button::after {
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      top: 0;
+      bottom: 0;
+
+      width: 4px;
+
+      background: #2563eb;
+
+      opacity: 0;
+
+      transition:
+        opacity 0.15s ease;
     }
 
-    .botao.carregando {
-      opacity: .6;
+    .menu-button:hover {
+      background: #f8fafc;
+
+      box-shadow:
+        0 7px 18px
+        rgba(15,23,42,0.08);
+
+      transform:
+        translateY(-1px);
+    }
+
+    .menu-button:hover::after {
+      opacity: 1;
+    }
+
+    .menu-button:active {
+      transform:
+        scale(0.985);
+
+      background:
+        #f1f5f9;
+
+      box-shadow: none;
+    }
+
+    .menu-button:focus {
+      outline: none;
+    }
+
+    .menu-button:focus-visible {
+      outline:
+        3px solid
+        rgba(37,99,235,0.25);
+
+      outline-offset: 2px;
+    }
+
+    .menu-icon {
+      width: 47px;
+      height: 47px;
+
+      min-width: 47px;
+
+      border-radius: 14px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      font-size: 21px;
+    }
+
+    .menu-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .menu-title {
+      font-size: 14px;
+
+      font-weight: 750;
+
+      color: #0f172a;
+
+      line-height: 1.25;
+    }
+
+    .menu-description {
+      margin-top: 4px;
+
+      font-size: 11px;
+
+      line-height: 1.35;
+
+      color: #64748b;
+    }
+
+    .arrow {
+      width: 28px;
+      height: 28px;
+
+      min-width: 28px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background:
+        #f8fafc;
+
+      color:
+        #64748b;
+
+      font-size: 17px;
+
+      font-weight: 600;
+    }
+
+    .icon-troca {
+      background: #eff6ff;
+    }
+
+    .icon-folga {
+      background: #f0fdf4;
+    }
+
+    .icon-atestado {
+      background: #fff7ed;
+    }
+
+    .icon-banco {
+      background: #f5f3ff;
+    }
+
+    .icon-treinamento {
+      background: #ecfeff;
+    }
+
+    .icon-suporte {
+      background: #fef2f2;
+    }
+
+    .icon-alarme {
+      background: #fff7ed;
+    }
+
+    .footer {
+      text-align: center;
+
+      margin-top: 19px;
+
+      padding: 4px;
+
+      color:
+        #94a3b8;
+
+      font-size: 10px;
+
+      line-height: 1.5;
+    }
+
+    .footer strong {
+      color:
+        #64748b;
+    }
+
+    .loading {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 9999;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background:
+        #0f172a;
+
+      transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+    }
+
+    .loading.hidden {
+      opacity: 0;
+      visibility: hidden;
       pointer-events: none;
     }
 
-    .sair {
-      margin-top: 20px;
-      width: 100%;
-      padding: 14px;
-      border: 0;
-      border-radius: 10px;
-      background: #c62828;
+    .loading-content {
+      text-align: center;
       color: white;
-      font-size: 16px;
-      cursor: pointer;
     }
+
+    .spinner {
+      width: 38px;
+      height: 38px;
+
+      border-radius: 50%;
+
+      border:
+        3px solid
+        rgba(255,255,255,0.18);
+
+      border-top-color:
+        white;
+
+      animation:
+        girar 0.8s linear infinite;
+
+      margin:
+        0
+        auto
+        14px;
+    }
+
+    .loading-text {
+      font-size: 12px;
+
+      color:
+        rgba(255,255,255,0.65);
+    }
+
+    @keyframes girar {
+      to {
+        transform:
+          rotate(360deg);
+      }
+    }
+
+    .menu-button.carregando {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .menu-button.carregando .arrow {
+      animation:
+        girar 0.7s linear infinite;
+    }
+
+    @media (max-width: 380px) {
+
+      .app {
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-top: 18px;
+      }
+
+      .header {
+        padding-bottom: 22px;
+      }
+
+      .brand-text h1 {
+        font-size: 21px;
+      }
+
+      .logo {
+        width: 47px;
+        height: 47px;
+        min-width: 47px;
+        font-size: 22px;
+      }
+
+      .content {
+        padding:
+          19px
+          14px
+          17px;
+
+        border-radius: 24px;
+      }
+
+      .menu-button {
+        min-height: 67px;
+
+        padding:
+          9px
+          10px;
+
+        gap: 10px;
+      }
+
+      .menu-icon {
+        width: 43px;
+        height: 43px;
+
+        min-width: 43px;
+
+        font-size: 19px;
+      }
+
+      .menu-title {
+        font-size: 13px;
+      }
+
+      .menu-description {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-height: 700px) {
+
+      .app {
+        padding-top: 14px;
+      }
+
+      .header {
+        padding-bottom: 17px;
+      }
+
+      .user-card {
+        margin-top: 15px;
+      }
+
+      .content {
+        padding-top: 16px;
+      }
+
+      .menu {
+        gap: 8px;
+      }
+
+      .menu-button {
+        min-height: 62px;
+      }
+    }
+
+    @media (min-width: 700px) {
+
+      body {
+        display: flex;
+        justify-content: center;
+      }
+
+      .app {
+        padding-top: 40px;
+      }
+
+      .header {
+        padding-bottom: 35px;
+      }
+
+      .content {
+        padding:
+          25px
+          23px;
+      }
+
+      .menu-button {
+        min-height: 78px;
+      }
+
+      .menu-title {
+        font-size: 15px;
+      }
+
+      .menu-description {
+        font-size: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+
+        animation-duration:
+          0.01ms !important;
+
+        animation-iteration-count:
+          1 !important;
+
+        transition-duration:
+          0.01ms !important;
+      }
+    }
+
   </style>
 
 </head>
 
 <body>
 
-  <div id="loading">
-    Carregando sistema...
-  </div>
-
-  <div class="container">
+  <div
+    class="loading"
+    id="loading"
+  >
 
 ```
-<div class="topo">
+<div class="loading-content">
 
-  <h1>
-    Sistema RH
-  </h1>
+  <div class="spinner"></div>
 
-  <p>
-    Usuário:
-    <strong id="nomeUsuario">Usuário</strong>
-  </p>
-
-  <p id="idUsuario">
-    ID: Não informado
-  </p>
+  <div class="loading-text">
+    Carregando aplicativo...
+  </div>
 
 </div>
-
-<div class="menu">
-
-  <button class="botao"
-          onclick="abrirPagina('troca', this)">
-    Troca de Plantão
-  </button>
-
-  <button class="botao"
-          onclick="abrirPagina('folga', this)">
-    Solicitação de Folga
-  </button>
-
-  <button class="botao"
-          onclick="abrirPagina('atestados', this)">
-    Atestados
-  </button>
-
-  <button class="botao"
-          onclick="abrirPagina('banco', this)">
-    Banco de Horas
-  </button>
-
-  <button class="botao"
-          onclick="abrirPagina('treinamentos', this)">
-    Treinamentos
-  </button>
-
-  <button class="botao"
-          onclick="abrirPagina('suporte', this)">
-    Suporte
-  </button>
-
-  <button class="botao"
-          onclick="abrirPagina('alarme', this)">
-    Alarme
-  </button>
-
-  <button class="botao"
-          onclick="abrirPagina('upload', this)">
-    Upload
-  </button>
-
-</div>
-
-<button class="sair" onclick="sair()">
-  Sair
-</button>
 ```
 
   </div>
 
-<script>
+  <div class="app">
 
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
+```
+<header class="header">
 
-const CHAVE_TOKEN = "tokenUsuario";
-const CHAVE_NOME = "nomeUsuario";
-const CHAVE_ID = "idUsuario";
+  <div class="header-top">
 
+    <div class="brand">
 
-/* =====================================================
-   LER PARÂMETROS DA URL
-===================================================== */
+      <div class="logo">
+        👥
+      </div>
 
-function obterParametrosURL() {
+      <div class="brand-text">
 
-  const params =
-    new URLSearchParams(window.location.search);
+        <h1>
+          App RH
+        </h1>
 
-  return {
+        <span>
+          Sistema de Recursos Humanos
+        </span>
 
-    params: params,
+      </div>
 
-    nome:
-      (params.get("nome") || "").trim(),
+    </div>
 
-    id:
-      (params.get("id") || "").trim(),
-
-    token:
-      (params.get("token") || "").trim()
-
-  };
-
-}
+  </div>
 
 
-/* =====================================================
-   GRAVAR TOKEN NO LOCAL STORAGE
-===================================================== */
+  <div class="user-card">
 
-function salvarToken(token) {
+    <div class="user-icon">
+      👤
+    </div>
 
-  console.log("=================================");
-  console.log("🔐 SALVANDO TOKEN");
-  console.log("=================================");
+    <div class="user-info">
 
-  console.log("Token recebido:", token);
+      <div class="user-label">
+        Usuário conectado
+      </div>
 
-  if (!token) {
+      <div
+        class="user-name"
+        id="nomeUsuario"
+      >
+        Carregando...
+      </div>
 
-    console.warn(
-      "⚠️ Nenhum token recebido para salvar."
-    );
+      <div
+        class="user-id"
+        id="idUsuario"
+      >
+        ID: carregando...
+      </div>
 
-    return false;
-  }
+    </div>
 
+  </div>
 
-  try {
-
-    localStorage.setItem(
-      CHAVE_TOKEN,
-      token
-    );
-
-
-    const tokenSalvo =
-      localStorage.getItem(CHAVE_TOKEN);
-
-
-    console.log(
-      "Token depois do localStorage.setItem:",
-      tokenSalvo
-    );
+</header>
 
 
-    if (tokenSalvo === token) {
+<main class="content">
+
+  <div class="section-title">
+
+    <div class="section-title-icon">
+      📋
+    </div>
+
+    <div class="section-title-text">
+
+      <h2>
+        Menu principal
+      </h2>
+
+      <p>
+        Selecione uma opção para continuar
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="menu">
+
+    <button
+      class="menu-button"
+      type="button"
+      onclick="abrirPagina('troca', this)"
+    >
+
+      <div class="menu-icon icon-troca">
+        🔄
+      </div>
+
+      <div class="menu-info">
+
+        <div class="menu-title">
+          Protocolo de Troca
+        </div>
+
+        <div class="menu-description">
+          Solicite ou acompanhe trocas de plantão
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ›
+      </div>
+
+    </button>
+
+
+    <button
+      class="menu-button"
+      type="button"
+      onclick="abrirPagina('folga', this)"
+    >
+
+      <div class="menu-icon icon-folga">
+        📅
+      </div>
+
+      <div class="menu-info">
+
+        <div class="menu-title">
+          Protocolo de Folga
+        </div>
+
+        <div class="menu-description">
+          Solicite folgas e consulte suas solicitações
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ›
+      </div>
+
+    </button>
+
+
+    <button
+      class="menu-button"
+      type="button"
+      onclick="abrirPagina('upload', this)"
+    >
+
+      <div class="menu-icon icon-troca">
+        📝✍️
+      </div>
+
+      <div class="menu-info">
+
+        <div class="menu-title">
+          Enviar assinatura
+        </div>
+
+        <div class="menu-description">
+          Envie sua assinatura para protocolos da Med
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ›
+      </div>
+
+    </button>
+
+
+    <button
+      class="menu-button"
+      type="button"
+      onclick="abrirPagina('atestados', this)"
+    >
+
+      <div class="menu-icon icon-atestado">
+        📄
+      </div>
+
+      <div class="menu-info">
+
+        <div class="menu-title">
+          Entregar Atestado
+        </div>
+
+        <div class="menu-description">
+          Envie seu atestado para análise do RH
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ›
+      </div>
+
+    </button>
+
+
+    <button
+      class="menu-button"
+      type="button"
+      onclick="abrirPagina('banco', this)"
+    >
+
+      <div class="menu-icon icon-banco">
+        ⏱️
+      </div>
+
+      <div class="menu-info">
+
+        <div class="menu-title">
+          Ver Banco de Horas
+        </div>
+
+        <div class="menu-description">
+          Consulte seu saldo e movimentações
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ›
+      </div>
+
+    </button>
+
+
+    <button
+      class="menu-button"
+      type="button"
+      onclick="abrirPagina('treinamentos', this)"
+    >
+
+      <div class="menu-icon icon-treinamento">
+        🎓
+      </div>
+
+      <div class="menu-info">
+
+        <div class="menu-title">
+          Treinamentos e Certificados
+        </div>
+
+        <div class="menu-description">
+          Acesse treinamentos e seus certificados
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ›
+      </div>
+
+    </button>
+
+
+    <button
+      class="menu-button"
+      type="button"
+      onclick="abrirPagina('suporte', this)"
+    >
+
+      <div class="menu-icon icon-suporte">
+        🛠️
+      </div>
+
+      <div class="menu-info">
+
+        <div class="menu-title">
+          Suporte
+        </div>
+
+        <div class="menu-description">
+          Entre em contato com o suporte do sistema
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ›
+      </div>
+
+    </button>
+
+
+    <button
+      class="menu-button"
+      type="button"
+      onclick="abrirPagina('alarme', this)"
+    >
+
+      <div class="menu-icon icon-alarme">
+        ⏰
+      </div>
+
+      <div class="menu-info">
+
+        <div class="menu-title">
+          Alarme
+        </div>
+
+        <div class="menu-description">
+          Crie um cronômetro e receba uma notificação
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ›
+      </div>
+
+    </button>
+
+  </div>
+
+</main>
+
+
+<footer class="footer">
+
+  <strong>
+    App RH
+  </strong>
+
+  <br>
+
+  Sistema de Recursos Humanos
+
+</footer>
+```
+
+  </div>
+
+  <script>
+
+    /* =====================================================
+       CHAVES DO LOGIN
+    ===================================================== */
+
+    const CHAVE_TOKEN = "tokenUsuario";
+    const CHAVE_NOME = "nomeUsuario";
+    const CHAVE_ID = "idUsuario";
+
+
+    /* =====================================================
+       PEGAR PARÂMETROS DA URL
+    ===================================================== */
+
+    function obterParametrosURL() {
+
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+      return {
+
+        params: params,
+
+        nome:
+          (params.get("nome") || "")
+            .trim(),
+
+        id:
+          (params.get("id") || "")
+            .trim(),
+
+        token:
+          (params.get("token") || "")
+            .trim()
+
+      };
+
+    }
+
+
+    /* =====================================================
+       SALVAR NO LOCAL STORAGE
+       
+       ESTE É O ÚNICO LOCAL DE PERSISTÊNCIA DO LOGIN.
+    ===================================================== */
+
+    function salvarLocal(chave, valor) {
+
+      try {
+
+        localStorage.setItem(
+          chave,
+          String(valor)
+        );
+
+        const confirmado =
+          localStorage.getItem(chave);
+
+        if (confirmado === String(valor)) {
+
+          console.log(
+            "✅ SALVO NO LOCALSTORAGE:",
+            chave,
+            confirmado
+          );
+
+          return true;
+
+        }
+
+        console.error(
+          "❌ LOCALSTORAGE NÃO CONFIRMOU:",
+          chave
+        );
+
+        return false;
+
+      } catch (erro) {
+
+        console.error(
+          "❌ ERRO NO LOCALSTORAGE:",
+          chave,
+          erro
+        );
+
+        return false;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       RECUPERAR DO LOCAL STORAGE
+    ===================================================== */
+
+    function lerLocal(chave) {
+
+      try {
+
+        return (
+          localStorage.getItem(chave) || ""
+        );
+
+      } catch (erro) {
+
+        console.error(
+          "❌ ERRO LENDO LOCALSTORAGE:",
+          erro
+        );
+
+        return "";
+
+      }
+
+    }
+
+
+    /* =====================================================
+       CARREGAR USUÁRIO
+    ===================================================== */
+
+    function carregarUsuario() {
+
+      console.log("");
+      console.log(
+        "======================================"
+      );
+      console.log(
+        "🚀 INICIANDO CARREGAMENTO DO HOME"
+      );
+      console.log(
+        "======================================"
+      );
+
+
+      const dados =
+        obterParametrosURL();
+
 
       console.log(
-        "✅ TOKEN GRAVADO E CONFIRMADO NO LOCALSTORAGE"
+        "URL:",
+        window.location.href
       );
 
-      return true;
-
-    }
-
-
-    console.error(
-      "❌ TOKEN FOI GRAVADO, MAS A LEITURA NÃO CONFIRMOU."
-    );
-
-    return false;
-
-  }
-
-  catch (erro) {
-
-    console.error(
-      "❌ ERRO AO GRAVAR TOKEN:",
-      erro
-    );
-
-    return false;
-
-  }
-
-}
-
-
-/* =====================================================
-   CARREGAR USUÁRIO
-===================================================== */
-
-function carregarUsuario() {
-
-  console.log("");
-  console.log("=================================");
-  console.log("🚀 INICIANDO CARREGAMENTO HOME");
-  console.log("=================================");
-
-
-  const dados =
-    obterParametrosURL();
-
-
-  console.log(
-    "URL atual:",
-    window.location.href
-  );
-
-  console.log(
-    "Origem:",
-    window.location.origin
-  );
-
-  console.log(
-    "Nome recebido:",
-    dados.nome
-  );
-
-  console.log(
-    "ID recebido:",
-    dados.id
-  );
-
-  console.log(
-    "Token recebido:",
-    dados.token
-  );
-
-
-  /* =================================================
-     1. TOKEN
-  ================================================= */
-
-  if (dados.token) {
-
-    const salvou =
-      salvarToken(dados.token);
-
-
-    if (!salvou) {
-
-      console.error(
-        "❌ NÃO FOI POSSÍVEL SALVAR O TOKEN."
+      console.log(
+        "ORIGEM:",
+        window.location.origin
       );
 
-      return;
-
-    }
-
-  }
-
-
-  /* =================================================
-     2. NOME
-  ================================================= */
-
-  if (dados.nome) {
-
-    try {
-
-      localStorage.setItem(
-        CHAVE_NOME,
+      console.log(
+        "NOME RECEBIDO:",
         dados.nome
       );
 
       console.log(
-        "✅ Nome salvo:",
-        localStorage.getItem(CHAVE_NOME)
-      );
-
-    }
-
-    catch (erro) {
-
-      console.error(
-        "❌ Erro salvando nome:",
-        erro
-      );
-
-    }
-
-  }
-
-
-  /* =================================================
-     3. ID
-  ================================================= */
-
-  if (dados.id) {
-
-    try {
-
-      localStorage.setItem(
-        CHAVE_ID,
+        "ID RECEBIDO:",
         dados.id
       );
 
       console.log(
-        "✅ ID salvo:",
-        localStorage.getItem(CHAVE_ID)
+        "TOKEN RECEBIDO:",
+        dados.token
+      );
+
+
+      /* =================================================
+         SE VEIO TOKEN PELA URL
+         
+         GRAVA IMEDIATAMENTE.
+      ================================================= */
+
+      if (dados.token) {
+
+        console.log(
+          "🔐 TOKEN ENCONTRADO NA URL."
+        );
+
+        const salvouToken =
+          salvarLocal(
+            CHAVE_TOKEN,
+            dados.token
+          );
+
+
+        if (!salvouToken) {
+
+          console.error(
+            "🚨 NÃO FOI POSSÍVEL SALVAR O TOKEN."
+          );
+
+        }
+
+      } else {
+
+        console.log(
+          "ℹ️ Nenhum token na URL."
+        );
+
+      }
+
+
+      /* =================================================
+         NOME
+      ================================================= */
+
+      if (dados.nome) {
+
+        salvarLocal(
+          CHAVE_NOME,
+          dados.nome
+        );
+
+      }
+
+
+      /* =================================================
+         ID
+      ================================================= */
+
+      if (dados.id) {
+
+        salvarLocal(
+          CHAVE_ID,
+          dados.id
+        );
+
+      }
+
+
+      /* =================================================
+         RECUPERAR O QUE REALMENTE ESTÁ NO STORAGE
+         
+         NÃO usamos a variável da URL aqui.
+         
+         Pegamos diretamente do localStorage.
+      ================================================= */
+
+      const tokenFinal =
+        lerLocal(CHAVE_TOKEN);
+
+      const nomeFinal =
+        lerLocal(CHAVE_NOME);
+
+      const idFinal =
+        lerLocal(CHAVE_ID);
+
+
+      console.log("");
+      console.log(
+        "======================================"
+      );
+      console.log(
+        "📦 DADOS RECUPERADOS DO LOCALSTORAGE"
+      );
+      console.log(
+        "======================================"
+      );
+
+      console.log(
+        "TOKEN:",
+        tokenFinal
+      );
+
+      console.log(
+        "NOME:",
+        nomeFinal
+      );
+
+      console.log(
+        "ID:",
+        idFinal
+      );
+
+
+      /* =================================================
+         CONFIRMAR TOKEN
+      ================================================= */
+
+      if (tokenFinal) {
+
+        console.log(
+          "🔥 TOKEN ESTÁ PERSISTIDO NO LOCALSTORAGE"
+        );
+
+      } else {
+
+        console.error(
+          "🚨 TOKEN NÃO EXISTE NO LOCALSTORAGE"
+        );
+
+      }
+
+
+      /* =================================================
+         MOSTRAR USUÁRIO NA TELA
+      ================================================= */
+
+      const elementoNome =
+        document.getElementById(
+          "nomeUsuario"
+        );
+
+      const elementoId =
+        document.getElementById(
+          "idUsuario"
+        );
+
+
+      if (elementoNome) {
+
+        elementoNome.textContent =
+          nomeFinal ||
+          "Usuário";
+
+      }
+
+
+      if (elementoId) {
+
+        elementoId.textContent =
+          "ID: " +
+          (
+            idFinal ||
+            "Não informado"
+          );
+
+      }
+
+
+      /* =================================================
+         LIMPAR PARÂMETROS DA URL
+         
+         IMPORTANTE:
+         
+         replaceState NÃO APAGA LOCALSTORAGE.
+         
+         Antes e depois verificamos o token.
+      ================================================= */
+
+      if (dados.params.toString()) {
+
+        console.log(
+          "🔵 TOKEN ANTES DO replaceState:",
+          localStorage.getItem(
+            CHAVE_TOKEN
+          )
+        );
+
+
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+
+
+        console.log(
+          "🟢 TOKEN DEPOIS DO replaceState:",
+          localStorage.getItem(
+            CHAVE_TOKEN
+          )
+        );
+
+      }
+
+
+      console.log("");
+      console.log(
+        "======================================"
+      );
+      console.log(
+        "🏁 HOME FINALIZADO"
+      );
+      console.log(
+        "TOKEN PERSISTIDO:",
+        localStorage.getItem(
+          CHAVE_TOKEN
+        )
+      );
+      console.log(
+        "======================================"
       );
 
     }
 
-    catch (erro) {
 
-      console.error(
-        "❌ Erro salvando ID:",
-        erro
-      );
+    /* =====================================================
+       ABRIR PÁGINAS
+    ===================================================== */
+
+    function abrirPagina(
+      pagina,
+      botao
+    ) {
+
+      const paginas = {
+
+        troca:
+          "./menutroca.html",
+
+        folga:
+          "./folga.html",
+
+        atestados:
+          "./atestados.html",
+
+        banco:
+          "./banco.html",
+
+        treinamentos:
+          "./treinamentos.html",
+
+        suporte:
+          "./suporte.html",
+
+        alarme:
+          "./alarme.html",
+
+        upload:
+          "./upload.html"
+
+      };
+
+
+      const destino =
+        paginas[pagina];
+
+
+      if (!destino) {
+
+        console.error(
+          "Página não encontrada:",
+          pagina
+        );
+
+        return;
+
+      }
+
+
+      if (botao) {
+
+        botao.classList.add(
+          "carregando"
+        );
+
+      }
+
+
+      window.location.href =
+        destino;
 
     }
 
-  }
+
+    /* =====================================================
+       INICIALIZAÇÃO
+    ===================================================== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+        carregarUsuario();
 
 
-  /* =================================================
-     4. MOSTRAR NA TELA
-  ================================================= */
-
-  const elementoNome =
-    document.getElementById("nomeUsuario");
-
-  const elementoId =
-    document.getElementById("idUsuario");
+        const loading =
+          document.getElementById(
+            "loading"
+          );
 
 
-  if (elementoNome) {
+        if (loading) {
 
-    elementoNome.textContent =
-      dados.nome ||
-      localStorage.getItem(CHAVE_NOME) ||
-      "Usuário";
+          loading.classList.add(
+            "hidden"
+          );
 
-  }
+        }
 
-
-  if (elementoId) {
-
-    const idFinal =
-      dados.id ||
-      localStorage.getItem(CHAVE_ID) ||
-      "";
-
-    elementoId.textContent =
-      "ID: " +
-      (idFinal || "Não informado");
-
-  }
-
-
-  /* =================================================
-     5. CONFIRMAÇÃO FINAL
-  ================================================= */
-
-  const tokenFinal =
-    localStorage.getItem(CHAVE_TOKEN);
-
-  const nomeFinal =
-    localStorage.getItem(CHAVE_NOME);
-
-  const idFinal =
-    localStorage.getItem(CHAVE_ID);
-
-
-  console.log("");
-  console.log("=================================");
-  console.log("📦 DADOS FINAIS NO LOCALSTORAGE");
-  console.log("=================================");
-
-  console.log(
-    "tokenUsuario:",
-    tokenFinal
-  );
-
-  console.log(
-    "nomeUsuario:",
-    nomeFinal
-  );
-
-  console.log(
-    "idUsuario:",
-    idFinal
-  );
-
-
-  if (tokenFinal) {
-
-    console.log(
-      "✅ TOKEN ESTÁ PERSISTIDO NO LOCALSTORAGE."
+      }
     );
 
-  } else {
-
-    console.error(
-      "❌ TOKEN NÃO ESTÁ NO LOCALSTORAGE."
-    );
-
-  }
-
-
-  /* =================================================
-     6. LIMPAR SOMENTE OS PARÂMETROS DA URL
-     
-     IMPORTANTE:
-     ISSO NÃO APAGA O LOCALSTORAGE.
-  ================================================= */
-
-  if (dados.params.toString()) {
-
-    console.log(
-      "🔵 Token ANTES de limpar URL:",
-      localStorage.getItem(CHAVE_TOKEN)
-    );
-
-
-    window.history.replaceState(
-      {},
-      document.title,
-      window.location.pathname
-    );
-
-
-    console.log(
-      "🟢 Token DEPOIS de limpar URL:",
-      localStorage.getItem(CHAVE_TOKEN)
-    );
-
-  }
-
-
-  console.log("");
-  console.log("=================================");
-  console.log("🏁 FINAL DO CARREGAMENTO HOME");
-  console.log("=================================");
-
-}
-
-
-/* =====================================================
-   ABRIR PÁGINA
-===================================================== */
-
-function abrirPagina(pagina, botao) {
-
-  const paginas = {
-
-    troca:
-      "./menutroca.html",
-
-    folga:
-      "./folga.html",
-
-    atestados:
-      "./atestados.html",
-
-    banco:
-      "./banco.html",
-
-    treinamentos:
-      "./treinamentos.html",
-
-    suporte:
-      "./suporte.html",
-
-    alarme:
-      "./alarme.html",
-
-    upload:
-      "./upload.html"
-
-  };
-
-
-  const destino =
-    paginas[pagina];
-
-
-  if (!destino) {
-
-    console.error(
-      "Página não encontrada:",
-      pagina
-    );
-
-    return;
-
-  }
-
-
-  if (botao) {
-
-    botao.classList.add(
-      "carregando"
-    );
-
-  }
-
-
-  window.location.href =
-    destino;
-
-}
-
-
-/* =====================================================
-   SAIR
-===================================================== */
-
-function sair() {
-
-  /*
-   * Aqui NÃO apagamos o token automaticamente.
-   *
-   * Se quiser que o botão "Sair" realmente
-   * encerre a sessão, descomente:
-   *
-   * localStorage.removeItem(CHAVE_TOKEN);
-   * localStorage.removeItem(CHAVE_NOME);
-   * localStorage.removeItem(CHAVE_ID);
-   */
-
-  window.location.href =
-    "./index.html";
-
-}
-
-
-/* =====================================================
-   INICIALIZAÇÃO
-===================================================== */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    carregarUsuario();
-
-
-    const loading =
-      document.getElementById("loading");
-
-
-    if (loading) {
-
-      loading.classList.add(
-        "hidden"
-      );
-
-    }
-
-  }
-);
-
-</script>
+  </script>
 
 </body>
+
 </html>
