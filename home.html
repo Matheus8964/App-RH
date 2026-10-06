@@ -12,29 +12,16 @@
 
   <meta name="theme-color" content="#0f172a">
 
-  <meta
-    name="apple-mobile-web-app-capable"
-    content="yes"
-  >
+  <meta name="apple-mobile-web-app-capable" content="yes">
 
   <meta
     name="apple-mobile-web-app-status-bar-style"
     content="black-translucent"
   >
 
-  <meta
-    name="apple-mobile-web-app-title"
-    content="App RH"
-  >
+  <meta name="apple-mobile-web-app-title" content="App RH">
 
   <title>App RH</title>
-
-
-  <!-- =====================================================
-       STORAGE DO APP
-       ===================================================== -->
-
-  <script src="./storage.js"></script>
 
 
   <style>
@@ -82,17 +69,10 @@
 
       overflow-x: hidden;
 
-      padding-top:
-        env(safe-area-inset-top);
-
-      padding-bottom:
-        env(safe-area-inset-bottom);
-
-      padding-left:
-        env(safe-area-inset-left);
-
-      padding-right:
-        env(safe-area-inset-right);
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
     }
 
 
@@ -101,7 +81,12 @@
     }
 
 
+    /* ================================
+       CONTAINER
+    ================================= */
+
     .app {
+
       width: 100%;
       max-width: 620px;
 
@@ -113,16 +98,18 @@
       padding:
         24px
         20px
-        calc(
-          30px +
-          env(safe-area-inset-bottom)
-        );
+        calc(30px + env(safe-area-inset-bottom));
 
       position: relative;
     }
 
 
+    /* ================================
+       CABEÇALHO
+    ================================= */
+
     .header {
+
       color: white;
 
       padding:
@@ -133,6 +120,7 @@
 
 
     .header-top {
+
       display: flex;
 
       align-items: center;
@@ -144,6 +132,7 @@
 
 
     .brand {
+
       display: flex;
 
       align-items: center;
@@ -153,8 +142,10 @@
 
 
     .logo {
+
       width: 52px;
       height: 52px;
+
       min-width: 52px;
 
       border-radius: 16px;
@@ -168,24 +159,20 @@
         rgba(255,255,255,0.14);
 
       border:
-        1px solid
-        rgba(255,255,255,0.18);
+        1px solid rgba(255,255,255,0.18);
 
-      backdrop-filter:
-        blur(10px);
-
-      -webkit-backdrop-filter:
-        blur(10px);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
 
       font-size: 25px;
 
       box-shadow:
-        0 8px 25px
-        rgba(0,0,0,0.15);
+        0 8px 25px rgba(0,0,0,0.15);
     }
 
 
     .brand-text h1 {
+
       margin: 0;
 
       font-size: 23px;
@@ -197,6 +184,7 @@
 
 
     .brand-text span {
+
       display: block;
 
       margin-top: 3px;
@@ -208,7 +196,12 @@
     }
 
 
+    /* ================================
+       USUÁRIO
+    ================================= */
+
     .user-card {
+
       margin-top: 22px;
 
       display: flex;
@@ -227,20 +220,18 @@
         rgba(255,255,255,0.10);
 
       border:
-        1px solid
-        rgba(255,255,255,0.13);
+        1px solid rgba(255,255,255,0.13);
 
-      backdrop-filter:
-        blur(12px);
-
-      -webkit-backdrop-filter:
-        blur(12px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
 
     .user-icon {
+
       width: 42px;
       height: 42px;
+
       min-width: 42px;
 
       border-radius: 50%;
@@ -258,12 +249,15 @@
 
 
     .user-info {
+
       min-width: 0;
+
       flex: 1;
     }
 
 
     .user-label {
+
       font-size: 10px;
 
       text-transform: uppercase;
@@ -276,6 +270,7 @@
 
 
     .user-name {
+
       margin-top: 3px;
 
       font-size: 15px;
@@ -292,7 +287,12 @@
     }
 
 
+    /* ================================
+       ID DO USUÁRIO
+    ================================= */
+
     .user-id {
+
       margin-top: 4px;
 
       font-size: 11px;
@@ -310,7 +310,12 @@
     }
 
 
+    /* ================================
+       CONTEÚDO
+    ================================= */
+
     .content {
+
       background:
         rgba(255,255,255,0.97);
 
@@ -332,6 +337,7 @@
 
 
     .section-title {
+
       display: flex;
 
       align-items: center;
@@ -345,8 +351,10 @@
 
 
     .section-title-icon {
+
       width: 34px;
       height: 34px;
+
       min-width: 34px;
 
       border-radius: 10px;
@@ -363,11 +371,13 @@
 
 
     .section-title-text {
+
       min-width: 0;
     }
 
 
     .section-title-text h2 {
+
       margin: 0;
 
       font-size: 17px;
@@ -379,6 +389,7 @@
 
 
     .section-title-text p {
+
       margin:
         2px
         0
@@ -390,7 +401,12 @@
     }
 
 
+    /* ================================
+       MENU
+    ================================= */
+
     .menu {
+
       display: flex;
 
       flex-direction: column;
@@ -400,6 +416,7 @@
 
 
     .menu-button {
+
       width: 100%;
 
       min-height: 72px;
@@ -442,12 +459,12 @@
       overflow: hidden;
 
       appearance: none;
-
       -webkit-appearance: none;
     }
 
 
     .menu-button::after {
+
       content: "";
 
       position: absolute;
@@ -468,6 +485,7 @@
 
 
     .menu-button:hover {
+
       background: #f8fafc;
 
       box-shadow:
@@ -480,11 +498,13 @@
 
 
     .menu-button:hover::after {
+
       opacity: 1;
     }
 
 
     .menu-button:active {
+
       transform:
         scale(0.985);
 
@@ -496,11 +516,13 @@
 
 
     .menu-button:focus {
+
       outline: none;
     }
 
 
     .menu-button:focus-visible {
+
       outline:
         3px solid
         rgba(37,99,235,0.25);
@@ -510,8 +532,10 @@
 
 
     .menu-icon {
+
       width: 47px;
       height: 47px;
+
       min-width: 47px;
 
       border-radius: 14px;
@@ -526,12 +550,15 @@
 
 
     .menu-info {
+
       flex: 1;
+
       min-width: 0;
     }
 
 
     .menu-title {
+
       font-size: 14px;
 
       font-weight: 750;
@@ -543,6 +570,7 @@
 
 
     .menu-description {
+
       margin-top: 4px;
 
       font-size: 11px;
@@ -554,8 +582,10 @@
 
 
     .arrow {
+
       width: 28px;
       height: 28px;
+
       min-width: 28px;
 
       display: flex;
@@ -576,6 +606,10 @@
       font-weight: 600;
     }
 
+
+    /* ================================
+       CORES
+    ================================= */
 
     .icon-troca {
       background: #eff6ff;
@@ -612,7 +646,12 @@
     }
 
 
+    /* ================================
+       RODAPÉ
+    ================================= */
+
     .footer {
+
       text-align: center;
 
       margin-top: 19px;
@@ -629,12 +668,18 @@
 
 
     .footer strong {
+
       color:
         #64748b;
     }
 
 
+    /* ================================
+       LOADING
+    ================================= */
+
     .loading {
+
       position: fixed;
 
       inset: 0;
@@ -644,7 +689,6 @@
       display: flex;
 
       align-items: center;
-
       justify-content: center;
 
       background:
@@ -657,6 +701,7 @@
 
 
     .loading.hidden {
+
       opacity: 0;
 
       visibility: hidden;
@@ -666,6 +711,7 @@
 
 
     .loading-content {
+
       text-align: center;
 
       color: white;
@@ -673,6 +719,7 @@
 
 
     .spinner {
+
       width: 38px;
       height: 38px;
 
@@ -696,6 +743,7 @@
 
 
     .loading-text {
+
       font-size: 12px;
 
       color:
@@ -706,14 +754,19 @@
     @keyframes girar {
 
       to {
+
         transform:
           rotate(360deg);
       }
-
     }
 
 
+    /* ================================
+       BOTÃO CARREGANDO
+    ================================= */
+
     .menu-button.carregando {
+
       pointer-events: none;
 
       opacity: 0.7;
@@ -721,200 +774,52 @@
 
 
     .menu-button.carregando .arrow {
+
       animation:
         girar 0.7s linear infinite;
     }
 
 
-    /* =====================================================
-       MODAL DE TESTE
-    ====================================================== */
-
-    .modal-teste {
-      position: fixed;
-
-      inset: 0;
-
-      z-index: 10000;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 20px;
-
-      background:
-        rgba(15,23,42,0.75);
-
-      backdrop-filter:
-        blur(5px);
-
-      -webkit-backdrop-filter:
-        blur(5px);
-    }
-
-
-    .modal-teste.hidden {
-      display: none;
-    }
-
-
-    .modal-teste-caixa {
-      width: 100%;
-
-      max-width: 430px;
-
-      background: white;
-
-      border-radius: 22px;
-
-      padding: 22px;
-
-      box-shadow:
-        0 25px 70px
-        rgba(0,0,0,0.30);
-    }
-
-
-    .modal-teste-titulo {
-      font-size: 19px;
-
-      font-weight: 800;
-
-      color: #0f172a;
-
-      margin-bottom: 7px;
-    }
-
-
-    .modal-teste-subtitulo {
-      font-size: 12px;
-
-      color: #64748b;
-
-      margin-bottom: 18px;
-    }
-
-
-    .modal-teste-item {
-      margin-bottom: 12px;
-
-      padding: 12px;
-
-      border-radius: 12px;
-
-      background: #f8fafc;
-
-      border:
-        1px solid
-        #e2e8f0;
-
-      word-break: break-word;
-    }
-
-
-    .modal-teste-label {
-      display: block;
-
-      font-size: 10px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.7px;
-
-      color: #64748b;
-
-      margin-bottom: 5px;
-    }
-
-
-    .modal-teste-valor {
-      font-size: 12px;
-
-      color: #0f172a;
-
-      font-weight: 600;
-
-      line-height: 1.4;
-    }
-
-
-    .modal-teste-botao {
-      width: 100%;
-
-      border: 0;
-
-      border-radius: 13px;
-
-      padding: 13px;
-
-      margin-top: 6px;
-
-      background: #0f172a;
-
-      color: white;
-
-      font-size: 14px;
-
-      font-weight: 700;
-
-      cursor: pointer;
-    }
-
-
-    .modal-teste-secundario {
-      width: 100%;
-
-      border: 1px solid #e2e8f0;
-
-      border-radius: 13px;
-
-      padding: 13px;
-
-      margin-top: 10px;
-
-      background: #f8fafc;
-
-      color: #0f172a;
-
-      font-size: 13px;
-
-      font-weight: 700;
-
-      cursor: pointer;
-    }
-
+    /* ================================
+       TELAS PEQUENAS
+    ================================= */
 
     @media (max-width: 380px) {
 
       .app {
+
         padding-left: 14px;
         padding-right: 14px;
+
         padding-top: 18px;
       }
 
 
       .header {
+
         padding-bottom: 22px;
       }
 
 
       .brand-text h1 {
+
         font-size: 21px;
       }
 
 
       .logo {
+
         width: 47px;
         height: 47px;
+
         min-width: 47px;
+
         font-size: 22px;
       }
 
 
       .content {
+
         padding:
           19px
           14px
@@ -925,6 +830,7 @@
 
 
       .menu-button {
+
         min-height: 67px;
 
         padding:
@@ -936,6 +842,7 @@
 
 
       .menu-icon {
+
         width: 43px;
         height: 43px;
 
@@ -946,70 +853,89 @@
 
 
       .menu-title {
+
         font-size: 13px;
       }
 
 
       .menu-description {
+
         font-size: 10px;
       }
-
     }
 
+
+    /* ================================
+       ALTURA PEQUENA
+    ================================= */
 
     @media (max-height: 700px) {
 
       .app {
+
         padding-top: 14px;
       }
 
 
       .header {
+
         padding-bottom: 17px;
       }
 
 
       .user-card {
+
         margin-top: 15px;
       }
 
 
       .content {
+
         padding-top: 16px;
       }
 
 
       .menu {
+
         gap: 8px;
       }
 
 
       .menu-button {
+
         min-height: 62px;
       }
-
     }
 
+
+    /* ================================
+       TABLET / DESKTOP
+    ================================= */
 
     @media (min-width: 700px) {
 
       body {
+
         display: flex;
+
         justify-content: center;
       }
 
 
       .app {
+
         padding-top: 40px;
       }
 
 
       .header {
+
         padding-bottom: 35px;
       }
 
 
       .content {
+
         padding:
           25px
           23px;
@@ -1017,21 +943,27 @@
 
 
       .menu-button {
+
         min-height: 78px;
       }
 
 
       .menu-title {
+
         font-size: 15px;
       }
 
 
       .menu-description {
+
         font-size: 12px;
       }
-
     }
 
+
+    /* ================================
+       ACESSIBILIDADE
+    ================================= */
 
     @media (prefers-reduced-motion: reduce) {
 
@@ -1048,8 +980,25 @@
         transition-duration:
           0.01ms !important;
       }
-
     }
+
+
+
+    /* ================================
+       MODAL - GUARDAR LOGIN
+    ================================= */
+    .login-modal-backdrop{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.72);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+    .login-modal-backdrop.visible{display:flex}
+    .login-modal{width:min(100%,430px);background:#fff;border-radius:24px;padding:25px 22px 20px;box-shadow:0 25px 70px rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.9);animation:modalEntrar .2s ease-out}
+    .login-modal-icon{width:54px;height:54px;margin:0 auto 14px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:#eff6ff;font-size:25px}
+    .login-modal h2{margin:0;text-align:center;font-size:19px;color:#0f172a}
+    .login-modal p{margin:12px 0 0;text-align:center;font-size:13px;line-height:1.55;color:#475569}
+    .login-modal-warning{margin-top:14px;padding:12px 13px;border-radius:14px;background:#f8fafc;border:1px solid #e2e8f0;font-size:12px;line-height:1.5;color:#334155;text-align:center}
+    .login-modal-actions{display:flex;gap:10px;margin-top:18px}
+    .login-modal-actions button{flex:1;min-height:46px;border:0;border-radius:13px;padding:10px 12px;font-weight:700;cursor:pointer;font-size:13px}
+    .login-modal-no{background:#f1f5f9;color:#334155}
+    .login-modal-yes{background:#2563eb;color:#fff;box-shadow:0 7px 18px rgba(37,99,235,.25)}
+    @keyframes modalEntrar{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 
   </style>
 
@@ -1060,7 +1009,7 @@
 
 
   <!-- =====================================================
-       LOADING
+       CARREGAMENTO
   ====================================================== -->
 
   <div
@@ -1081,119 +1030,32 @@
   </div>
 
 
-  <!-- =====================================================
-       MODAL DE TESTE
-  ====================================================== -->
 
-  <div
-    class="modal-teste hidden"
-    id="modalTeste"
-  >
 
-    <div class="modal-teste-caixa">
-
-      <div class="modal-teste-titulo">
-        🔐 Armazenamento do aplicativo
+  <!-- MODAL - GUARDAR LOGIN NO DISPOSITIVO -->
+  <div class="login-modal-backdrop" id="modalGuardarLogin" role="dialog" aria-modal="true" aria-labelledby="tituloGuardarLogin">
+    <div class="login-modal">
+      <div class="login-modal-icon">🔐</div>
+      <h2 id="tituloGuardarLogin">Guardar seu login neste dispositivo?</h2>
+      <p>Podemos guardar seus dados de acesso neste dispositivo para que você não precise fazer o login novamente toda vez que abrir o App RH.</p>
+      <div class="login-modal-warning"><strong>Aviso:</strong><br>tentaremos forçar o seu dispositivo a guardar na memória o seu login usando os recursos de armazenamento disponíveis do aplicativo, como Local Storage e IndexedDB.</div>
+      <div class="login-modal-actions">
+        <button type="button" class="login-modal-no" onclick="responderGuardarLogin(false)">Não guardar</button>
+        <button type="button" class="login-modal-yes" onclick="responderGuardarLogin(true)">Sim, guardar</button>
       </div>
-
-
-      <div class="modal-teste-subtitulo">
-        Dados recuperados do IndexedDB.
-      </div>
-
-
-      <div class="modal-teste-item">
-
-        <span class="modal-teste-label">
-          Token
-        </span>
-
-        <div
-          class="modal-teste-valor"
-          id="testeToken"
-        >
-          --
-        </div>
-
-      </div>
-
-
-      <div class="modal-teste-item">
-
-        <span class="modal-teste-label">
-          Nome
-        </span>
-
-        <div
-          class="modal-teste-valor"
-          id="testeNome"
-        >
-          --
-        </div>
-
-      </div>
-
-
-      <div class="modal-teste-item">
-
-        <span class="modal-teste-label">
-          ID
-        </span>
-
-        <div
-          class="modal-teste-valor"
-          id="testeId"
-        >
-          --
-        </div>
-
-      </div>
-
-
-      <div class="modal-teste-item">
-
-        <span class="modal-teste-label">
-          Cargo
-        </span>
-
-        <div
-          class="modal-teste-valor"
-          id="testeCargo"
-        >
-          --
-        </div>
-
-      </div>
-
-
-      <button
-        type="button"
-        class="modal-teste-botao"
-        onclick="fecharModalTeste()"
-      >
-        OK, continuar
-      </button>
-
-
-      <button
-        type="button"
-        class="modal-teste-secundario"
-        onclick="testarArmazenamento()"
-      >
-        🔄 Ler novamente
-      </button>
-
     </div>
-
   </div>
 
-
   <!-- =====================================================
-       APP
+       APLICATIVO
   ====================================================== -->
 
   <div class="app">
 
+
+    <!-- ===================================================
+         CABEÇALHO
+    ==================================================== -->
 
     <header class="header">
 
@@ -1227,6 +1089,10 @@
 
       </div>
 
+
+      <!-- =================================================
+           USUÁRIO CONECTADO
+      ================================================== -->
 
       <div class="user-card">
 
@@ -1269,6 +1135,10 @@
     </header>
 
 
+    <!-- =================================================
+         CONTEÚDO
+    ================================================== -->
+
     <main class="content">
 
 
@@ -1282,16 +1152,13 @@
 
         <div class="section-title-text">
 
-
           <h2>
             Menu principal
           </h2>
 
-
           <p>
             Selecione uma opção para continuar
           </p>
-
 
         </div>
 
@@ -1299,10 +1166,16 @@
       </div>
 
 
+      <!-- =================================================
+           MENU
+      ================================================== -->
+
       <div class="menu">
 
 
-        <!-- TROCA -->
+        <!-- =================================================
+             TROCA
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1321,7 +1194,6 @@
               Protocolo de Troca
             </div>
 
-
             <div class="menu-description">
               Solicite ou acompanhe trocas de plantão
             </div>
@@ -1336,7 +1208,9 @@
         </button>
 
 
-        <!-- FOLGA -->
+        <!-- =================================================
+             FOLGA
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1355,7 +1229,6 @@
               Protocolo de Folga
             </div>
 
-
             <div class="menu-description">
               Solicite folgas e consulte suas solicitações
             </div>
@@ -1369,10 +1242,7 @@
 
         </button>
 
-
-        <!-- ASSINATURA -->
-
-        <button
+<button
           class="menu-button"
           type="button"
           onclick="abrirPagina('upload', this)"
@@ -1389,7 +1259,6 @@
               Enviar assinatura
             </div>
 
-
             <div class="menu-description">
               Envie sua assinatura para protocolos da Med
             </div>
@@ -1402,9 +1271,9 @@
           </div>
 
         </button>
-
-
-        <!-- ATESTADOS -->
+        <!-- =================================================
+             ATESTADO
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1423,7 +1292,6 @@
               Entregar Atestado
             </div>
 
-
             <div class="menu-description">
               Envie seu atestado para análise do RH
             </div>
@@ -1438,7 +1306,9 @@
         </button>
 
 
-        <!-- BANCO -->
+        <!-- =================================================
+             BANCO DE HORAS
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1457,7 +1327,6 @@
               Ver Banco de Horas
             </div>
 
-
             <div class="menu-description">
               Consulte seu saldo e movimentações
             </div>
@@ -1472,7 +1341,9 @@
         </button>
 
 
-        <!-- TREINAMENTOS -->
+        <!-- =================================================
+             TREINAMENTOS
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1491,7 +1362,6 @@
               Treinamentos e Certificados
             </div>
 
-
             <div class="menu-description">
               Acesse treinamentos e seus certificados
             </div>
@@ -1506,7 +1376,9 @@
         </button>
 
 
-        <!-- SUPORTE -->
+        <!-- =================================================
+             SUPORTE
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1525,7 +1397,6 @@
               Suporte
             </div>
 
-
             <div class="menu-description">
               Entre em contato com o suporte do sistema
             </div>
@@ -1540,7 +1411,9 @@
         </button>
 
 
-        <!-- ALARME -->
+        <!-- =================================================
+             ALARME
+        ================================================== -->
 
         <button
           class="menu-button"
@@ -1558,7 +1431,6 @@
             <div class="menu-title">
               Alarme
             </div>
-
 
             <div class="menu-description">
               Crie um cronômetro e receba uma notificação
@@ -1580,6 +1452,10 @@
     </main>
 
 
+    <!-- =====================================================
+         RODAPÉ
+    ====================================================== -->
+
     <footer class="footer">
 
       <strong>
@@ -1596,6 +1472,10 @@
   </div>
 
 
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
   <script>
 
 
@@ -1603,582 +1483,191 @@
        CARREGAR USUÁRIO
     ====================================================== */
 
-    async function carregarUsuario() {
+    const BANCO_LOGIN = "AppRHLoginDB";
+    const STORE_LOGIN = "login";
+    const CHAVE_LOGIN = "usuarioAtual";
+    let dadosLoginAtual = null;
 
+    function obterParametrosURL(){
+      const params=new URLSearchParams(window.location.search);
+      const dados={};
+      params.forEach(function(valor,chave){ dados[chave]=valor; });
+      return {
+        params:params,
+        dados:dados,
+        nome:(params.get("nome")||"").trim(),
+        id:(params.get("id")||"").trim(),
+        token:(params.get("token")||"").trim()
+      };
+    }
 
-      try {
+    function abrirBancoLogin(){
+      return new Promise(function(resolve,reject){
+        if(!window.indexedDB){ reject(new Error("IndexedDB não disponível.")); return; }
+        const req=indexedDB.open(BANCO_LOGIN,1);
+        req.onupgradeneeded=function(e){
+          const db=e.target.result;
+          if(!db.objectStoreNames.contains(STORE_LOGIN)) db.createObjectStore(STORE_LOGIN,{keyPath:"chave"});
+        };
+        req.onsuccess=function(e){resolve(e.target.result)};
+        req.onerror=function(){reject(req.error||new Error("Erro ao abrir IndexedDB."))};
+      });
+    }
 
+    async function salvarLoginIndexedDB(dados){
+      const db=await abrirBancoLogin();
+      return new Promise(function(resolve,reject){
+        const tx=db.transaction(STORE_LOGIN,"readwrite");
+        tx.objectStore(STORE_LOGIN).put({chave:CHAVE_LOGIN,...dados,salvoEm:new Date().toISOString()});
+        tx.oncomplete=function(){db.close();resolve(true)};
+        tx.onerror=function(){db.close();reject(tx.error||new Error("Erro ao salvar IndexedDB."))};
+      });
+    }
 
-        const params =
-          new URLSearchParams(
-            window.location.search
-          );
+    async function lerLoginIndexedDB(){
+      try{
+        const db=await abrirBancoLogin();
+        return await new Promise(function(resolve,reject){
+          const tx=db.transaction(STORE_LOGIN,"readonly");
+          const req=tx.objectStore(STORE_LOGIN).get(CHAVE_LOGIN);
+          req.onsuccess=function(){db.close();resolve(req.result||null)};
+          req.onerror=function(){db.close();reject(req.error)};
+        });
+      }catch(e){ console.warn("IndexedDB não pôde ser lido:",e); return null; }
+    }
 
+    async function apagarLoginIndexedDB(){
+      try{
+        const db=await abrirBancoLogin();
+        await new Promise(function(resolve,reject){
+          const tx=db.transaction(STORE_LOGIN,"readwrite");
+          tx.objectStore(STORE_LOGIN).delete(CHAVE_LOGIN);
+          tx.oncomplete=resolve; tx.onerror=function(){reject(tx.error)};
+        });
+        db.close();
+      }catch(e){console.warn("Não foi possível apagar IndexedDB:",e)}
+    }
 
-        /* =================================================
-           DADOS RECEBIDOS PELA URL
-        ================================================= */
+    function salvarCookieLogin(dados){
+      try{
+        document.cookie="appRHLogin="+encodeURIComponent(JSON.stringify(dados))+"; max-age="+(60*60*24*365)+"; path=/; SameSite=Lax";
+      }catch(e){console.warn("Cookie não disponível:",e)}
+    }
 
-        const nomeURL =
-          String(
-            params.get("nome") || ""
-          ).trim();
+    function salvarSessao(dados){
+      try{
+        sessionStorage.setItem("usuario",JSON.stringify(dados.usuario));
+        sessionStorage.setItem("nomeUsuario",dados.nome);
+        sessionStorage.setItem("idUsuario",dados.id);
+        sessionStorage.setItem("tokenUsuario",dados.token);
+        sessionStorage.setItem("parametrosURL",JSON.stringify(dados.parametrosURL));
+      }catch(e){console.warn("Session Storage não disponível:",e)}
+    }
 
+    async function salvarLoginNoDispositivo(dados){
+      let local=false,indexed=false;
+      try{
+        localStorage.setItem("usuario",JSON.stringify(dados.usuario));
+        localStorage.setItem("nomeUsuario",dados.nome);
+        localStorage.setItem("idUsuario",dados.id);
+        localStorage.setItem("tokenUsuario",dados.token);
+        localStorage.setItem("parametrosURL",JSON.stringify(dados.parametrosURL));
+        localStorage.setItem("loginSalvoNoDispositivo","true");
+        localStorage.setItem("loginSalvoEm",new Date().toISOString());
+        local=true;
+      }catch(e){console.warn("Local Storage não disponível:",e)}
+      try{await salvarLoginIndexedDB(dados);indexed=true}catch(e){console.warn("IndexedDB não disponível:",e)}
+      salvarCookieLogin(dados);
+      salvarSessao(dados);
+      console.log("LOGIN PERSISTIDO:",{localStorage:local,indexedDB:indexed,cookie:true,sessionStorage:true});
+    }
 
-        const idURL =
-          String(
-            params.get("id") || ""
-          ).trim();
+    function mostrarModalGuardarLogin(dados){
+      dadosLoginAtual=dados;
+      const modal=document.getElementById("modalGuardarLogin");
+      if(modal) modal.classList.add("visible");
+    }
 
+    async function responderGuardarLogin(guardar){
+      const modal=document.getElementById("modalGuardarLogin");
+      if(modal) modal.classList.remove("visible");
+      if(!dadosLoginAtual)return;
+      if(guardar){
+        await salvarLoginNoDispositivo(dadosLoginAtual);
+      }else{
+        salvarSessao(dadosLoginAtual);
+        console.log("Login NÃO será persistido no dispositivo; somente nesta sessão.");
+      }
+      dadosLoginAtual=null;
+    }
 
-        const tokenURL =
-          String(
-            params.get("token") || ""
-          ).trim();
+    function lerUsuarioSalvo(){
+      try{
+        const local=localStorage.getItem("usuario");
+        if(local) return JSON.parse(local);
+      }catch(e){console.warn("Erro no Local Storage:",e)}
+      try{
+        const sess=sessionStorage.getItem("usuario");
+        if(sess) return JSON.parse(sess);
+      }catch(e){console.warn("Erro no Session Storage:",e)}
+      return null;
+    }
 
+    async function carregarUsuario(){
+      const url=obterParametrosURL();
+      const elementoNome=document.getElementById("nomeUsuario");
+      const elementoId=document.getElementById("idUsuario");
+      let usuario=lerUsuarioSalvo();
 
-        console.log(
-          "================================="
-        );
-
-        console.log(
-          "APP RH - CARREGAMENTO"
-        );
-
-        console.log(
-          "Nome URL:",
-          nomeURL
-        );
-
-        console.log(
-          "ID URL:",
-          idURL
-        );
-
-        console.log(
-          "Token URL:",
-          tokenURL
-        );
-
-        console.log(
-          "================================="
-        );
-
-
-        /* =================================================
-           BUSCA USUÁRIO JÁ SALVO
-        ================================================= */
-
-        let usuarioSalvo =
-          null;
-
-
-        try {
-
-          usuarioSalvo =
-            await obterUsuarioRH();
-
+      /* Se o Local Storage foi apagado, tenta recuperar o login do IndexedDB. */
+      if(!usuario){
+        const recuperado=await lerLoginIndexedDB();
+        if(recuperado && recuperado.usuario){
+          usuario=recuperado.usuario;
+          try{
+            localStorage.setItem("usuario",JSON.stringify(recuperado.usuario));
+            localStorage.setItem("nomeUsuario",recuperado.nome||"");
+            localStorage.setItem("idUsuario",recuperado.id||"");
+            localStorage.setItem("tokenUsuario",recuperado.token||"");
+            localStorage.setItem("parametrosURL",JSON.stringify(recuperado.parametrosURL||{}));
+            localStorage.setItem("loginSalvoNoDispositivo","true");
+          }catch(e){console.warn("Não foi possível restaurar IndexedDB para Local Storage:",e)}
+          salvarSessao(recuperado);
         }
-        catch(erro) {
-
-          console.error(
-            "Erro ao ler IndexedDB:",
-            erro
-          );
-
-        }
-
-
-        console.log(
-          "Usuário encontrado no IndexedDB:",
-          usuarioSalvo
-        );
-
-
-        /* =================================================
-           SE A URL TEM TOKEN
-           É UM NOVO LOGIN/ACESSO.
-        ================================================= */
-
-        if(tokenURL) {
-
-
-          const usuarioNovo = {
-
-            id:
-              idURL ||
-              (
-                usuarioSalvo &&
-                usuarioSalvo.id
-              ) ||
-              "",
-
-            nome:
-              nomeURL ||
-              (
-                usuarioSalvo &&
-                usuarioSalvo.nome
-              ) ||
-              "",
-
-            cargo:
-              (
-                usuarioSalvo &&
-                usuarioSalvo.cargo
-              ) ||
-              "",
-
-            token:
-              tokenURL
-
-          };
-
-
-          console.log(
-            "SALVANDO NOVO USUÁRIO NO INDEXEDDB:",
-            usuarioNovo
-          );
-
-
-          await salvarUsuarioRH(
-            usuarioNovo
-          );
-
-
-          usuarioSalvo =
-            await obterUsuarioRH();
-
-
-          console.log(
-            "USUÁRIO CONFIRMADO APÓS SALVAR:",
-            usuarioSalvo
-          );
-
-        }
-
-
-        /* =================================================
-           NENHUM DADO NA URL
-           USA O QUE JÁ ESTÁ SALVO.
-        ================================================= */
-
-        if(!usuarioSalvo) {
-
-
-          console.warn(
-            "Nenhum usuário encontrado no IndexedDB."
-          );
-
-
-          mostrarUsuario(
-            "",
-            ""
-          );
-
-
-          abrirModalTeste(
-            null
-          );
-
-
-          return;
-
-        }
-
-
-        /* =================================================
-           MOSTRAR USUÁRIO
-        ================================================= */
-
-        mostrarUsuario(
-          usuarioSalvo.nome,
-          usuarioSalvo.id
-        );
-
-
-        /* =================================================
-           MOSTRA MODAL DE TESTE
-        ================================================= */
-
-        abrirModalTeste(
-          usuarioSalvo
-        );
-
-
-        /* =================================================
-           LIMPA SOMENTE A URL
-           
-           IMPORTANTE:
-           ISSO NÃO APAGA O INDEXEDDB.
-        ================================================= */
-
-        if(
-          params.has("nome") ||
-          params.has("id") ||
-          params.has("token")
-        ) {
-
-
-          window.history.replaceState(
-            {},
-            document.title,
-            window.location.pathname
-          );
-
-
-        }
-
-
-      }
-      catch(erro) {
-
-
-        console.error(
-          "ERRO AO CARREGAR USUÁRIO:",
-          erro
-        );
-
-
-        mostrarUsuario(
-          "",
-          ""
-        );
-
-
-        abrirModalErro(
-          erro
-        );
-
       }
 
+      const nomeSalvo=localStorage.getItem("nomeUsuario")||sessionStorage.getItem("nomeUsuario")||"";
+      const idSalvo=localStorage.getItem("idUsuario")||sessionStorage.getItem("idUsuario")||"";
+      const tokenSalvo=localStorage.getItem("tokenUsuario")||sessionStorage.getItem("tokenUsuario")||"";
 
+      const nome=(url.nome||(usuario&&(usuario.nome||usuario.nomeCompleto||usuario.NOME||usuario["NOME COMPLETO"]))||nomeSalvo||"").trim();
+      const id=String(url.id||(usuario&&(usuario.id||usuario.idUsuario||usuario.ID||usuario.IDUSUARIO||usuario["ID USUARIO"]))||idSalvo||"").trim();
+      const token=String(url.token||(usuario&&usuario.token)||tokenSalvo||"").trim();
+
+      const usuarioFinal={...(usuario||{}),nome:nome,id:id,token:token};
+      const temDadosURL=Object.keys(url.dados).length>0;
+      const temLoginURL=!!(url.nome||url.id||url.token);
+      const dadosLogin={usuario:usuarioFinal,nome:nome,id:id,token:token,parametrosURL:url.dados};
+
+      console.log("TODOS OS PARÂMETROS RECEBIDOS PELA URL:",url.dados);
+      console.log("nome:",url.nome,"id:",url.id,"token:",url.token);
+
+      if(elementoNome) elementoNome.textContent=nome||"Usuário";
+      if(elementoId) elementoId.textContent="ID: "+(id||"Não informado");
+
+      if(temLoginURL && nome && id && token){
+        const tokenSalvoLocal=localStorage.getItem("tokenUsuario")||"";
+        const jaPersistido=localStorage.getItem("loginSalvoNoDispositivo")==="true" && tokenSalvoLocal===token;
+        if(!jaPersistido) mostrarModalGuardarLogin(dadosLogin);
+      }else if(nome||id){
+        salvarSessao(dadosLogin);
+      }
+
+      if(temDadosURL){
+        try{sessionStorage.setItem("parametrosURL",JSON.stringify(url.dados))}catch(e){}
+        window.history.replaceState({},document.title,window.location.pathname);
+      }
     }
-
-
-    /* =====================================================
-       MOSTRAR USUÁRIO
-    ===================================================== */
-
-    function mostrarUsuario(
-      nome,
-      id
-    ) {
-
-
-      const elementoNome =
-        document.getElementById(
-          "nomeUsuario"
-        );
-
-
-      const elementoId =
-        document.getElementById(
-          "idUsuario"
-        );
-
-
-      if(elementoNome) {
-
-        elementoNome.textContent =
-          nome ||
-          "Usuário não identificado";
-
-      }
-
-
-      if(elementoId) {
-
-        elementoId.textContent =
-          "ID: " +
-          (
-            id ||
-            "Não informado"
-          );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       MODAL DE TESTE
-    ===================================================== */
-
-    function abrirModalTeste(
-      usuario
-    ) {
-
-
-      const modal =
-        document.getElementById(
-          "modalTeste"
-        );
-
-
-      if(!modal) {
-        return;
-      }
-
-
-      const token =
-        usuario &&
-        usuario.token
-          ?
-            usuario.token
-          :
-            "";
-
-
-      const nome =
-        usuario &&
-        usuario.nome
-          ?
-            usuario.nome
-          :
-            "";
-
-
-      const id =
-        usuario &&
-        usuario.id
-          ?
-            usuario.id
-          :
-            "";
-
-
-      const cargo =
-        usuario &&
-        usuario.cargo
-          ?
-            usuario.cargo
-          :
-            "";
-
-
-      const elementoToken =
-        document.getElementById(
-          "testeToken"
-        );
-
-
-      const elementoNome =
-        document.getElementById(
-          "testeNome"
-        );
-
-
-      const elementoId =
-        document.getElementById(
-          "testeId"
-        );
-
-
-      const elementoCargo =
-        document.getElementById(
-          "testeCargo"
-        );
-
-
-      if(elementoToken) {
-
-        elementoToken.textContent =
-          token ||
-          "❌ Nenhum token armazenado";
-
-      }
-
-
-      if(elementoNome) {
-
-        elementoNome.textContent =
-          nome ||
-          "❌ Nenhum nome armazenado";
-
-      }
-
-
-      if(elementoId) {
-
-        elementoId.textContent =
-          id ||
-          "❌ Nenhum ID armazenado";
-
-      }
-
-
-      if(elementoCargo) {
-
-        elementoCargo.textContent =
-          cargo ||
-          "Não informado";
-
-      }
-
-
-      modal.classList.remove(
-        "hidden"
-      );
-
-    }
-
-
-    /* =====================================================
-       LER INDEXEDDB NOVAMENTE
-    ====================================================== */
-
-    async function testarArmazenamento() {
-
-
-      try {
-
-
-        const usuario =
-          await obterUsuarioRH();
-
-
-        console.log(
-          "LEITURA DO INDEXEDDB:",
-          usuario
-        );
-
-
-        abrirModalTeste(
-          usuario
-        );
-
-
-      }
-      catch(erro) {
-
-
-        console.error(
-          erro
-        );
-
-
-        alert(
-          "Erro ao ler o armazenamento:\n\n" +
-          erro.message
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       FECHAR MODAL
-    ====================================================== */
-
-    function fecharModalTeste() {
-
-
-      const modal =
-        document.getElementById(
-          "modalTeste"
-        );
-
-
-      if(modal) {
-
-        modal.classList.add(
-          "hidden"
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       MODAL DE ERRO
-    ====================================================== */
-
-    function abrirModalErro(
-      erro
-    ) {
-
-
-      console.error(
-        erro
-      );
-
-
-      const modal =
-        document.getElementById(
-          "modalTeste"
-        );
-
-
-      if(!modal) {
-        return;
-      }
-
-
-      const token =
-        document.getElementById(
-          "testeToken"
-        );
-
-
-      const nome =
-        document.getElementById(
-          "testeNome"
-        );
-
-
-      const id =
-        document.getElementById(
-          "testeId"
-        );
-
-
-      const cargo =
-        document.getElementById(
-          "testeCargo"
-        );
-
-
-      if(token) {
-
-        token.textContent =
-          "ERRO";
-
-      }
-
-
-      if(nome) {
-
-        nome.textContent =
-          erro.message ||
-          "Erro desconhecido";
-
-      }
-
-
-      if(id) {
-
-        id.textContent =
-          "--";
-
-      }
-
-
-      if(cargo) {
-
-        cargo.textContent =
-          "--";
-
-      }
-
-
-      modal.classList.remove(
-        "hidden"
-      );
-
-    }
-
 
     /* =====================================================
        ABRIR PÁGINA
@@ -2192,38 +1681,28 @@
 
       const paginas = {
 
-
         troca:
           "./menutroca.html",
-
 
         folga:
           "./folga.html",
 
-
         atestados:
           "./atestados.html",
-
 
         banco:
           "./banco.html",
 
-
         treinamentos:
           "./treinamentos.html",
-
 
         suporte:
           "./suporte.html",
 
-
         alarme:
           "./alarme.html",
-
-
         upload:
           "./upload.html"
-
 
       };
 
@@ -2232,12 +1711,14 @@
         paginas[pagina];
 
 
-      if(!destino) {
+      if (!destino) {
+
         return;
+
       }
 
 
-      if(botao) {
+      if (botao) {
 
         botao.classList.add(
           "carregando"
@@ -2261,37 +1742,22 @@
       async function() {
 
 
+        await carregarUsuario();
+
+
         const loading =
           document.getElementById(
             "loading"
           );
 
 
-        try {
-
-
-          await carregarUsuario();
-
-
-        }
-        catch(erro) {
-
-
-          console.error(
-            erro
-          );
-
-        }
-
-
-        if(loading) {
+        if (loading) {
 
           loading.classList.add(
             "hidden"
           );
 
         }
-
 
       }
     );
