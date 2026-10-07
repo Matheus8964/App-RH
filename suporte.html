@@ -1,339 +1,1112 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
 <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1"
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
 >
 
-<title>Teste Token</title>
-
-<style>
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  min-height:100vh;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  padding:20px;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  background:#0f172a;
-}
-
-.caixa{
-
-  width:100%;
-  max-width:500px;
-
-  background:white;
-
-  border-radius:20px;
-
-  padding:25px;
-
-  box-shadow:
-    0 20px 50px
-    rgba(0,0,0,.30);
-
-}
-
-h1{
-
-  margin:0 0 10px;
-
-  font-size:22px;
-
-  color:#0f172a;
-
-}
-
-.subtitulo{
-
-  color:#64748b;
-
-  font-size:13px;
-
-  margin-bottom:25px;
-
-}
-
-.status{
-
-  padding:18px;
-
-  border-radius:14px;
-
-  background:#f8fafc;
-
-  border:1px solid #e2e8f0;
-
-  word-break:break-all;
-
-}
-
-.label{
-
-  font-size:11px;
-
-  text-transform:uppercase;
-
-  letter-spacing:1px;
-
-  color:#64748b;
-
-  margin-bottom:8px;
-
-}
-
-.token{
-
-  font-size:15px;
-
-  font-weight:bold;
-
-  color:#0f172a;
-
-  line-height:1.5;
-
-}
-
-.sucesso{
-
-  margin-top:18px;
-
-  padding:14px;
-
-  border-radius:12px;
-
-  background:#dcfce7;
-
-  color:#166534;
-
-  font-weight:bold;
-
-}
-
-.erro{
-
-  margin-top:18px;
-
-  padding:14px;
-
-  border-radius:12px;
-
-  background:#fee2e2;
-
-  color:#991b1b;
-
-  font-weight:bold;
-
-}
-
-button{
-
-  width:100%;
-
-  margin-top:20px;
-
-  padding:14px;
-
-  border:0;
-
-  border-radius:12px;
-
-  background:#0f172a;
-
-  color:white;
-
-  font-size:14px;
-
-  font-weight:bold;
-
-  cursor:pointer;
-
-}
-
-.info{
-
-  margin-top:20px;
-
-  padding:14px;
-
-  border-radius:12px;
-
-  background:#f1f5f9;
-
-  font-size:12px;
-
-  color:#475569;
-
-  line-height:1.5;
-
-}
-
-</style>
+<meta
+name="theme-color"
+content="#0f172a"
+
+>
+
+  <title>Teste de Persistência - App RH</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #0f172a;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    .subtitulo {
+      color: #94a3b8;
+      margin-top: 0;
+    }
+
+    .token {
+      background: #020617;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 20px 0;
+      word-break: break-all;
+      font-family: monospace;
+      color: #38bdf8;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin: 6px 0;
+      border: 0;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .principal {
+      background: #2563eb;
+      color: white;
+    }
+
+    .secundario {
+      background: #334155;
+      color: white;
+    }
+
+    .perigo {
+      background: #dc2626;
+      color: white;
+    }
+
+    .resultado {
+      margin-top: 20px;
+      background: #020617;
+      border-radius: 12px;
+      padding: 15px;
+      border: 1px solid #334155;
+    }
+
+    .item {
+      padding: 12px 0;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .item:last-child {
+      border-bottom: 0;
+    }
+
+    .nome {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .status {
+      margin-top: 5px;
+      font-family: monospace;
+      word-break: break-word;
+    }
+
+    .ok {
+      color: #4ade80;
+    }
+
+    .erro {
+      color: #f87171;
+    }
+
+    .aviso {
+      color: #facc15;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #020617;
+      padding: 12px;
+      border-radius: 8px;
+      overflow: auto;
+    }
+
+  </style>
 
 </head>
 
-
 <body>
 
+<div class="container">
 
-<div class="caixa">
+  <h1>🔬 Teste de Persistência</h1>
 
-  <h1>🔐 Teste do Token</h1>
+  <p class="subtitulo">
+    App RH — laboratório de armazenamento do navegador
+  </p>
 
-  <div class="subtitulo">
-    Esta página somente verifica o Local Storage.
-  </div>
+  <div class="token">
 
+```
+TOKEN DE TESTE:<br><br>
 
-  <div class="status">
-
-    <div class="label">
-      Token salvo
-    </div>
-
-    <div
-      class="token"
-      id="token"
-    >
-      Verificando...
-    </div>
+<strong id="token"></strong>
+```
 
   </div>
 
+<button
+ class="principal"
+ onclick="gravarTudo()">
 
-  <div id="resultado"></div>
+```
+💾 GRAVAR EM TODOS OS MÉTODOS
+```
 
-
-  <button
-    onclick="verificarToken()"
-  >
-    🔄 Verificar novamente
   </button>
 
+<button
+ class="secundario"
+ onclick="verificarTudo()">
 
-  <div class="info">
+```
+🔎 VERIFICAR O QUE ESTÁ SALVO
+```
 
-    <b>Chave pesquisada:</b><br>
+  </button>
 
-    tokenUsuario
+<button
+ class="secundario"
+ onclick="mostrarAmbiente()">
 
-    <br><br>
+```
+📱 MOSTRAR INFORMAÇÕES DO NAVEGADOR
+```
 
-    Esta página não recebe token pela URL.
-    Ela somente tenta recuperar o token que já
-    está salvo no Local Storage deste domínio.
+  </button>
+
+<button
+ class="perigo"
+ onclick="limparTestes()">
+
+```
+🗑️ LIMPAR TESTES
+```
+
+  </button>
+
+  <div class="resultado">
+
+```
+<h2>Resultado</h2>
+
+<div id="resultado">
+
+  Clique em
+  <strong>GRAVAR EM TODOS OS MÉTODOS</strong>.
+
+</div>
+```
+
+  </div>
+
+  <div class="resultado">
+
+```
+<h2>Log</h2>
+
+<pre id="log"></pre>
+```
 
   </div>
 
 </div>
 
-
 <script>
 
 
-function verificarToken(){
+// =====================================================
+// TOKEN DE TESTE
+// =====================================================
 
-  const elementoToken =
-    document.getElementById("token");
-
-  const resultado =
-    document.getElementById("resultado");
+const TOKEN_TESTE =
+  "TESTE_APP_RH_" +
+  Date.now();
 
 
-  let token = "";
+// =====================================================
+// ELEMENTOS
+// =====================================================
 
+const tokenElement =
+  document.getElementById("token");
+
+const resultadoElement =
+  document.getElementById("resultado");
+
+const logElement =
+  document.getElementById("log");
+
+
+tokenElement.textContent =
+  TOKEN_TESTE;
+
+
+// =====================================================
+// LOG
+// =====================================================
+
+function log(mensagem){
+
+  const hora =
+    new Date().toLocaleTimeString();
+
+  logElement.textContent +=
+    "[" + hora + "] " +
+    mensagem +
+    "\n";
+
+}
+
+
+// =====================================================
+// LOCAL STORAGE
+// =====================================================
+
+function gravarLocalStorage(){
 
   try{
 
-    token =
-      localStorage.getItem(
-        "tokenUsuario"
-      ) || "";
+    localStorage.setItem(
+      "testePersistencia",
+      TOKEN_TESTE
+    );
 
-  }
-  catch(erro){
+    return true;
 
-    elementoToken.textContent =
-      "ERRO AO ACESSAR LOCAL STORAGE";
+  }catch(erro){
 
-    resultado.className =
-      "erro";
+    log(
+      "localStorage ERRO: " +
+      erro.message
+    );
 
-    resultado.textContent =
-      "O navegador bloqueou o acesso ao Local Storage.";
-
-    console.error(erro);
-
-    return;
-
-  }
-
-
-  console.log(
-    "TOKEN ENCONTRADO:",
-    token
-  );
-
-
-  if(token){
-
-    elementoToken.textContent =
-      token;
-
-    resultado.className =
-      "sucesso";
-
-    resultado.textContent =
-      "✅ TOKEN ENCONTRADO NO LOCAL STORAGE";
-
-  }
-  else{
-
-    elementoToken.textContent =
-      "Nenhum token encontrado";
-
-    resultado.className =
-      "erro";
-
-    resultado.textContent =
-      "❌ NÃO EXISTE tokenUsuario neste Local Storage.";
+    return false;
 
   }
 
 }
 
 
-document.addEventListener(
-  "DOMContentLoaded",
+function lerLocalStorage(){
+
+  try{
+
+    return localStorage.getItem(
+      "testePersistencia"
+    );
+
+  }catch(erro){
+
+    return null;
+
+  }
+
+}
+
+
+// =====================================================
+// SESSION STORAGE
+// =====================================================
+
+function gravarSessionStorage(){
+
+  try{
+
+    sessionStorage.setItem(
+      "testePersistencia",
+      TOKEN_TESTE
+    );
+
+    return true;
+
+  }catch(erro){
+
+    log(
+      "sessionStorage ERRO: " +
+      erro.message
+    );
+
+    return false;
+
+  }
+
+}
+
+
+function lerSessionStorage(){
+
+  try{
+
+    return sessionStorage.getItem(
+      "testePersistencia"
+    );
+
+  }catch(erro){
+
+    return null;
+
+  }
+
+}
+
+
+// =====================================================
+// COOKIE
+// =====================================================
+
+function gravarCookie(){
+
+  try{
+
+    document.cookie =
+      "testePersistencia=" +
+      encodeURIComponent(TOKEN_TESTE) +
+      "; path=/; max-age=2592000; SameSite=Lax";
+
+    return true;
+
+  }catch(erro){
+
+    log(
+      "Cookie ERRO: " +
+      erro.message
+    );
+
+    return false;
+
+  }
+
+}
+
+
+function lerCookie(){
+
+  const cookies =
+    document.cookie.split(";");
+
+  for(
+    let cookie of cookies
+  ){
+
+    cookie =
+      cookie.trim();
+
+    if(
+      cookie.startsWith(
+        "testePersistencia="
+      )
+    ){
+
+      return decodeURIComponent(
+        cookie.substring(
+          "testePersistencia=".length
+        )
+      );
+
+    }
+
+  }
+
+  return null;
+
+}
+
+
+// =====================================================
+// INDEXED DB
+// =====================================================
+
+function abrirIndexedDB(){
+
+  return new Promise(
+    function(resolve, reject){
+
+      const request =
+        indexedDB.open(
+          "AppRHTesteDB",
+          1
+        );
+
+
+      request.onupgradeneeded =
+        function(event){
+
+          const db =
+            event.target.result;
+
+          if(
+            !db.objectStoreNames.contains(
+              "tokens"
+            )
+          ){
+
+            db.createObjectStore(
+              "tokens"
+            );
+
+          }
+
+        };
+
+
+      request.onsuccess =
+        function(event){
+
+          resolve(
+            event.target.result
+          );
+
+        };
+
+
+      request.onerror =
+        function(){
+
+          reject(
+            request.error
+          );
+
+        };
+
+    }
+  );
+
+}
+
+
+async function gravarIndexedDB(){
+
+  try{
+
+    const db =
+      await abrirIndexedDB();
+
+    return new Promise(
+      function(resolve, reject){
+
+        const transaction =
+          db.transaction(
+            "tokens",
+            "readwrite"
+          );
+
+        const store =
+          transaction.objectStore(
+            "tokens"
+          );
+
+        store.put(
+          TOKEN_TESTE,
+          "testePersistencia"
+        );
+
+
+        transaction.oncomplete =
+          function(){
+
+            db.close();
+
+            resolve(true);
+
+          };
+
+
+        transaction.onerror =
+          function(){
+
+            db.close();
+
+            reject(
+              transaction.error
+            );
+
+          };
+
+      }
+    );
+
+  }catch(erro){
+
+    log(
+      "IndexedDB ERRO: " +
+      erro.message
+    );
+
+    return false;
+
+  }
+
+}
+
+
+async function lerIndexedDB(){
+
+  try{
+
+    const db =
+      await abrirIndexedDB();
+
+    return new Promise(
+      function(resolve, reject){
+
+        const transaction =
+          db.transaction(
+            "tokens",
+            "readonly"
+          );
+
+        const store =
+          transaction.objectStore(
+            "tokens"
+          );
+
+        const request =
+          store.get(
+            "testePersistencia"
+          );
+
+
+        request.onsuccess =
+          function(){
+
+            const valor =
+              request.result || null;
+
+            db.close();
+
+            resolve(valor);
+
+          };
+
+
+        request.onerror =
+          function(){
+
+            db.close();
+
+            reject(
+              request.error
+            );
+
+          };
+
+      }
+    );
+
+  }catch(erro){
+
+    return null;
+
+  }
+
+}
+
+
+// =====================================================
+// CACHE STORAGE
+// =====================================================
+
+async function gravarCache(){
+
+  try{
+
+    if(
+      !("caches" in window)
+    ){
+
+      return false;
+
+    }
+
+    const cache =
+      await caches.open(
+        "app-rh-teste"
+      );
+
+
+    const resposta =
+      new Response(
+        TOKEN_TESTE,
+        {
+          headers: {
+            "Content-Type":
+              "text/plain"
+          }
+        }
+      );
+
+
+    await cache.put(
+      "/app-rh-token-teste",
+      resposta
+    );
+
+
+    return true;
+
+  }catch(erro){
+
+    log(
+      "Cache Storage ERRO: " +
+      erro.message
+    );
+
+    return false;
+
+  }
+
+}
+
+
+async function lerCache(){
+
+  try{
+
+    if(
+      !("caches" in window)
+    ){
+
+      return null;
+
+    }
+
+    const cache =
+      await caches.open(
+        "app-rh-teste"
+      );
+
+
+    const resposta =
+      await cache.match(
+        "/app-rh-token-teste"
+      );
+
+
+    if(!resposta){
+
+      return null;
+
+    }
+
+
+    return await resposta.text();
+
+  }catch(erro){
+
+    return null;
+
+  }
+
+}
+
+
+// =====================================================
+// URL
+// =====================================================
+
+function lerURL(){
+
+  const parametros =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  return (
+    parametros.get("token") ||
+    null
+  );
+
+}
+
+
+// =====================================================
+// GRAVAR TUDO
+// =====================================================
+
+async function gravarTudo(){
+
+  logElement.textContent = "";
+
+  log(
+    "INICIANDO GRAVAÇÃO..."
+  );
+
+
+  const local =
+    gravarLocalStorage();
+
+  log(
+    "localStorage: " +
+    (local ? "OK" : "ERRO")
+  );
+
+
+  const session =
+    gravarSessionStorage();
+
+  log(
+    "sessionStorage: " +
+    (session ? "OK" : "ERRO")
+  );
+
+
+  const cookie =
+    gravarCookie();
+
+  log(
+    "Cookie: " +
+    (cookie ? "OK" : "ERRO")
+  );
+
+
+  const indexed =
+    await gravarIndexedDB();
+
+  log(
+    "IndexedDB: " +
+    (indexed ? "OK" : "ERRO")
+  );
+
+
+  const cache =
+    await gravarCache();
+
+  log(
+    "Cache Storage: " +
+    (cache ? "OK" : "ERRO")
+  );
+
+
+  log(
+    "GRAVAÇÃO FINALIZADA."
+  );
+
+
+  await verificarTudo();
+
+}
+
+
+// =====================================================
+// VERIFICAR TUDO
+// =====================================================
+
+async function verificarTudo(){
+
+  logElement.textContent = "";
+
+  log(
+    "VERIFICANDO ARMAZENAMENTOS..."
+  );
+
+
+  const local =
+    lerLocalStorage();
+
+
+  const session =
+    lerSessionStorage();
+
+
+  const cookie =
+    lerCookie();
+
+
+  const indexed =
+    await lerIndexedDB();
+
+
+  const cache =
+    await lerCache();
+
+
+  const url =
+    lerURL();
+
+
+  mostrarResultado(
+    "localStorage",
+    local
+  );
+
+  mostrarResultado(
+    "sessionStorage",
+    session
+  );
+
+  mostrarResultado(
+    "Cookie",
+    cookie
+  );
+
+  mostrarResultado(
+    "IndexedDB",
+    indexed
+  );
+
+  mostrarResultado(
+    "Cache Storage",
+    cache
+  );
+
+  mostrarResultado(
+    "URL",
+    url
+  );
+
+
+  log(
+    "VERIFICAÇÃO FINALIZADA."
+  );
+
+}
+
+
+// =====================================================
+// MOSTRAR RESULTADO
+// =====================================================
+
+function mostrarResultado(
+  nome,
+  valor
+){
+
+  let classe =
+    "erro";
+
+  let texto =
+    "❌ NÃO ENCONTRADO";
+
+
+  if(valor){
+
+    if(
+      valor === TOKEN_TESTE
+    ){
+
+      classe =
+        "ok";
+
+      texto =
+        "✅ ENCONTRADO — TOKEN CORRETO";
+
+    }else{
+
+      classe =
+        "aviso";
+
+      texto =
+        "⚠️ ENCONTRADO — MAS É OUTRO VALOR";
+
+    }
+
+  }
+
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+  div.className =
+    "item";
+
+
+  div.innerHTML =
+    `
+      <div class="nome">
+        ${nome}
+      </div>
+
+      <div class="status ${classe}">
+        ${texto}
+      </div>
+
+      <div class="status">
+        Valor:
+        ${valor || "null"}
+      </div>
+    `;
+
+
+  resultadoElement.appendChild(
+    div
+  );
+
+}
+
+
+// =====================================================
+// AMBIENTE
+// =====================================================
+
+function mostrarAmbiente(){
+
+  resultadoElement.innerHTML = "";
+
+
+  const dados = {
+
+    navegador:
+      navigator.userAgent,
+
+    plataforma:
+      navigator.platform,
+
+    idioma:
+      navigator.language,
+
+    online:
+      navigator.onLine,
+
+    cookies:
+      navigator.cookieEnabled,
+
+    localStorage:
+      !!window.localStorage,
+
+    sessionStorage:
+      !!window.sessionStorage,
+
+    indexedDB:
+      !!window.indexedDB,
+
+    cacheStorage:
+      !!window.caches,
+
+    origem:
+      window.location.origin,
+
+    url:
+      window.location.href,
+
+    data:
+      new Date().toString()
+
+  };
+
+
+  const pre =
+    document.createElement(
+      "pre"
+    );
+
+
+  pre.textContent =
+    JSON.stringify(
+      dados,
+      null,
+      2
+    );
+
+
+  resultadoElement.appendChild(
+    pre
+  );
+
+
+  log(
+    "Informações do ambiente exibidas."
+  );
+
+}
+
+
+// =====================================================
+// LIMPAR
+// =====================================================
+
+async function limparTestes(){
+
+  try{
+
+    localStorage.removeItem(
+      "testePersistencia"
+    );
+
+  }catch(e){}
+
+
+  try{
+
+    sessionStorage.removeItem(
+      "testePersistencia"
+    );
+
+  }catch(e){}
+
+
+  try{
+
+    document.cookie =
+      "testePersistencia=; path=/; max-age=0";
+
+  }catch(e){}
+
+
+  try{
+
+    const db =
+      await abrirIndexedDB();
+
+    db.close();
+
+    indexedDB.deleteDatabase(
+      "AppRHTesteDB"
+    );
+
+  }catch(e){}
+
+
+  try{
+
+    await caches.delete(
+      "app-rh-teste"
+    );
+
+  }catch(e){}
+
+
+  resultadoElement.innerHTML =
+    "<div class='ok'>✅ Testes limpos.</div>";
+
+
+  log(
+    "Todos os testes foram limpos."
+  );
+
+}
+
+
+// =====================================================
+// ABERTURA AUTOMÁTICA
+// =====================================================
+
+window.addEventListener(
+  "load",
   function(){
 
-    verificarToken();
+    verificarTudo();
 
   }
 );
 
 
 </script>
-
 
 </body>
 
