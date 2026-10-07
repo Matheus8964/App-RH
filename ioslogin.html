@@ -1,222 +1,241 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
 
-<title>Sistema de Folgas</title>
+  <meta
+    name="theme-color"
+    content="#0f172a"
+  >
 
-<style>
+  <meta
+    name="mobile-web-app-capable"
+    content="yes"
+  >
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial;
-}
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
 
-body{
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+  >
 
-  background:#f4f6f8;
+  <meta
+    name="apple-mobile-web-app-title"
+    content="App RH"
+  >
 
-  display:flex;
+  <link
+    rel="manifest"
+    href="./manifest.json"
+  >
 
-  justify-content:center;
+  <link
+    rel="apple-touch-icon"
+    href="./icons/icon-192.png"
+  >
 
-  align-items:center;
+  <title>App RH</title>
 
-  height:100vh;
 
-}
+  <style>
 
-.card{
+    * {
+      box-sizing: border-box;
+    }
 
-  width:400px;
-  max-width:90%;
 
-  background:#FFF;
+    html,
+    body {
 
-  padding:35px;
+      margin: 0;
 
-  border-radius:10px;
+      width: 100%;
 
-  box-shadow:
-    0 5px 20px
-    rgba(0,0,0,.15);
+      height: 100%;
 
-}
+      overflow: hidden;
 
-h2{
+      font-family: Arial, sans-serif;
 
-  text-align:center;
+      background: #0f172a;
 
-  margin-bottom:30px;
+    }
 
-  color:#1565C0;
 
-}
+    #app {
 
-label{
+      width: 100%;
 
-  display:block;
+      height: 100%;
 
-  margin-top:15px;
-  margin-bottom:5px;
+      position: relative;
 
-}
+    }
 
-input{
 
-  width:100%;
+    #siteFrame {
 
-  padding:12px;
+      width: 100%;
 
-  border:1px solid #CCC;
+      height: 100%;
 
-  border-radius:5px;
+      border: 0;
 
-  font-size:16px;
+      display: block;
 
-}
+      background: white;
 
-button{
+    }
 
-  margin-top:25px;
 
-  width:100%;
+    #loading {
 
-  padding:14px;
+      position: absolute;
 
-  border:none;
+      inset: 0;
 
-  background:#1565C0;
+      z-index: 10;
 
-  color:#FFF;
+      display: flex;
 
-  font-size:16px;
+      flex-direction: column;
 
-  cursor:pointer;
+      align-items: center;
 
-  border-radius:5px;
+      justify-content: center;
 
-}
+      gap: 14px;
 
-button:hover{
+      background: #0f172a;
 
-  background:#0D47A1;
+      color: white;
 
-}
+      transition: opacity .25s ease;
 
-#msg{
+      text-align: center;
 
-  margin-top:15px;
+      padding: 20px;
 
-  text-align:center;
+    }
 
-  color:red;
 
-}
+    #loading.hidden {
 
+      opacity: 0;
 
-/* =====================================================
-   TELA DE RECUPERAÇÃO
-===================================================== */
+      pointer-events: none;
 
-#recuperandoIOS{
+    }
 
-  width:400px;
-  max-width:90%;
 
-  background:#FFF;
+    .spinner {
 
-  padding:35px;
+      width: 38px;
 
-  border-radius:10px;
+      height: 38px;
 
-  box-shadow:
-    0 5px 20px
-    rgba(0,0,0,.15);
+      border: 4px solid rgba(255,255,255,.25);
 
-  text-align:center;
+      border-top-color: white;
 
-}
+      border-radius: 50%;
 
-#recuperandoIOS h2{
+      animation: spin .8s linear infinite;
 
-  margin-bottom:15px;
+    }
 
-}
 
-#recuperandoIOS p{
+    @keyframes spin {
 
-  color:#555;
+      to {
 
-  line-height:1.5;
+        transform: rotate(360deg);
 
-}
+      }
 
+    }
 
-/* =====================================================
-   BOLINHA
-===================================================== */
 
-.loader{
+    #loadingMessage {
 
-  width:35px;
+      font-size: 15px;
 
-  height:35px;
+      line-height: 1.4;
 
-  border:4px solid #ddd;
+    }
 
-  border-top:4px solid #1565C0;
 
-  border-radius:50%;
+    #offline {
 
-  animation:girar .8s linear infinite;
+      display: none;
 
-  margin:25px auto 0;
+      position: absolute;
 
-}
+      left: 12px;
 
-@keyframes girar{
+      right: 12px;
 
-  from{
-    transform:rotate(0deg);
-  }
+      bottom: 12px;
 
-  to{
-    transform:rotate(360deg);
-  }
+      z-index: 20;
 
-}
+      padding: 12px 14px;
 
+      border-radius: 12px;
 
-/* =====================================================
-   ERRO DE CONEXÃO
-===================================================== */
+      background: rgba(15,23,42,.95);
 
-#erroConexao{
+      color: white;
 
-  display:none;
+      text-align: center;
 
-  margin-top:15px;
+      font-size: 14px;
 
-  color:#b71c1c;
+    }
 
-  font-size:14px;
 
-  text-align:center;
+    #install {
 
-}
+      display: none;
 
-</style>
+      position: fixed;
+
+      right: 16px;
+
+      bottom: 16px;
+
+      z-index: 30;
+
+      border: 0;
+
+      border-radius: 999px;
+
+      padding: 12px 18px;
+
+      background: #2563eb;
+
+      color: white;
+
+      font-weight: 700;
+
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+
+      cursor: pointer;
+
+    }
+
+  </style>
 
 </head>
 
@@ -224,960 +243,490 @@ button:hover{
 <body>
 
 
-<!-- =====================================================
-     RECUPERANDO USUÁRIO
-===================================================== -->
-
-<div id="recuperandoIOS">
-
-  <h2>
-    iOS identificado
-  </h2>
-
-  <p>
-    Tentando retornar seu usuário...
-  </p>
-
-  <div class="loader"></div>
-
-  <div id="erroConexao">
-    Não foi possível verificar o usuário.
-  </div>
-
-</div>
+  <main id="app">
 
 
+    <div id="loading">
 
-<!-- =====================================================
-     LOGIN
-===================================================== -->
+      <div class="spinner"></div>
 
-<div
-  class="card"
-  id="cardLogin"
-  style="display:none"
->
+      <strong id="loadingMessage">
+        Carregando...
+      </strong>
 
-  <h2>
-    Sistema de Folgas
-  </h2>
+    </div>
 
 
-  <label>
-    Nome Completo
-  </label>
-
-  <input
-    id="nome"
-    autocomplete="name"
-  >
+    <iframe
+      id="siteFrame"
+      title="App RH"
+      allow="fullscreen; clipboard-read; clipboard-write"
+      referrerpolicy="no-referrer">
+    </iframe>
 
 
-  <label>
-    Primeiros 4 dígitos do CPF
-  </label>
-
-  <input
-    id="cpf"
-    maxlength="4"
-    inputmode="numeric"
-    pattern="[0-9]*"
-    placeholder="Ex.: 6078"
-    autocomplete="off"
-  >
+    <div id="offline">
+      Sem conexão.
+    </div>
 
 
-  <button
-    type="button"
-    onclick="login()"
-    id="btnLogin"
-  >
-
-    Entrar
-
-  </button>
+    <button
+      id="install"
+      type="button">
+      Instalar aplicativo
+    </button>
 
 
-  <div id="msg"></div>
-
-</div>
+  </main>
 
 
-
-<script>
-
-
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
-
-/*
- * COLOQUE AQUI A URL DO SEU WEB APP DO APPS SCRIPT.
- *
- * Exemplo:
- *
- * https://script.google.com/macros/s/XXXXXXXX/exec
- */
-
-const URL_APPS_SCRIPT =
-  "https://script.google.com/a/*/macros/s/AKfycbzHA32fnNDd117Uc1SrRCZpGzz0L8YkIQ144SUpckVJ9t3eEaEHIbJYq3b0Ashnr5QyzQ/exec?page=ioslogin";
+  <script>
 
 
-const URL_HOME =
-  "https://matheus8964.github.io/App-RH/home.html";
+    // =====================================================
+    // CONFIGURAÇÃO
+    // =====================================================
+
+    const URL_APPS_SCRIPT =
+      "https://script.google.com/a/*/macros/s/AKfycbzHA32fnNDd117Uc1SrRCZpGzz0L8YkIQ144SUpckVJ9t3eEaEHIbJYq3b0Ashnr5QyzQ/exec";
 
 
-const NOME_BANCO =
-  "AppRH";
+    // =====================================================
+    // ELEMENTOS
+    // =====================================================
+
+    const frame =
+      document.getElementById("siteFrame");
+
+    const loading =
+      document.getElementById("loading");
+
+    const loadingMessage =
+      document.getElementById("loadingMessage");
+
+    const offline =
+      document.getElementById("offline");
+
+    const installButton =
+      document.getElementById("install");
 
 
-const NOME_STORE =
-  "dados";
+    // =====================================================
+    // MOSTRA MENSAGEM
+    // =====================================================
+
+    function mostrarMensagem(mensagem){
+
+      loadingMessage.textContent =
+        mensagem;
+
+    }
 
 
-const CHAVE_TOKEN =
-  "tokenUsuario";
+    // =====================================================
+    // RECUPERA TOKEN SALVO
+    // =====================================================
+
+    function recuperarTokenSalvo(){
+
+      console.log(
+        "================================="
+      );
+
+      console.log(
+        "VERIFICANDO LOGIN SALVO"
+      );
+
+      console.log(
+        "================================="
+      );
 
 
+      let token = "";
 
-/* =====================================================
-   BANCO INDEXEDDB
-===================================================== */
 
-function abrirBanco(){
+      // ---------------------------------------------------
+      // 1. TENTA tokenUsuario
+      // ---------------------------------------------------
 
-  return new Promise(
-    function(resolve, reject){
+      try{
 
-      const request =
-        indexedDB.open(
-          NOME_BANCO,
-          1
+        token =
+          localStorage.getItem(
+            "tokenUsuario"
+          ) || "";
+
+      }catch(erro){
+
+        console.error(
+          "Erro ao acessar tokenUsuario:",
+          erro
         );
 
-
-      request.onupgradeneeded =
-        function(event){
-
-          const db =
-            event.target.result;
+      }
 
 
-          if(
-            !db.objectStoreNames.contains(
-              NOME_STORE
-            )
-          ){
+      token =
+        String(token).trim();
 
-            db.createObjectStore(
-              NOME_STORE
+
+      if(token){
+
+        console.log(
+          "Token encontrado em tokenUsuario:",
+          token
+        );
+
+        return token;
+
+      }
+
+
+      // ---------------------------------------------------
+      // 2. TENTA objeto usuario
+      // ---------------------------------------------------
+
+      try{
+
+        const usuarioSalvo =
+          localStorage.getItem(
+            "usuario"
+          );
+
+
+        if(usuarioSalvo){
+
+          const usuario =
+            JSON.parse(
+              usuarioSalvo
             );
+
+
+          if(usuario && usuario.token){
+
+            token =
+              String(
+                usuario.token
+              ).trim();
+
+
+            if(token){
+
+              console.log(
+                "Token encontrado dentro de usuario:",
+                token
+              );
+
+
+              // Sincroniza novamente
+              // a chave tokenUsuario.
+
+              try{
+
+                localStorage.setItem(
+                  "tokenUsuario",
+                  token
+                );
+
+              }catch(erro){
+
+                console.warn(
+                  "Não foi possível sincronizar tokenUsuario:",
+                  erro
+                );
+
+              }
+
+
+              return token;
+
+            }
 
           }
 
-        };
+        }
+
+      }catch(erro){
+
+        console.error(
+          "Erro ao recuperar objeto usuario:",
+          erro
+        );
+
+      }
 
 
-      request.onsuccess =
-        function(){
+      // ---------------------------------------------------
+      // 3. Nenhum token
+      // ---------------------------------------------------
 
-          resolve(
-            request.result
-          );
-
-        };
+      console.log(
+        "Nenhum token salvo encontrado."
+      );
 
 
-      request.onerror =
-        function(){
-
-          reject(
-            request.error
-          );
-
-        };
+      return "";
 
     }
-  );
-
-}
 
 
+    // =====================================================
+    // MONTA URL DO APPS SCRIPT
+    // =====================================================
 
-/* =====================================================
-   SALVAR TOKEN NO INDEXEDDB
-===================================================== */
+    function montarURLAppsScript(token){
 
-async function salvarToken(token){
+      if(!token){
 
-  if(!token){
-    return;
-  }
+        console.log(
+          "Abrindo Apps Script normalmente."
+        );
 
+        return URL_APPS_SCRIPT;
 
-  try{
-
-    const db =
-      await abrirBanco();
-
-
-    await new Promise(
-      function(resolve, reject){
-
-        const transacao =
-          db.transaction(
-            NOME_STORE,
-            "readwrite"
-          );
+      }
 
 
-        const store =
-          transacao.objectStore(
-            NOME_STORE
-          );
+      const separador =
+        URL_APPS_SCRIPT.includes("?")
+          ? "&"
+          : "?";
 
 
-        store.put(
-          token,
-          CHAVE_TOKEN
+      const url =
+        URL_APPS_SCRIPT +
+        separador +
+        "token=" +
+        encodeURIComponent(token);
+
+
+      console.log(
+        "URL do Apps Script com token:"
+      );
+
+      console.log(
+        url
+      );
+
+
+      return url;
+
+    }
+
+
+    // =====================================================
+    // INICIALIZA O APLICATIVO
+    // =====================================================
+
+    function iniciarAplicativo(){
+
+      const token =
+        recuperarTokenSalvo();
+
+
+      // ---------------------------------------------------
+      // TEM TOKEN
+      // ---------------------------------------------------
+
+      if(token){
+
+        console.log(
+          "Opa! Identifiquei um token salvo."
         );
 
 
-        transacao.oncomplete =
-          function(){
-
-            resolve();
-
-          };
+        mostrarMensagem(
+          "Opa! Identifiquei um login salvo. " +
+          "Vou redirecionar você automaticamente..."
+        );
 
 
-        transacao.onerror =
-          function(){
+        const url =
+          montarURLAppsScript(
+            token
+          );
 
-            reject(
-              transacao.error
-            );
 
-          };
+        /*
+         * Pequeno intervalo apenas para permitir
+         * que o usuário veja a mensagem.
+         */
+
+        setTimeout(function(){
+
+          frame.src =
+            url;
+
+        }, 700);
+
+
+        return;
+
+      }
+
+
+      // ---------------------------------------------------
+      // NÃO TEM TOKEN
+      // ---------------------------------------------------
+
+      console.log(
+        "Nenhum login salvo."
+      );
+
+
+      mostrarMensagem(
+        "Carregando..."
+      );
+
+
+      frame.src =
+        montarURLAppsScript("");
+
+
+    }
+
+
+    // =====================================================
+    // IFRAME CARREGOU
+    // =====================================================
+
+    frame.addEventListener(
+      "load",
+      function(){
+
+        loading.classList.add(
+          "hidden"
+        );
 
       }
     );
 
 
-    db.close();
+    // =====================================================
+    // CONEXÃO
+    // =====================================================
 
-  }
-  catch(erro){
+    function updateConnection(){
 
-    console.error(
-      "Erro ao salvar token no IndexedDB:",
-      erro
+      offline.style.display =
+        navigator.onLine
+          ? "none"
+          : "block";
+
+    }
+
+
+    window.addEventListener(
+      "online",
+      updateConnection
     );
 
-  }
 
-
-  /*
-   * Também salva no localStorage
-   * como segunda cópia.
-   */
-
-  try{
-
-    localStorage.setItem(
-      CHAVE_TOKEN,
-      token
+    window.addEventListener(
+      "offline",
+      updateConnection
     );
 
-  }
-  catch(erro){
 
-    console.warn(
-      "Não foi possível salvar token no localStorage.",
-      erro
-    );
-
-  }
-
-}
+    updateConnection();
 
 
+    // =====================================================
+    // SERVICE WORKER
+    // =====================================================
 
-/* =====================================================
-   PEGAR TOKEN DO INDEXEDDB
-===================================================== */
+    if(
+      "serviceWorker" in navigator
+    ){
 
-async function obterTokenIndexedDB(){
+      window.addEventListener(
+        "load",
+        function(){
 
-  try{
-
-    const db =
-      await abrirBanco();
-
-
-    const token =
-      await new Promise(
-        function(resolve, reject){
-
-          const transacao =
-            db.transaction(
-              NOME_STORE,
-              "readonly"
+          navigator.serviceWorker
+            .register("./sw.js")
+            .catch(
+              console.error
             );
-
-
-          const store =
-            transacao.objectStore(
-              NOME_STORE
-            );
-
-
-          const request =
-            store.get(
-              CHAVE_TOKEN
-            );
-
-
-          request.onsuccess =
-            function(){
-
-              resolve(
-                request.result || ""
-              );
-
-            };
-
-
-          request.onerror =
-            function(){
-
-              reject(
-                request.error
-              );
-
-            };
 
         }
       );
 
-
-    db.close();
-
-
-    if(token){
-      return token;
     }
 
-  }
-  catch(erro){
 
-    console.error(
-      "Erro ao consultar IndexedDB:",
-      erro
-    );
+    // =====================================================
+    // INSTALAÇÃO PWA
+    // =====================================================
 
-  }
+    let deferredPrompt =
+      null;
 
 
-  /*
-   * Se não encontrou no IndexedDB,
-   * tenta localStorage.
-   */
+    window.addEventListener(
+      "beforeinstallprompt",
+      function(event){
 
-  try{
+        event.preventDefault();
 
-    return (
-      localStorage.getItem(
-        CHAVE_TOKEN
-      ) || ""
-    );
+        deferredPrompt =
+          event;
 
-  }
-  catch(erro){
-
-    return "";
-
-  }
-
-}
-
-
-
-/* =====================================================
-   APAGAR TOKEN
-===================================================== */
-
-async function apagarToken(){
-
-  try{
-
-    const db =
-      await abrirBanco();
-
-
-    await new Promise(
-      function(resolve){
-
-        const transacao =
-          db.transaction(
-            NOME_STORE,
-            "readwrite"
-          );
-
-
-        const store =
-          transacao.objectStore(
-            NOME_STORE
-          );
-
-
-        store.delete(
-          CHAVE_TOKEN
-        );
-
-
-        transacao.oncomplete =
-          function(){
-
-            resolve();
-
-          };
-
-        transacao.onerror =
-          function(){
-
-            resolve();
-
-          };
+        installButton.style.display =
+          "block";
 
       }
     );
 
 
-    db.close();
+    installButton.addEventListener(
+      "click",
+      async function(){
 
-  }
-  catch(erro){
+        if(!deferredPrompt){
 
-    console.error(
-      "Erro ao apagar token:",
-      erro
-    );
+          return;
 
-  }
+        }
 
 
-  try{
-
-    localStorage.removeItem(
-      CHAVE_TOKEN
-    );
-
-  }
-  catch(erro){}
-
-}
+        deferredPrompt.prompt();
 
 
-
-/* =====================================================
-   MOSTRAR LOGIN
-===================================================== */
-
-function mostrarLogin(){
-
-  document
-    .getElementById(
-      "recuperandoIOS"
-    )
-    .style.display =
-      "none";
+        await deferredPrompt.userChoice;
 
 
-  document
-    .getElementById(
-      "cardLogin"
-    )
-    .style.display =
-      "block";
-
-}
+        deferredPrompt =
+          null;
 
 
+        installButton.style.display =
+          "none";
 
-/* =====================================================
-   ENTRAR NO HOME
-===================================================== */
-
-function entrarNoSistema(
-  nome,
-  id
-){
-
-  window.location.href =
-    URL_HOME +
-    "?nome=" +
-    encodeURIComponent(nome) +
-    "&id=" +
-    encodeURIComponent(id);
-
-}
-
-
-
-/* =====================================================
-   CHAMAR APPS SCRIPT
-===================================================== */
-
-/*
- * Usamos GET para manter a comunicação simples
- * entre GitHub Pages e Google Apps Script.
- *
- * O Apps Script deverá receber:
- *
- * ?acao=validarToken&token=XXXX
- *
- * ou:
- *
- * ?acao=validarLogin&nome=XXXX&cpf=XXXX
- */
-
-async function chamarAppsScript(
-  parametros
-){
-
-  const query =
-    new URLSearchParams(
-      parametros
-    );
-
-
-  const resposta =
-    await fetch(
-      URL_APPS_SCRIPT +
-      "?" +
-      query.toString(),
-      {
-        method:"GET",
-        cache:"no-store"
       }
     );
 
 
-  if(!resposta.ok){
+    window.addEventListener(
+      "appinstalled",
+      function(){
 
-    throw new Error(
-      "Erro HTTP " +
-      resposta.status
-    );
+        installButton.style.display =
+          "none";
 
-  }
-
-
-  return await resposta.json();
-
-}
-
-
-
-/* =====================================================
-   RECUPERAR USUÁRIO
-===================================================== */
-
-async function recuperarUsuario(){
-
-  /*
-   * Primeiro procura no armazenamento
-   * mais persistente do aplicativo.
-   */
-
-  const token =
-    await obterTokenIndexedDB();
-
-
-  /*
-   * NÃO EXISTE TOKEN
-   */
-
-  if(!token){
-
-    mostrarLogin();
-
-    return;
-
-  }
-
-
-  /*
-   * EXISTE TOKEN
-   *
-   * Envia para o Apps Script.
-   */
-
-  try{
-
-    const resposta =
-      await chamarAppsScript({
-
-        acao:
-          "validarToken",
-
-        token:
-          token
-
-      });
-
-
-    /*
-     * TOKEN INVÁLIDO
-     */
-
-    if(
-      !resposta ||
-      !resposta.sucesso
-    ){
-
-      await apagarToken();
-
-      mostrarLogin();
-
-      return;
-
-    }
-
-
-    /*
-     * TOKEN VÁLIDO
-     */
-
-    const nome =
-      resposta.nome ||
-      resposta.nomeCompleto ||
-      resposta.NOME ||
-      resposta["NOME COMPLETO"] ||
-      "Usuário";
-
-
-    const id =
-      resposta.id ||
-      resposta.idUsuario ||
-      resposta.ID ||
-      resposta.IDUSUARIO ||
-      resposta["ID USUARIO"] ||
-      "";
-
-
-    /*
-     * Salva novamente os dados
-     * retornados pelo servidor.
-     */
-
-    localStorage.setItem(
-      "usuario",
-      JSON.stringify(
-        resposta
-      )
+      }
     );
 
 
-    localStorage.setItem(
-      "nomeUsuario",
-      nome
-    );
+    // =====================================================
+    // INICIA
+    // =====================================================
 
+    iniciarAplicativo();
 
-    if(id){
 
-      localStorage.setItem(
-        "idUsuario",
-        String(id)
-      );
+  </script>
 
-    }
-
-
-    /*
-     * Se o Apps Script devolver
-     * um token novo, atualiza.
-     */
-
-    if(resposta.token){
-
-      await salvarToken(
-        resposta.token
-      );
-
-    }
-
-
-    /*
-     * Entra normalmente.
-     */
-
-    entrarNoSistema(
-      nome,
-      id
-    );
-
-  }
-  catch(erro){
-
-    console.error(
-      "Erro ao recuperar usuário:",
-      erro
-    );
-
-
-    /*
-     * Se não conseguiu consultar
-     * o Apps Script, mostra o login.
-     */
-
-    mostrarLogin();
-
-  }
-
-}
-
-
-
-/* =====================================================
-   LOGIN NORMAL
-===================================================== */
-
-async function login(){
-
-  const nome =
-    document
-      .getElementById(
-        "nome"
-      )
-      .value
-      .trim();
-
-
-  const cpf =
-    document
-      .getElementById(
-        "cpf"
-      )
-      .value
-      .trim();
-
-
-  const msg =
-    document.getElementById(
-      "msg"
-    );
-
-
-  const botao =
-    document.getElementById(
-      "btnLogin"
-    );
-
-
-  /*
-   * VALIDAÇÃO
-   */
-
-  if(!nome){
-
-    msg.textContent =
-      "Digite seu nome completo.";
-
-    return;
-
-  }
-
-
-  if(!cpf){
-
-    msg.textContent =
-      "Digite os 4 primeiros dígitos do CPF.";
-
-    return;
-
-  }
-
-
-  /*
-   * EVITA DUPLO CLIQUE
-   */
-
-  botao.disabled =
-    true;
-
-  botao.textContent =
-    "Verificando...";
-
-  msg.textContent =
-    "";
-
-
-  try{
-
-    /*
-     * Envia nome + CPF para
-     * o Apps Script.
-     */
-
-    const resposta =
-      await chamarAppsScript({
-
-        acao:
-          "validarLogin",
-
-        nome:
-          nome,
-
-        cpf:
-          cpf
-
-      });
-
-
-    /*
-     * LOGIN NEGADO
-     */
-
-    if(
-      !resposta ||
-      !resposta.sucesso
-    ){
-
-      msg.textContent =
-        resposta &&
-        resposta.mensagem
-          ? resposta.mensagem
-          : "Usuário não encontrado.";
-
-      botao.disabled =
-        false;
-
-      botao.textContent =
-        "Entrar";
-
-      return;
-
-    }
-
-
-    /*
-     * =================================================
-     * LOGIN ACEITO
-     * =================================================
-     */
-
-    const nomeUsuario =
-      resposta.nome ||
-      resposta.nomeCompleto ||
-      resposta.NOME ||
-      resposta["NOME COMPLETO"] ||
-      "Usuário";
-
-
-    const idUsuario =
-      resposta.id ||
-      resposta.idUsuario ||
-      resposta.ID ||
-      resposta.IDUSUARIO ||
-      resposta["ID USUARIO"] ||
-      "";
-
-
-    /*
-     * Salva o objeto completo
-     */
-
-    localStorage.setItem(
-      "usuario",
-      JSON.stringify(
-        resposta
-      )
-    );
-
-
-    /*
-     * Salva nome
-     */
-
-    localStorage.setItem(
-      "nomeUsuario",
-      nomeUsuario
-    );
-
-
-    /*
-     * Salva ID
-     */
-
-    if(idUsuario){
-
-      localStorage.setItem(
-        "idUsuario",
-        String(idUsuario)
-      );
-
-    }
-
-
-    /*
-     * =================================================
-     * SALVA O TOKEN
-     * =================================================
-     */
-
-    if(resposta.token){
-
-      await salvarToken(
-        resposta.token
-      );
-
-    }
-
-
-    /*
-     * Entra normalmente.
-     */
-
-    entrarNoSistema(
-      nomeUsuario,
-      idUsuario
-    );
-
-  }
-  catch(erro){
-
-    console.error(
-      "Erro no login:",
-      erro
-    );
-
-
-    msg.textContent =
-      "Erro ao realizar login. Tente novamente.";
-
-
-    botao.disabled =
-      false;
-
-    botao.textContent =
-      "Entrar";
-
-  }
-
-}
-
-
-
-/* =====================================================
-   INICIAR
-===================================================== */
-
-recuperarUsuario();
-
-</script>
 
 </body>
 
