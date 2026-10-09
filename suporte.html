@@ -1,1112 +1,134 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
 <meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
-
+    name="viewport"
+    content="width=device-width,
+             initial-scale=1,
+             maximum-scale=1,
+             viewport-fit=cover"
 >
 
-<meta
-name="theme-color"
-content="#0f172a"
+<meta name="theme-color" content="#0f172a">
 
->
+<title>Suporte</title>
 
-  <title>Teste de Persistência - App RH</title>
+<style>
 
-  <style>
+* {
+    box-sizing: border-box;
+}
 
-    * {
-      box-sizing: border-box;
-    }
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f5f9;
+}
 
-    body {
-      margin: 0;
-      padding: 20px;
-      background: #0f172a;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
+body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+}
 
-    .container {
-      max-width: 800px;
-      margin: auto;
-    }
+/* CABEÇALHO */
 
-    h1 {
-      margin-bottom: 5px;
-    }
+.header {
+    height: 58px;
+    background: #0f172a;
+    color: white;
 
-    .subtitulo {
-      color: #94a3b8;
-      margin-top: 0;
-    }
+    display: flex;
+    align-items: center;
 
-    .token {
-      background: #020617;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      padding: 15px;
-      margin: 20px 0;
-      word-break: break-all;
-      font-family: monospace;
-      color: #38bdf8;
-    }
+    padding: 0 14px;
 
-    button {
-      width: 100%;
-      padding: 15px;
-      margin: 6px 0;
-      border: 0;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+    gap: 12px;
 
-    .principal {
-      background: #2563eb;
-      color: white;
-    }
+    position: relative;
+    z-index: 10;
+}
 
-    .secundario {
-      background: #334155;
-      color: white;
-    }
+.btn-voltar {
 
-    .perigo {
-      background: #dc2626;
-      color: white;
-    }
+    border: 0;
 
-    .resultado {
-      margin-top: 20px;
-      background: #020617;
-      border-radius: 12px;
-      padding: 15px;
-      border: 1px solid #334155;
-    }
+    background: rgba(255,255,255,0.12);
 
-    .item {
-      padding: 12px 0;
-      border-bottom: 1px solid #1e293b;
-    }
+    color: white;
 
-    .item:last-child {
-      border-bottom: 0;
-    }
+    width: 42px;
+    height: 42px;
 
-    .nome {
-      font-weight: bold;
-      font-size: 16px;
-    }
+    border-radius: 12px;
 
-    .status {
-      margin-top: 5px;
-      font-family: monospace;
-      word-break: break-word;
-    }
+    font-size: 22px;
 
-    .ok {
-      color: #4ade80;
-    }
+    cursor: pointer;
 
-    .erro {
-      color: #f87171;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .aviso {
-      color: #facc15;
-    }
+}
 
-    pre {
-      white-space: pre-wrap;
-      word-break: break-word;
-      background: #020617;
-      padding: 12px;
-      border-radius: 8px;
-      overflow: auto;
-    }
+.titulo {
 
-  </style>
+    font-size: 18px;
+    font-weight: 700;
+
+}
+
+/* WEBVIEW */
+
+.webview {
+
+    width: 100%;
+    height: calc(100vh - 58px);
+
+    border: 0;
+
+    display: block;
+
+    background: white;
+}
+
+</style>
 
 </head>
 
 <body>
 
-<div class="container">
-
-  <h1>🔬 Teste de Persistência</h1>
-
-  <p class="subtitulo">
-    App RH — laboratório de armazenamento do navegador
-  </p>
-
-  <div class="token">
-
-```
-TOKEN DE TESTE:<br><br>
-
-<strong id="token"></strong>
-```
-
-  </div>
-
-<button
- class="principal"
- onclick="gravarTudo()">
-
-```
-💾 GRAVAR EM TODOS OS MÉTODOS
-```
-
-  </button>
-
-<button
- class="secundario"
- onclick="verificarTudo()">
-
-```
-🔎 VERIFICAR O QUE ESTÁ SALVO
-```
-
-  </button>
-
-<button
- class="secundario"
- onclick="mostrarAmbiente()">
-
-```
-📱 MOSTRAR INFORMAÇÕES DO NAVEGADOR
-```
-
-  </button>
-
-<button
- class="perigo"
- onclick="limparTestes()">
-
-```
-🗑️ LIMPAR TESTES
-```
-
-  </button>
-
-  <div class="resultado">
-
-```
-<h2>Resultado</h2>
-
-<div id="resultado">
-
-  Clique em
-  <strong>GRAVAR EM TODOS OS MÉTODOS</strong>.
-
-</div>
-```
-
-  </div>
-
-  <div class="resultado">
-
-```
-<h2>Log</h2>
-
-<pre id="log"></pre>
-```
-
-  </div>
-
-</div>
-
-<script>
-
-
-// =====================================================
-// TOKEN DE TESTE
-// =====================================================
-
-const TOKEN_TESTE =
-  "TESTE_APP_RH_" +
-  Date.now();
-
-
-// =====================================================
-// ELEMENTOS
-// =====================================================
-
-const tokenElement =
-  document.getElementById("token");
-
-const resultadoElement =
-  document.getElementById("resultado");
-
-const logElement =
-  document.getElementById("log");
-
-
-tokenElement.textContent =
-  TOKEN_TESTE;
-
-
-// =====================================================
-// LOG
-// =====================================================
-
-function log(mensagem){
-
-  const hora =
-    new Date().toLocaleTimeString();
-
-  logElement.textContent +=
-    "[" + hora + "] " +
-    mensagem +
-    "\n";
-
-}
-
-
-// =====================================================
-// LOCAL STORAGE
-// =====================================================
-
-function gravarLocalStorage(){
-
-  try{
-
-    localStorage.setItem(
-      "testePersistencia",
-      TOKEN_TESTE
-    );
-
-    return true;
-
-  }catch(erro){
-
-    log(
-      "localStorage ERRO: " +
-      erro.message
-    );
-
-    return false;
-
-  }
-
-}
-
-
-function lerLocalStorage(){
-
-  try{
-
-    return localStorage.getItem(
-      "testePersistencia"
-    );
-
-  }catch(erro){
-
-    return null;
-
-  }
-
-}
-
-
-// =====================================================
-// SESSION STORAGE
-// =====================================================
-
-function gravarSessionStorage(){
-
-  try{
-
-    sessionStorage.setItem(
-      "testePersistencia",
-      TOKEN_TESTE
-    );
-
-    return true;
-
-  }catch(erro){
-
-    log(
-      "sessionStorage ERRO: " +
-      erro.message
-    );
-
-    return false;
-
-  }
-
-}
-
-
-function lerSessionStorage(){
-
-  try{
-
-    return sessionStorage.getItem(
-      "testePersistencia"
-    );
-
-  }catch(erro){
-
-    return null;
-
-  }
-
-}
-
-
-// =====================================================
-// COOKIE
-// =====================================================
-
-function gravarCookie(){
-
-  try{
-
-    document.cookie =
-      "testePersistencia=" +
-      encodeURIComponent(TOKEN_TESTE) +
-      "; path=/; max-age=2592000; SameSite=Lax";
-
-    return true;
-
-  }catch(erro){
-
-    log(
-      "Cookie ERRO: " +
-      erro.message
-    );
-
-    return false;
-
-  }
-
-}
-
-
-function lerCookie(){
-
-  const cookies =
-    document.cookie.split(";");
-
-  for(
-    let cookie of cookies
-  ){
-
-    cookie =
-      cookie.trim();
-
-    if(
-      cookie.startsWith(
-        "testePersistencia="
-      )
-    ){
-
-      return decodeURIComponent(
-        cookie.substring(
-          "testePersistencia=".length
-        )
-      );
-
-    }
-
-  }
-
-  return null;
-
-}
-
-
-// =====================================================
-// INDEXED DB
-// =====================================================
-
-function abrirIndexedDB(){
-
-  return new Promise(
-    function(resolve, reject){
-
-      const request =
-        indexedDB.open(
-          "AppRHTesteDB",
-          1
-        );
-
-
-      request.onupgradeneeded =
-        function(event){
-
-          const db =
-            event.target.result;
-
-          if(
-            !db.objectStoreNames.contains(
-              "tokens"
-            )
-          ){
-
-            db.createObjectStore(
-              "tokens"
-            );
-
-          }
-
-        };
-
-
-      request.onsuccess =
-        function(event){
-
-          resolve(
-            event.target.result
-          );
-
-        };
-
-
-      request.onerror =
-        function(){
-
-          reject(
-            request.error
-          );
-
-        };
-
-    }
-  );
-
-}
-
-
-async function gravarIndexedDB(){
-
-  try{
-
-    const db =
-      await abrirIndexedDB();
-
-    return new Promise(
-      function(resolve, reject){
-
-        const transaction =
-          db.transaction(
-            "tokens",
-            "readwrite"
-          );
-
-        const store =
-          transaction.objectStore(
-            "tokens"
-          );
-
-        store.put(
-          TOKEN_TESTE,
-          "testePersistencia"
-        );
-
-
-        transaction.oncomplete =
-          function(){
-
-            db.close();
-
-            resolve(true);
-
-          };
-
-
-        transaction.onerror =
-          function(){
-
-            db.close();
-
-            reject(
-              transaction.error
-            );
-
-          };
-
-      }
-    );
-
-  }catch(erro){
-
-    log(
-      "IndexedDB ERRO: " +
-      erro.message
-    );
-
-    return false;
-
-  }
-
-}
-
-
-async function lerIndexedDB(){
-
-  try{
-
-    const db =
-      await abrirIndexedDB();
-
-    return new Promise(
-      function(resolve, reject){
-
-        const transaction =
-          db.transaction(
-            "tokens",
-            "readonly"
-          );
-
-        const store =
-          transaction.objectStore(
-            "tokens"
-          );
-
-        const request =
-          store.get(
-            "testePersistencia"
-          );
-
-
-        request.onsuccess =
-          function(){
-
-            const valor =
-              request.result || null;
-
-            db.close();
-
-            resolve(valor);
-
-          };
-
-
-        request.onerror =
-          function(){
-
-            db.close();
-
-            reject(
-              request.error
-            );
-
-          };
-
-      }
-    );
-
-  }catch(erro){
-
-    return null;
-
-  }
-
-}
-
-
-// =====================================================
-// CACHE STORAGE
-// =====================================================
-
-async function gravarCache(){
-
-  try{
-
-    if(
-      !("caches" in window)
-    ){
-
-      return false;
-
-    }
-
-    const cache =
-      await caches.open(
-        "app-rh-teste"
-      );
-
-
-    const resposta =
-      new Response(
-        TOKEN_TESTE,
-        {
-          headers: {
-            "Content-Type":
-              "text/plain"
-          }
-        }
-      );
-
-
-    await cache.put(
-      "/app-rh-token-teste",
-      resposta
-    );
-
-
-    return true;
-
-  }catch(erro){
-
-    log(
-      "Cache Storage ERRO: " +
-      erro.message
-    );
-
-    return false;
-
-  }
-
-}
-
-
-async function lerCache(){
-
-  try{
-
-    if(
-      !("caches" in window)
-    ){
-
-      return null;
-
-    }
-
-    const cache =
-      await caches.open(
-        "app-rh-teste"
-      );
-
-
-    const resposta =
-      await cache.match(
-        "/app-rh-token-teste"
-      );
-
-
-    if(!resposta){
-
-      return null;
-
-    }
-
-
-    return await resposta.text();
-
-  }catch(erro){
-
-    return null;
-
-  }
-
-}
-
-
-// =====================================================
-// URL
-// =====================================================
-
-function lerURL(){
-
-  const parametros =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  return (
-    parametros.get("token") ||
-    null
-  );
-
-}
-
-
-// =====================================================
-// GRAVAR TUDO
-// =====================================================
-
-async function gravarTudo(){
-
-  logElement.textContent = "";
-
-  log(
-    "INICIANDO GRAVAÇÃO..."
-  );
-
-
-  const local =
-    gravarLocalStorage();
-
-  log(
-    "localStorage: " +
-    (local ? "OK" : "ERRO")
-  );
-
-
-  const session =
-    gravarSessionStorage();
-
-  log(
-    "sessionStorage: " +
-    (session ? "OK" : "ERRO")
-  );
-
-
-  const cookie =
-    gravarCookie();
-
-  log(
-    "Cookie: " +
-    (cookie ? "OK" : "ERRO")
-  );
-
-
-  const indexed =
-    await gravarIndexedDB();
-
-  log(
-    "IndexedDB: " +
-    (indexed ? "OK" : "ERRO")
-  );
-
-
-  const cache =
-    await gravarCache();
-
-  log(
-    "Cache Storage: " +
-    (cache ? "OK" : "ERRO")
-  );
-
-
-  log(
-    "GRAVAÇÃO FINALIZADA."
-  );
-
-
-  await verificarTudo();
-
-}
-
-
-// =====================================================
-// VERIFICAR TUDO
-// =====================================================
-
-async function verificarTudo(){
-
-  logElement.textContent = "";
-
-  log(
-    "VERIFICANDO ARMAZENAMENTOS..."
-  );
-
-
-  const local =
-    lerLocalStorage();
-
-
-  const session =
-    lerSessionStorage();
-
-
-  const cookie =
-    lerCookie();
-
-
-  const indexed =
-    await lerIndexedDB();
-
-
-  const cache =
-    await lerCache();
-
-
-  const url =
-    lerURL();
-
-
-  mostrarResultado(
-    "localStorage",
-    local
-  );
-
-  mostrarResultado(
-    "sessionStorage",
-    session
-  );
-
-  mostrarResultado(
-    "Cookie",
-    cookie
-  );
-
-  mostrarResultado(
-    "IndexedDB",
-    indexed
-  );
-
-  mostrarResultado(
-    "Cache Storage",
-    cache
-  );
-
-  mostrarResultado(
-    "URL",
-    url
-  );
-
-
-  log(
-    "VERIFICAÇÃO FINALIZADA."
-  );
-
-}
-
-
-// =====================================================
-// MOSTRAR RESULTADO
-// =====================================================
-
-function mostrarResultado(
-  nome,
-  valor
-){
-
-  let classe =
-    "erro";
-
-  let texto =
-    "❌ NÃO ENCONTRADO";
-
-
-  if(valor){
-
-    if(
-      valor === TOKEN_TESTE
-    ){
-
-      classe =
-        "ok";
-
-      texto =
-        "✅ ENCONTRADO — TOKEN CORRETO";
-
-    }else{
-
-      classe =
-        "aviso";
-
-      texto =
-        "⚠️ ENCONTRADO — MAS É OUTRO VALOR";
-
-    }
-
-  }
-
-
-  const div =
-    document.createElement(
-      "div"
-    );
-
-  div.className =
-    "item";
-
-
-  div.innerHTML =
-    `
-      <div class="nome">
-        ${nome}
-      </div>
-
-      <div class="status ${classe}">
-        ${texto}
-      </div>
-
-      <div class="status">
-        Valor:
-        ${valor || "null"}
-      </div>
-    `;
-
-
-  resultadoElement.appendChild(
-    div
-  );
-
-}
-
-
-// =====================================================
-// AMBIENTE
-// =====================================================
-
-function mostrarAmbiente(){
-
-  resultadoElement.innerHTML = "";
-
-
-  const dados = {
-
-    navegador:
-      navigator.userAgent,
-
-    plataforma:
-      navigator.platform,
-
-    idioma:
-      navigator.language,
-
-    online:
-      navigator.onLine,
-
-    cookies:
-      navigator.cookieEnabled,
-
-    localStorage:
-      !!window.localStorage,
-
-    sessionStorage:
-      !!window.sessionStorage,
-
-    indexedDB:
-      !!window.indexedDB,
-
-    cacheStorage:
-      !!window.caches,
-
-    origem:
-      window.location.origin,
-
-    url:
-      window.location.href,
-
-    data:
-      new Date().toString()
-
-  };
-
-
-  const pre =
-    document.createElement(
-      "pre"
-    );
-
-
-  pre.textContent =
-    JSON.stringify(
-      dados,
-      null,
-      2
-    );
-
-
-  resultadoElement.appendChild(
-    pre
-  );
-
-
-  log(
-    "Informações do ambiente exibidas."
-  );
-
-}
-
-
-// =====================================================
-// LIMPAR
-// =====================================================
-
-async function limparTestes(){
-
-  try{
-
-    localStorage.removeItem(
-      "testePersistencia"
-    );
-
-  }catch(e){}
-
-
-  try{
-
-    sessionStorage.removeItem(
-      "testePersistencia"
-    );
-
-  }catch(e){}
-
-
-  try{
-
-    document.cookie =
-      "testePersistencia=; path=/; max-age=0";
-
-  }catch(e){}
-
-
-  try{
-
-    const db =
-      await abrirIndexedDB();
-
-    db.close();
-
-    indexedDB.deleteDatabase(
-      "AppRHTesteDB"
-    );
-
-  }catch(e){}
-
-
-  try{
-
-    await caches.delete(
-      "app-rh-teste"
-    );
-
-  }catch(e){}
-
-
-  resultadoElement.innerHTML =
-    "<div class='ok'>✅ Testes limpos.</div>";
-
-
-  log(
-    "Todos os testes foram limpos."
-  );
-
-}
-
-
-// =====================================================
-// ABERTURA AUTOMÁTICA
-// =====================================================
-
-window.addEventListener(
-  "load",
-  function(){
-
-    verificarTudo();
-
-  }
-);
-
-
-</script>
+<header class="header">
+
+    <button
+        class="btn-voltar"
+        onclick="location.href='./index.html'"
+        aria-label="Voltar"
+    >
+        ←
+    </button>
+
+    <div class="titulo">
+        Suporte
+    </div>
+
+</header>
+
+<iframe
+    class="webview"
+    src="https://script.google.com/a/*/macros/s/AKfycbzHA32fnNDd117Uc1SrRCZpGzz0L8YkIQ144SUpckVJ9t3eEaEHIbJYq3b0Ashnr5QyzQ/exec?page=suporte"
+    allow="clipboard-read; clipboard-write"
+    loading="eager"
+></iframe>
 
 </body>
 
