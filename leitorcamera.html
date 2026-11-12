@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leitor de Código de Barras - Eletro Cell</title>
+
+  <!-- Biblioteca de leitura de códigos de barras -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      background: #101827;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      background: #1c293b;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 12px 40px #0005;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 0 0 8px;
+    }
+
+    .subtitulo {
+      text-align: center;
+      color: #aab8ca;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    #reader {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #080d15;
+      min-height: 100px;
+    }
+
+    .status {
+      padding: 13px;
+      margin: 15px 0;
+      background: #26374d;
+      border-radius: 9px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .codigo {
+      display: none;
+      background: #123d2d;
+      border: 1px solid #238653;
+      padding: 14px;
+      border-radius: 9px;
+      text-align: center;
+      margin: 12px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .codigo strong {
+      display: block;
+      color: #6ee7a3;
+      font-size: 20px;
+      margin-top: 5px;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .principal {
+      background: #16a36a;
+      color: white;
+    }
+
+    .secundario {
+      background: #34465f;
+      color: white;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .aviso {
+      color: #aab8ca;
+      text-align: center;
+      font-size: 12px;
+      margin-top: 16px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <h2>📷 Leitor de código de barras</h2>
+
+    <div class="subtitulo">
+      Eletro Cell — Cadastro de produtos
+    </div>
+
+    <div id="reader"></div>
+
+    <div class="status" id="status">
+      Clique em iniciar para autorizar a câmera do dispositivo.
+    </div>
+
+    <div class="codigo" id="resultado">
+      Código identificado:
+      <strong id="codigoEncontrado"></strong>
+    </div>
+
+    <button class="principal" id="btnIniciar" onclick="iniciarLeitor()">
+      📷 Autorizar câmera e iniciar leitura
+    </button>
+
+    <button class="secundario" id="btnTrocar" onclick="trocarCamera()" style="display:none">
+      🔄 Trocar câmera
+    </button>
+
+    <button class="secundario" onclick="fecharLeitor()">
+      ✖ Fechar leitor
+    </button>
+
+    <div class="aviso">
+      Autorize o acesso à câmera quando o Chrome solicitar.
+      Posicione o código de barras dentro da área de leitura.
+    </div>
+
+  </main>
+
+<script>
+  // =====================================================
+  // CONFIGURAÇÃO DA COMUNICAÇÃO COM O APPS SCRIPT
+  // =====================================================
+
+  const parametros = new URLSearchParams(location.search);
+
+  const nonce = parametros.get("nonce");
+  const parentOriginInformada = parametros.get("parentOrigin");
+
+  let origemSistema = "";
+
+  try {
+    const urlOrigem = new URL(parentOriginInformada);
+
+    if (urlOrigem.protocol === "https:" ||
+        urlOrigem.hostname === "localhost") {
+      origemSistema = urlOrigem.origin;
+    }
+  } catch (e) {
+    origemSistema = "";
+  }
+
+  let leitor = null;
+  let cameras = [];
+  let indiceCamera = 0;
+  let lendo = false;
+  let codigoEnviado = false;
+
+  const statusEl = document.getElementById("status");
+
+  function atualizarStatus(mensagem) {
+    statusEl.textContent = mensagem;
+  }
+
+  // =====================================================
+  // INICIAR CÂMERA
+  // =====================================================
+
+  async function iniciarLeitor() {
+
+    if (!nonce || !origemSistema || !window.opener) {
+      atualizarStatus(
+        "Não foi possível conectar ao Eletro Cell. Abra o leitor pelo botão do sistema."
+      );
+      return;
+    }
+
+    if (typeof Html5Qrcode === "undefined") {
+      atualizarStatus(
+        "A biblioteca do leitor não carregou. Verifique sua conexão com a internet."
+      );
+      return;
+    }
+
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia) {
+      atualizarStatus(
+        "Seu navegador não disponibilizou a câmera. Utilize HTTPS."
+      );
+      return;
+    }
+
+    document.getElementById("btnIniciar").disabled = true;
+    atualizarStatus("Solicitando autorização da câmera...");
+
+    try {
+
+      leitor = new Html5Qrcode("reader", {
+        formatsToSupport: [
+          Html5QrcodeSupportedFormats.EAN_13,
+          Html5QrcodeSupportedFormats.EAN_8,
+          Html5QrcodeSupportedFormats.UPC_A,
+          Html5QrcodeSupportedFormats.UPC_E,
+          Html5QrcodeSupportedFormats.CODE_128,
+          Html5QrcodeSupportedFormats.CODE_39,
+          Html5QrcodeSupportedFormats.ITF,
+          Html5QrcodeSupportedFormats.CODABAR
+        ],
+        verbose: false
+      });
+
+      // Solicita a câmera traseira
+      await leitor.start(
+        { facingMode: "environment" },
+        {
+          fps: 12,
+          aspectRatio: 1.5
+        },
+        codigo => {
+          if (codigo && !codigoEnviado) {
+            enviarCodigo(codigo);
+          }
+        },
+        () => {
+          // Erros de leitura de um quadro são normais.
+        }
+      );
+
+      lendo = true;
+
+      atualizarStatus("Câmera ativa! Aponte para o código de barras.");
+
+      document.getElementById("btnTrocar").style.display = "block";
+
+    } catch (erro) {
+
+      console.error("Erro ao iniciar câmera:", erro);
+
+      let mensagem = "Não foi possível iniciar a câmera.";
+
+      if (erro.name === "NotAllowedError" ||
+          erro.name === "PermissionDeniedError") {
+        mensagem = "Acesso à câmera negado. Verifique as permissões do Chrome.";
+      } else if (erro.name === "NotFoundError") {
+        mensagem = "Nenhuma câmera foi encontrada.";
+      } else if (erro.name === "NotReadableError") {
+        mensagem = "A câmera está sendo utilizada por outro aplicativo.";
+      }
+
+      atualizarStatus(mensagem);
+      document.getElementById("btnIniciar").disabled = false;
+    }
+  }
+
+  // =====================================================
+  // ENVIAR CÓDIGO PARA O APPS SCRIPT
+  // =====================================================
+
+  async function enviarCodigo(codigo) {
+
+    if (codigoEnviado) return;
+
+    codigoEnviado = true;
+
+    document.getElementById("codigoEncontrado").textContent = codigo;
+    document.getElementById("resultado").style.display = "block";
+
+    atualizarStatus("Código identificado! Enviando para o Eletro Cell...");
+
+    try {
+      if (leitor && lendo) {
+        await leitor.stop();
+        lendo = false;
+      }
+
+      if (!window.opener || window.opener.closed) {
+        atualizarStatus("A aba do Eletro Cell foi fechada. Não foi possível enviar.");
+        codigoEnviado = false;
+        return;
+      }
+
+      window.opener.postMessage({
+        tipo: "CODIGO_LIDO",
+        codigo: String(codigo),
+        nonce: nonce
+      }, origemSistema);
+
+      atualizarStatus("Código enviado! Retornando ao Eletro Cell.");
+
+      document.getElementById("btnIniciar").style.display = "none";
+      document.getElementById("btnTrocar").style.display = "none";
+
+    } catch (erro) {
+      console.error(erro);
+      atualizarStatus("Erro ao enviar o código para o sistema.");
+      codigoEnviado = false;
+    }
+  }
+
+  // =====================================================
+  // TROCAR CÂMERA
+  // =====================================================
+
+  async function trocarCamera() {
+
+    if (!leitor || !lendo) return;
+
+    try {
+
+      cameras = await Html5Qrcode.getCameras();
+
+      if (!cameras || cameras.length < 2) {
+        atualizarStatus("Não foram encontradas outras câmeras.");
+        return;
+      }
+
+      await leitor.stop();
+      lendo = false;
+
+      indiceCamera = (indiceCamera + 1) % cameras.length;
+
+      await leitor.start(
+        cameras[indiceCamera].id,
+        {
+          fps: 12,
+          aspectRatio: 1.5
+        },
+        codigo => {
+          if (codigo && !codigoEnviado) {
+            enviarCodigo(codigo);
+          }
+        },
+        () => {}
+      );
+
+      lendo = true;
+      atualizarStatus("Câmera alterada. Aponte para o código.");
+
+    } catch (erro) {
+      console.error(erro);
+      atualizarStatus("Não foi possível trocar a câmera.");
+    }
+  }
+
+  // =====================================================
+  // FECHAR LEITOR
+  // =====================================================
+
+  async function fecharLeitor() {
+
+    try {
+      if (leitor && lendo) {
+        await leitor.stop();
+        lendo = false;
+      }
+    } catch (erro) {
+      console.error(erro);
+    }
+
+    try {
+      if (leitor) {
+        await leitor.clear();
+      }
+    } catch (erro) {
+      console.error(erro);
+    }
+
+    window.close();
+
+    atualizarStatus("Leitor encerrado. Você pode fechar esta aba.");
+  }
+
+  // Limpa a câmera se o usuário sair da página
+  window.addEventListener("pagehide", () => {
+    if (leitor && lendo) {
+      leitor.stop().catch(console.error);
+    }
+  });
+
+</script>
+
+</body>
+</html>
